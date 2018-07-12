@@ -1,0 +1,1 @@
+Travel Agency project on Spring. Using technologies: Maven, HikariCP, jenkins, etc.
