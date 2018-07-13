@@ -32,7 +32,7 @@ public class TravelAgencyApplication {
 		// Country 1
 //		Country country = new Country();
 //		country.setId(201);
-//		country.setName("BelarusBlyat");
+//		country.setName("Belarus");
 
 		// Insert a country to DB
 //		countryDao.insert(country);
