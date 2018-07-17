@@ -11,8 +11,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.1.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>1.4.5.RELEASE</version>
+		<relativePath/>
 	</parent>
 
 	<properties>
@@ -57,11 +57,16 @@
     		<version>1.9.5</version>
     		<scope>test</scope>
 		</dependency>
-		<dependency> <!-- embedded db -->
-    <groupId>com.opentable.components</groupId>
-    <artifactId>otj-pg-embedded</artifactId>
-    <version>0.7.1</version>
-</dependency>
+		<dependency>
+    		<groupId>com.opentable.components</groupId>
+    		<artifactId>otj-pg-embedded</artifactId>
+    		<version>0.7.1</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.flywaydb</groupId>-->
+			<!--<artifactId>flyway-core</artifactId>-->
+			<!--<version>5.1.4</version>-->
+		<!--</dependency>-->
 	</dependencies>
 
 	<build>

@@ -1,39 +1,32 @@
 package by.rekuts.travelagency.dao.impl;
 
-import java.sql.PreparedStatement;
+import by.rekuts.travelagency.dao.CountryDao;
+import by.rekuts.travelagency.dao.subjects.Country;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
+@Repository("countrydao")
+public class CountryDaoImpl implements CountryDao {
+	JdbcTemplate jdbcTemplate;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
-
-import by.rekuts.travelagency.dao.CountryDao;
-import by.rekuts.travelagency.dao.subjects.Country;
-
-@Repository
-public class CountryDaoImpl extends JdbcDaoSupport implements CountryDao {
-    @Qualifier("dataSource")
-    @Autowired
-	DataSource dataSource;
-	
-	@PostConstruct
-	private void initialize(){
-		setDataSource(dataSource);
+	@Autowired
+	public CountryDaoImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	@Override
 	public void insert(Country country) {
 		String sql = "INSERT INTO country (id, name) VALUES (?, ?)" ;
-		getJdbcTemplate().update(sql, new Object[]{
+		jdbcTemplate.update(sql, new Object[]{
 				country.getId(), country.getName()
 		});
 	}
@@ -41,13 +34,13 @@ public class CountryDaoImpl extends JdbcDaoSupport implements CountryDao {
 	@Override
 	public void delete(int id) {
 		String sql ="DELETE FROM country WHERE id = ?";
-		getJdbcTemplate().update(sql, new Object[]{id});
+		jdbcTemplate.update(sql, new Object[]{id});
 	}
 
 	@Override
 	public Country getCountryById(int id) {
 		String sql = "SELECT id, name FROM country WHERE id = ?";
-		return (Country)getJdbcTemplate().queryForObject(sql, new Object[]{id}, new RowMapper<Country>(){
+		return jdbcTemplate.queryForObject(sql, new Object[]{id}, new RowMapper<Country>(){
 			@Override
 			public Country mapRow(ResultSet rs, int rwNumber) throws SQLException {
 				Country country = new Country();
@@ -61,7 +54,7 @@ public class CountryDaoImpl extends JdbcDaoSupport implements CountryDao {
 	@Override
 	public List<Country> getAllCountries() {
 		String sql = "SELECT id, name FROM country";
-		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 		
 		List<Country> result = new ArrayList<Country>();
 		for(Map<String, Object> row:rows){

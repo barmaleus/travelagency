@@ -1,26 +1,34 @@
 package by.rekuts.travelagency.dao.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-
 import by.rekuts.travelagency.dao.HotelDao;
 import by.rekuts.travelagency.dao.subjects.Hotel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public class HotelDaoImpl extends JdbcDaoSupport implements HotelDao {
+
+    //todo
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+    //todo end
+
     @Qualifier("dataSource")
     @Autowired
     DataSource dataSource;
