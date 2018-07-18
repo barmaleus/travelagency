@@ -3,11 +3,11 @@ package by.rekuts.travelagency.dao.subjects;
 import java.time.LocalDateTime;
 
 public class Review {
-	int id;
-	LocalDateTime date;
-	String text;
-	int userId;
-	int tourId;
+	private int id;
+	private LocalDateTime date;
+	private String text;
+	private int userId;
+	private int tourId;
 
 	public Review() {
 

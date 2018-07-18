@@ -1,8 +1,8 @@
 package by.rekuts.travelagency.dao.subjects;
 
 public class UserTour {
-	int userId;
-	int tourId;
+	private int userId;
+	private int tourId;
 
 	@Override
 	public String toString() {

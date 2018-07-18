@@ -1,8 +1,8 @@
 package by.rekuts.travelagency.dao.subjects;
 
 public class Country {
-	int id;
-	String name;
+	private int id;
+	private String name;
 	
 	public Country() {
 		

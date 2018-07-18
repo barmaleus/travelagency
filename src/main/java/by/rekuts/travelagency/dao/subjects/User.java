@@ -1,9 +1,9 @@
 package by.rekuts.travelagency.dao.subjects;
 
 public class User {
-	int userId;
-	String login;
-	String password;
+	private int userId;
+	private String login;
+	private String password;
 
 	@Override
 	public String toString() {

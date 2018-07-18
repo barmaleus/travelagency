@@ -3,15 +3,15 @@ package by.rekuts.travelagency.dao.subjects;
 import java.time.LocalDate;
 
 public class Tour {
-	int id;
-	String photo;
-	LocalDate date;
-	short duration;
-	String description;
-	int cost;
-	TourType tourType;
-	int hotelId;
-	int countryId;
+	private int id;
+	private String photo;
+	private LocalDate date;
+	private short duration;
+	private String description;
+	private int cost;
+	private TourType tourType;
+	private int hotelId;
+	private int countryId;
 
 	@Override
 	public String toString() {

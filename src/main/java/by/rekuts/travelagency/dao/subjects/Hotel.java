@@ -1,15 +1,16 @@
 package by.rekuts.travelagency.dao.subjects;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.sql.Array;
 
 public class Hotel {
-	int hotelId;
-	String name;
-	short stars;
-	String website;
-	double latitude;
-	double longitude;
-	List<Features> features;
+	private int hotelId;
+	private String name;
+	private int stars;
+	private String website;
+	private BigDecimal latitude;
+	private BigDecimal longitude;
+	private Array features;
 	
 	public enum Features{
 		A("swimming pool"),
@@ -24,17 +25,20 @@ public class Hotel {
 		J("children room");
 		
 		private final String feature;
-		
+
 		private Features(String feature) {
 			this.feature = feature;
+		}
+
+		public String getValue() {
+			return feature;
 		}
 	}
 	
 	public Hotel() {
-		
 	}
 	
-	public Hotel(int hotelId, String name, short stars, String website, double latitude, double longitude, List<Features> features) {
+	public Hotel(int hotelId, String name, int stars, String website, BigDecimal latitude, BigDecimal longitude, Array features) {
 		this.hotelId = hotelId;
 		this.name = name;
 		this.stars = stars;
@@ -60,11 +64,11 @@ public class Hotel {
 		this.name = name;
 	}
 
-	public short getStars() {
+	public int getStars() {
 		return stars;
 	}
 
-	public void setStars(short stars) {
+	public void setStars(int stars) {
 		this.stars = stars;
 	}
 
@@ -76,27 +80,27 @@ public class Hotel {
 		this.website = website;
 	}
 
-	public double getLatitude() {
+	public BigDecimal getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(BigDecimal latitude) {
 		this.latitude = latitude;
 	}
 
-	public double getLongitude() {
+	public BigDecimal getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
 
-	public List<Features> getFeatures() {
+	public Array getFeatures() {
 		return features;
 	}
 
-	public void setFeatures(List<Features> features) {
+	public void setFeatures(Array features) {
 		this.features = features;
 	}
 	

@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotEquals;
 
 public class CountryDaoImplTest {
 
-	private final DatabasePreparer prepCountry = new SimplePreparer("country");
+	private final DatabasePreparer prepCountry = new SimpleReviewPreparer("country");
 	@Rule
 	public PreparedDbRule dbCountry = EmbeddedPostgresRules.preparedDatabase(prepCountry);
 
@@ -109,10 +109,10 @@ public class CountryDaoImplTest {
     }
 }
 
-class SimplePreparer implements DatabaseConnectionPreparer {
+class SimpleCountryPreparer implements DatabaseConnectionPreparer {
     private final String name;
 
-    public SimplePreparer(String name) {
+    SimpleCountryPreparer(String name) {
         this.name = name;
     }
 
