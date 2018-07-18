@@ -36,3 +36,4 @@ class SimpleReviewPreparer implements DatabaseConnectionPreparer {
             stmt.execute();
         }
     }
+}
