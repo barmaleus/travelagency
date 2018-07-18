@@ -15,6 +15,11 @@ import java.util.Map;
 
 @Repository
 public class CountryDaoImpl implements CountryDao {
+	private final static String INSERT_COUNTRY_QUERY = "INSERT INTO country (id, name) VALUES (?, ?)";
+	private final static String DELETE_COUNTRY_QUERY = "DELETE FROM country WHERE id = ?";
+	private final static String GET_COUNTRY_BY_ID_QUERY = "SELECT id, name FROM country WHERE id = ?";
+	private final static String GET_ALL_COUNTRIES_QUERY = "SELECT id, name FROM country";
+
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
@@ -24,22 +29,19 @@ public class CountryDaoImpl implements CountryDao {
 
 	@Override
 	public void insert(Country country) {
-		String sql = "INSERT INTO country (id, name) VALUES (?, ?)" ;
-		jdbcTemplate.update(sql, new Object[]{
+		jdbcTemplate.update(INSERT_COUNTRY_QUERY, new Object[]{
 				country.getId(), country.getName()
 		});
 	}
 
 	@Override
 	public void delete(int id) {
-		String sql ="DELETE FROM country WHERE id = ?";
-		jdbcTemplate.update(sql, new Object[]{id});
+		jdbcTemplate.update(DELETE_COUNTRY_QUERY, new Object[]{id});
 	}
 
 	@Override
 	public Country getCountryById(int id) {
-		String sql = "SELECT id, name FROM country WHERE id = ?";
-		return jdbcTemplate.queryForObject(sql, new Object[]{id}, new RowMapper<Country>(){
+		return jdbcTemplate.queryForObject(GET_COUNTRY_BY_ID_QUERY, new Object[]{id}, new RowMapper<Country>(){
 			@Override
 			public Country mapRow(ResultSet rs, int rwNumber) throws SQLException {
 				Country country = new Country();
@@ -52,9 +54,7 @@ public class CountryDaoImpl implements CountryDao {
 
 	@Override
 	public List<Country> getAllCountries() {
-		String sql = "SELECT id, name FROM country";
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
-		
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_COUNTRIES_QUERY);
 		List<Country> result = new ArrayList<Country>();
 		for(Map<String, Object> row:rows){
 			Country country = new Country();

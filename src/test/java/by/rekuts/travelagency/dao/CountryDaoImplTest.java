@@ -4,23 +4,46 @@ import by.rekuts.travelagency.dao.impl.CountryDaoImpl;
 import by.rekuts.travelagency.dao.subjects.Country;
 import com.opentable.db.postgres.embedded.DatabaseConnectionPreparer;
 import com.opentable.db.postgres.embedded.DatabasePreparer;
+import com.opentable.db.postgres.embedded.EmbeddedPostgres;
 import com.opentable.db.postgres.junit.EmbeddedPostgresRules;
 import com.opentable.db.postgres.junit.PreparedDbRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class CountryDaoImplTest {
 
 	private final DatabasePreparer prepCountry = new SimpleCountryPreparer("country");
 	@Rule
 	public PreparedDbRule dbCountry = EmbeddedPostgresRules.preparedDatabase(prepCountry);
+
+    @Test
+    public void testEmbeddedDbEcho() throws SQLException, IOException
+    {
+        EmbeddedPostgres pg = EmbeddedPostgres.start();
+        Connection c = pg.getPostgresDatabase().getConnection();
+        Statement s = c.createStatement();
+        ResultSet rs = s.executeQuery("SELECT 1");
+        assertTrue(rs.next());
+        assertEquals(1, rs.getInt(1));
+        assertFalse(rs.next());
+    }
+
+    @Test
+    public void testDbSimpleQuery() throws SQLException {
+        Connection c = dbCountry.getTestDatabase().getConnection();
+        Statement stmt = c.createStatement();
+        stmt.execute("INSERT INTO country (id, name) VALUES ('1', 'Country Simple Name')");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM country");
+        rs.next();
+        assertEquals(1, rs.getInt("id"));
+    }
 
     @Test
     public void insertTest() throws SQLException {

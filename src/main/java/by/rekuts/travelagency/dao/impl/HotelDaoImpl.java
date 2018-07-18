@@ -17,6 +17,12 @@ import java.util.Map;
 
 @Repository
 public class HotelDaoImpl implements HotelDao {
+    private final static String INSERT_HOTEL_QUERY = "INSERT INTO hotel " +
+            "(id, name, stars, website, latitude, longitude, features) VALUES (?, ?, ?, ?, ?, ?, ?)" ;
+    private final static String DELETE_HOTEL_QUERY = "DELETE FROM hotel WHERE id = ?";
+    private final static String GET_HOTEL_BY_ID_QUERY = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel WHERE id = ?";
+    private final static String GET_ALL_HOTELS_QUERY = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel";
+
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -26,23 +32,19 @@ public class HotelDaoImpl implements HotelDao {
 
     @Override
     public void insert(Hotel hotel) {
-        String sql = "INSERT INTO hotel " +
-                "(id, name, stars, website, latitude, longitude, features) VALUES (?, ?, ?, ?, ?, ?, ?)" ;
-        jdbcTemplate.update(sql, new Object[]{
+        jdbcTemplate.update(INSERT_HOTEL_QUERY, new Object[]{
                 hotel.getHotelId(), hotel.getName(), hotel.getStars(), hotel.getWebsite(), hotel.getLatitude(), hotel.getLongitude(), hotel.getFeatures()
         });
     }
 
     @Override
     public void delete(int id) {
-        String sql ="DELETE FROM hotel WHERE id = ?";
-        jdbcTemplate.update(sql, new Object[]{id});
+        jdbcTemplate.update(DELETE_HOTEL_QUERY, new Object[]{id});
     }
 
     @Override
     public Hotel getHotelById(int id) {
-        String sql = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new RowMapper<Hotel>(){
+        return jdbcTemplate.queryForObject(GET_HOTEL_BY_ID_QUERY, new Object[]{id}, new RowMapper<Hotel>(){
             @Override
             public Hotel mapRow(ResultSet rs, int rwNumber) throws SQLException {
                 Hotel hotel = new Hotel();
@@ -60,8 +62,7 @@ public class HotelDaoImpl implements HotelDao {
 
     @Override
     public List<Hotel> getAllHotels() {
-        String sql = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel";
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_HOTELS_QUERY);
 
         List<Hotel> result = new ArrayList<>();
         for(Map<String, Object> row:rows){

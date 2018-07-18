@@ -1,9 +1,8 @@
 package by.rekuts.travelagency.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import by.rekuts.travelagency.dao.subjects.User;
+
+import java.util.List;
 
 public interface UserDao {
 	void insert(User user);
