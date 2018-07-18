@@ -1,10 +1,10 @@
 package by.rekuts.travelagency.dao.subjects;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Review {
 	private int id;
-	private LocalDateTime date;
+	private Timestamp date;
 	private String text;
 	private int userId;
 	private int tourId;
@@ -13,7 +13,7 @@ public class Review {
 
 	}
 
-	public Review(int id, LocalDateTime date, String text, int userId, int tourId) {
+	public Review(int id, Timestamp date, String text, int userId, int tourId) {
 		this.id = id;
 		this.date = date;
 		this.text = text;
@@ -27,10 +27,10 @@ public class Review {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public LocalDateTime getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 	public String getText() {

@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotEquals;
 
 public class CountryDaoImplTest {
 
-	private final DatabasePreparer prepCountry = new SimpleReviewPreparer("country");
+	private final DatabasePreparer prepCountry = new SimpleCountryPreparer("country");
 	@Rule
 	public PreparedDbRule dbCountry = EmbeddedPostgresRules.preparedDatabase(prepCountry);
 
