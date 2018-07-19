@@ -1,15 +1,16 @@
 package by.rekuts.travelagency.dao.subjects;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Tour {
 	private int id;
 	private String photo;
 	private LocalDate date;
-	private short duration;
+	private int duration;
 	private String description;
-	private int cost;
-	private TourType tourType;
+	private BigDecimal cost;
+	private String tourType;
 	private int hotelId;
 	private int countryId;
 
@@ -31,7 +32,7 @@ public class Tour {
 	public Tour() {
 	}
 
-	public Tour(int id, String photo, LocalDate date, short duration, String description, int cost, TourType tourType, int hotelId, int countryId) {
+	public Tour(int id, String photo, LocalDate date, int duration, String description, BigDecimal cost, String tourType, int hotelId, int countryId) {
 
 		this.id = id;
 		this.photo = photo;
@@ -45,21 +46,25 @@ public class Tour {
 	}
 
 	public enum TourType{
-		A("swimming pool"),
-		B("all inclusive"),
-		C("fresh towel"),
-		D("carpets on the walls"),
-		E("free wifi"),
-		F("close to sea"),
-		G("free animators"),
-		H("free beer"),
-		I("air conditioning"),
-		J("children room");
+		A("safari"),
+		B("rural"),
+		C("mountain"),
+		D("ski"),
+		E("ecotourism"),
+		F("health"),
+		G("cruise"),
+		H("education"),
+		I("adventure"),
+		J("cultural");
 		
 		private final String tourType;
 		
-		private TourType(String tourType) {
+		TourType(String tourType) {
 			this.tourType = tourType;
+		}
+
+		public String getValue() {
+			return tourType;
 		}
 	}
 
@@ -87,11 +92,11 @@ public class Tour {
 		this.date = date;
 	}
 
-	public short getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 
-	public void setDuration(short duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 
@@ -103,19 +108,19 @@ public class Tour {
 		this.description = description;
 	}
 
-	public int getCost() {
+	public BigDecimal getCost() {
 		return cost;
 	}
 
-	public void setCost(int cost) {
+	public void setCost(BigDecimal cost) {
 		this.cost = cost;
 	}
 
-	public TourType getTourType() {
+	public String getTourType() {
 		return tourType;
 	}
 
-	public void setTourType(TourType tourType) {
+	public void setTourType(String tourType) {
 		this.tourType = tourType;
 	}
 

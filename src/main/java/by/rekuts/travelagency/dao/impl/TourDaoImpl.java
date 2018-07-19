@@ -7,9 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import java.util.Map;
 @Repository
 public class TourDaoImpl implements TourDao {
     private final static String INSERT_TOUR_QUERY = "INSERT INTO tour " +
-            "(id, photo, date, duration, description, cost, tour_type, hotel_id, country_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)" ;
+            "(id, photo, date, duration, description, cost, tour_type, hotel_id, country_id) VALUES (?, ?, ?, ?, ?, CAST(? AS money), CAST(? AS tour_type), ?, ?)" ;
     private final static String DELETE_TOUR_QUERY = "DELETE FROM tour WHERE id = ?";
     private final static String GET_TOUR_BY_ID_QUERY = "SELECT id, photo, date, duration, description, cost, tour_type, hotel_id, country_id FROM tour WHERE id = ?";
     private final static String GET_ALL_TOURS_QUERY = "SELECT id, photo, date, duration, description, cost, tour_type, hotel_id, country_id FROM tour";
@@ -48,10 +49,10 @@ public class TourDaoImpl implements TourDao {
                 tour.setId(rs.getInt("id"));
                 tour.setPhoto(rs.getString("photo"));
                 tour.setDate(rs.getDate("date").toLocalDate());
-                tour.setDuration(rs.getShort("duration"));
+                tour.setDuration(rs.getInt("duration"));
                 tour.setDescription(rs.getString("description"));
-                tour.setCost(rs.getInt("cost"));
-//                tour.setTourType(rs.getString("tour_type"));     //todo
+                tour.setCost(new BigDecimal(rs.getDouble("cost")));
+                tour.setTourType(rs.getString("tour_type"));
                 tour.setHotelId(rs.getInt("hotel_id"));
                 tour.setCountryId(rs.getInt("country_id"));
                 return tour;
@@ -68,11 +69,11 @@ public class TourDaoImpl implements TourDao {
             Tour tour = new Tour();
             tour.setId((Integer)row.get("id"));
             tour.setPhoto((String)row.get("photo"));
-            tour.setDate((LocalDate)row.get("date"));
-            tour.setDuration((Short)row.get("duration"));
+            tour.setDate(((Date)row.get("date")).toLocalDate());
+            tour.setDuration((Integer) row.get("duration"));
             tour.setDescription((String)row.get("description"));
-            tour.setCost((Integer)row.get("cost"));
-//            tour.setTourType((String)row.get("tour_type"));     //todo
+            tour.setCost(new BigDecimal((double)row.get("cost")));
+            tour.setTourType((String)row.get("tour_type"));
             tour.setHotelId((Integer)row.get("hotel_id"));
             tour.setCountryId((Integer)row.get("country_id"));
             result.add(tour);

@@ -15,10 +15,10 @@ import java.util.Map;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    private final static String INSERT_USER_QUERY = "INSERT INTO user (id, login, password) VALUES (?, ?, ?)" ;
-    private final static String DELETE_USER_QUERY = "DELETE FROM user WHERE id = ?";
-    private final static String GET_USER_BY_ID_QUERY = "SELECT id, login, password FROM user WHERE id = ?";
-    private final static String GET_ALL_USERS_QUERY = "SELECT id, login, password FROM country";
+    private final static String INSERT_USER_QUERY = "INSERT INTO \"user\" (\"id\", login, password) VALUES (?, ?, ?)" ;
+    private final static String DELETE_USER_QUERY = "DELETE FROM \"user\" WHERE \"id\" = ?";
+    private final static String GET_USER_BY_ID_QUERY = "SELECT \"id\", login, password FROM \"user\" WHERE id = ?";
+    private final static String GET_ALL_USERS_QUERY = "SELECT \"id\", login, password FROM \"user\"";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired

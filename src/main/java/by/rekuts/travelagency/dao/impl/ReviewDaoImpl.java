@@ -17,7 +17,7 @@ import java.util.Map;
 @Repository
 public class ReviewDaoImpl implements ReviewDao {
     private final static String INSERT_REVIEW_QUERY = "INSERT INTO review (id, date, text, user_id, tour_id) VALUES (?, ?, ?, ?, ?)" ;
-    private final static String DELETE_REVIEW_QUERY = "DELETE FROM 'review' WHERE id = ?";
+    private final static String DELETE_REVIEW_QUERY = "DELETE FROM review WHERE id = ?";
     private final static String GET_REVIEW_BY_ID_QUERY = "SELECT id, date, text, user_id, tour_id FROM review WHERE id = ?";
     private final static String GET_ALL_REVIEWS_QUERY = "SELECT id, date, text, user_id, tour_id FROM review";
 
@@ -45,7 +45,7 @@ public class ReviewDaoImpl implements ReviewDao {
             public Review mapRow(ResultSet rs, int rwNumber) throws SQLException {
                 Review review = new Review();
                 review.setId(rs.getInt("id"));
-                review.setDate(rs.getTimestamp("date"));
+                review.setDate(rs.getTimestamp("date").toLocalDateTime());
                 review.setText(rs.getString("text"));
                 review.setUserId(rs.getInt("user_id"));
                 review.setTourId(rs.getInt("tour_id"));
@@ -62,7 +62,7 @@ public class ReviewDaoImpl implements ReviewDao {
         for(Map<String, Object> row:rows){
             Review review = new Review();
             review.setId((Integer)row.get("id"));
-            review.setDate((Timestamp) row.get("date"));
+            review.setDate(((Timestamp) row.get("date")).toLocalDateTime());
             review.setText((String)row.get("text"));
             review.setUserId((Integer)row.get("user_id"));
             review.setTourId((Integer)row.get("tour_id"));

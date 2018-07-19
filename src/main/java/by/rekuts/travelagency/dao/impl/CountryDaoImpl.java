@@ -19,7 +19,6 @@ public class CountryDaoImpl implements CountryDao {
 	private final static String DELETE_COUNTRY_QUERY = "DELETE FROM country WHERE id = ?";
 	private final static String GET_COUNTRY_BY_ID_QUERY = "SELECT id, name FROM country WHERE id = ?";
 	private final static String GET_ALL_COUNTRIES_QUERY = "SELECT id, name FROM country";
-
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired

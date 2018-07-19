@@ -26,7 +26,7 @@ public class Hotel {
 		
 		private final String feature;
 
-		private Features(String feature) {
+		Features(String feature) {
 			this.feature = feature;
 		}
 
