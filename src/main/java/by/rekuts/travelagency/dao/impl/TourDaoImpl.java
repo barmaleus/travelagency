@@ -16,6 +16,11 @@ import java.util.Map;
 
 @Repository
 public class TourDaoImpl implements TourDao {
+    private final static String INSERT_TOUR_QUERY = "INSERT INTO tour " +
+            "(id, photo, date, duration, description, cost, tour_type, hotel_id, country_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)" ;
+    private final static String DELETE_TOUR_QUERY = "DELETE FROM tour WHERE id = ?";
+    private final static String GET_TOUR_BY_ID_QUERY = "SELECT id, photo, date, duration, description, cost, tour_type, hotel_id, country_id FROM tour WHERE id = ?";
+    private final static String GET_ALL_TOURS_QUERY = "SELECT id, photo, date, duration, description, cost, tour_type, hotel_id, country_id FROM tour";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -25,24 +30,18 @@ public class TourDaoImpl implements TourDao {
 
     @Override
     public void insert(Tour tour) {
-        String sql = "INSERT INTO tour " +
-                "(id, photo, date, duration, description, cost, tour_type, hotel_id, country_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)" ;
-        jdbcTemplate.update(sql, new Object[]{
-                tour.getId(), tour.getPhoto(), tour.getDate(), tour.getDuration(), tour.getDescription(), tour.getCost(),
-                tour.getTourType(), tour.getHotelId(), tour.getCountryId()
-        });
+        jdbcTemplate.update(INSERT_TOUR_QUERY, tour.getId(), tour.getPhoto(), tour.getDate(), tour.getDuration(), tour.getDescription(), tour.getCost(),
+                tour.getTourType(), tour.getHotelId(), tour.getCountryId());
     }
 
     @Override
     public void delete(int id) {
-        String sql ="DELETE FROM tour WHERE id = ?";
-        jdbcTemplate.update(sql, new Object[]{id});
+        jdbcTemplate.update(DELETE_TOUR_QUERY, id);
     }
 
     @Override
     public Tour getTourById(int id) {
-        String sql = "SELECT id, photo, date, duration, description, cost, tour_type, hotel_id, country_id FROM tour WHERE id = ?";
-        return (Tour) jdbcTemplate.queryForObject(sql, new Object[]{id}, new RowMapper<Tour>(){
+        return jdbcTemplate.queryForObject(GET_TOUR_BY_ID_QUERY, new Object[]{id}, new RowMapper<Tour>(){
             @Override
             public Tour mapRow(ResultSet rs, int rwNumber) throws SQLException {
                 Tour tour = new Tour();
@@ -62,8 +61,7 @@ public class TourDaoImpl implements TourDao {
 
     @Override
     public List<Tour> getAllTours() {
-        String sql = "SELECT id, photo, date, duration, description, cost, tour_type, hotel_id, country_id FROM tour";
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_TOURS_QUERY);
 
         List<Tour> result = new ArrayList<Tour>();
         for(Map<String, Object> row:rows){

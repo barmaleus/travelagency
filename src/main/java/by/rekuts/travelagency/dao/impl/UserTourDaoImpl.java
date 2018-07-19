@@ -15,6 +15,11 @@ import java.util.List;
 
 @Repository
 public class UserTourDaoImpl implements UserTourDao {
+    private final static String INSERT_USER_TOUR_QUERY = "INSERT INTO user_tour (user_id, tour_id) VALUES (?, ?)";
+    private final static String DELETE_USER_TOUR_QUERY = "DELETE FROM user_tour WHERE user_id = ? & tour_id = ?";    //todo check query if right
+    private final static String GET_USERS_BY_TOUR_ID_QUERY = "SELECT id, login, password FROM user, user_tour WHERE user_tour.tour_id = ? & user_tour.user_id = user.id";    //todo check query if right
+    private final static String GET_TOURS_BY_USER_ID_QUERY = "SELECT id, login, password FROM user, user_tour WHERE user_tour.tour_id = ? & user_tour.user_id = user.id";    //todo rebuild query
+    private final static String GET_ALL_USER_TOURS_QUERY = "SELECT user_id, tour_id FROM user_tour";   //todo check query if right
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -24,22 +29,17 @@ public class UserTourDaoImpl implements UserTourDao {
 
     @Override
     public void insert(UserTour userTour) {
-        String sql = "INSERT INTO user_tour (user_id, tour_id) VALUES (?, ?)" ;
-        jdbcTemplate.update(sql, new Object[]{
-                userTour.getUserId(), userTour.getTourId()
-        });
+        jdbcTemplate.update(INSERT_USER_TOUR_QUERY, userTour.getUserId(), userTour.getTourId());
     }
 
     @Override
     public void delete(int userId, int tourId) {
-        String sql ="DELETE FROM user_tour WHERE user_id = ? & tour_id = ?";    //todo check query if right
-        jdbcTemplate.update(sql, new Object[]{userId, tourId});
+        jdbcTemplate.update(DELETE_USER_TOUR_QUERY, userId, tourId);
     }
 
     @Override
     public List<User> getUsersByTourId(int tourId) {
-        String sql = "SELECT id, login, password FROM user, user_tour WHERE user_tour.tour_id = ? & user_tour.user_id = user.id";    //todo check query if right
-        return (List<User>) jdbcTemplate.queryForObject(sql, new Object[]{tourId}, new RowMapper<User>(){
+        return (List<User>) jdbcTemplate.queryForObject(GET_USERS_BY_TOUR_ID_QUERY, new Object[]{tourId}, new RowMapper<User>(){
             @Override
             public User mapRow(ResultSet rs, int rwNumber) throws SQLException {
                 User user = new User();
@@ -53,6 +53,11 @@ public class UserTourDaoImpl implements UserTourDao {
 
     @Override
     public List<Tour> getToursByUserId(int userId) {
+        return null;    //todo
+    }
+
+    @Override
+    public List<UserTour> getAllUserTours() {
         return null;    //todo
     }
 }

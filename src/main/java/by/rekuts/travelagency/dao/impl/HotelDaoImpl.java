@@ -32,14 +32,12 @@ public class HotelDaoImpl implements HotelDao {
 
     @Override
     public void insert(Hotel hotel) {
-        jdbcTemplate.update(INSERT_HOTEL_QUERY, new Object[]{
-                hotel.getHotelId(), hotel.getName(), hotel.getStars(), hotel.getWebsite(), hotel.getLatitude(), hotel.getLongitude(), hotel.getFeatures()
-        });
+        jdbcTemplate.update(INSERT_HOTEL_QUERY, hotel.getHotelId(), hotel.getName(), hotel.getStars(), hotel.getWebsite(), hotel.getLatitude(), hotel.getLongitude(), hotel.getFeatures());
     }
 
     @Override
     public void delete(int id) {
-        jdbcTemplate.update(DELETE_HOTEL_QUERY, new Object[]{id});
+        jdbcTemplate.update(DELETE_HOTEL_QUERY, id);
     }
 
     @Override

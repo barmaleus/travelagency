@@ -11,4 +11,5 @@ public interface UserTourDao {
 	void delete(int userId, int tourId);
 	List<User> getUsersByTourId(int tourId);
 	List<Tour> getToursByUserId(int userId);
+	public List<UserTour> getAllUserTours();
 }

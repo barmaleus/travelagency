@@ -29,14 +29,12 @@ public class CountryDaoImpl implements CountryDao {
 
 	@Override
 	public void insert(Country country) {
-		jdbcTemplate.update(INSERT_COUNTRY_QUERY, new Object[]{
-				country.getId(), country.getName()
-		});
+		jdbcTemplate.update(INSERT_COUNTRY_QUERY, country.getId(), country.getName());
 	}
 
 	@Override
 	public void delete(int id) {
-		jdbcTemplate.update(DELETE_COUNTRY_QUERY, new Object[]{id});
+		jdbcTemplate.update(DELETE_COUNTRY_QUERY, id);
 	}
 
 	@Override

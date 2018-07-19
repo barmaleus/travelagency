@@ -30,19 +30,17 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public void insert(Review review) {
-        jdbcTemplate.update(INSERT_REVIEW_QUERY, new Object[]{
-                review.getId(), review.getDate(), review.getText(), review.getUserId(), review.getTourId()
-        });
+        jdbcTemplate.update(INSERT_REVIEW_QUERY, review.getId(), review.getDate(), review.getText(), review.getUserId(), review.getTourId());
     }
 
     @Override
     public void delete(int id) {
-        jdbcTemplate.update(DELETE_REVIEW_QUERY, new Object[]{id});
+        jdbcTemplate.update(DELETE_REVIEW_QUERY, id);
     }
 
     @Override
     public Review getReviewById(int id) {
-        return (Review)jdbcTemplate.queryForObject(GET_REVIEW_BY_ID_QUERY, new Object[]{id}, new RowMapper<Review>(){
+        return jdbcTemplate.queryForObject(GET_REVIEW_BY_ID_QUERY, new Object[]{id}, new RowMapper<Review>(){
             @Override
             public Review mapRow(ResultSet rs, int rwNumber) throws SQLException {
                 Review review = new Review();
