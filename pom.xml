@@ -4,7 +4,7 @@
   <artifactId>travelagency</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  
+
   <name>TravelAgency</name>
 	<description>Project using Spring JDBC Template - PostgreSQL</description>
 
@@ -23,6 +23,7 @@
         <flyway.version>5.1.4</flyway.version>
         <sonar.version>3.4.1.1168</sonar.version>
         <log4j2.version>2.11.0</log4j2.version>
+		<maven.site.version>3.7.1</maven.site.version>
 	</properties>
 
 	<dependencies>
@@ -52,7 +53,7 @@
 			<artifactId>HikariCP</artifactId>
 			<version>${hikaricp.version}</version>
 		</dependency>
-		
+
 		<dependency>
     		<groupId>junit</groupId>
     		<artifactId>junit</artifactId>
@@ -78,9 +79,19 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-site-plugin</artifactId>
+			<version>${maven.site.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.sonarsource.scanner.maven</groupId>
 			<artifactId>sonar-maven-plugin</artifactId>
 			<version>${sonar.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>${jacoco.version}</version>
 		</dependency>
 
 		<dependency>
@@ -89,28 +100,4 @@
 			<version>${log4j2.version}</version>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>

@@ -3,6 +3,11 @@ package by.rekuts.travelagency.dao.subjects;
 import java.math.BigDecimal;
 import java.sql.Array;
 
+/**
+ * Class Hotel, includes fields <b>hotelId</b>, <b>name</b>, <b>stars</b>,
+ * <b>website</b>, <b>latitude</b>, <b>longitude</b>, <b> features</b>
+ * @author Aleh_Rekuts
+ */
 public class Hotel {
 	private int hotelId;
 	private String name;
@@ -11,7 +16,10 @@ public class Hotel {
 	private BigDecimal latitude;
 	private BigDecimal longitude;
 	private Array features;
-	
+
+	/**
+	 * Inner to class Hotel enum Features. It stores the names of features of hotels in the values.
+	 */
 	public enum Features{
 		A("swimming pool"),
 		B("all inclusive"),
