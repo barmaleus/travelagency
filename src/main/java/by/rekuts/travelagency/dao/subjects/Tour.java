@@ -2,6 +2,8 @@ package by.rekuts.travelagency.dao.subjects;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tour {
 	private int id;
@@ -13,6 +15,7 @@ public class Tour {
 	private String tourType;
 	private int hotelId;
 	private int countryId;
+	private List<User> users;
 
 	@Override
 	public String toString() {
@@ -26,6 +29,7 @@ public class Tour {
 				", tourType=" + tourType +
 				", hotelId=" + hotelId +
 				", countryId=" + countryId +
+				", users=" + users +
 				'}';
 	}
 
@@ -33,7 +37,6 @@ public class Tour {
 	}
 
 	public Tour(int id, String photo, LocalDate date, int duration, String description, BigDecimal cost, String tourType, int hotelId, int countryId) {
-
 		this.id = id;
 		this.photo = photo;
 		this.date = date;
@@ -43,6 +46,7 @@ public class Tour {
 		this.tourType = tourType;
 		this.hotelId = hotelId;
 		this.countryId = countryId;
+		this.users = new ArrayList<>();
 	}
 
 	public enum TourType{
@@ -139,6 +143,12 @@ public class Tour {
 	public void setCountryId(int countryId) {
 		this.countryId = countryId;
 	}
-	
-	
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 }

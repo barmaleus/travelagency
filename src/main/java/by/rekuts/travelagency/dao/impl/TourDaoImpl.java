@@ -4,13 +4,10 @@ import by.rekuts.travelagency.dao.TourDao;
 import by.rekuts.travelagency.dao.subjects.Tour;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,21 +39,18 @@ public class TourDaoImpl implements TourDao {
 
     @Override
     public Tour getTourById(int id) {
-        return jdbcTemplate.queryForObject(GET_TOUR_BY_ID_QUERY, new Object[]{id}, new RowMapper<Tour>(){
-            @Override
-            public Tour mapRow(ResultSet rs, int rwNumber) throws SQLException {
-                Tour tour = new Tour();
-                tour.setId(rs.getInt("id"));
-                tour.setPhoto(rs.getString("photo"));
-                tour.setDate(rs.getDate("date").toLocalDate());
-                tour.setDuration(rs.getInt("duration"));
-                tour.setDescription(rs.getString("description"));
-                tour.setCost(new BigDecimal(rs.getDouble("cost")));
-                tour.setTourType(rs.getString("tour_type"));
-                tour.setHotelId(rs.getInt("hotel_id"));
-                tour.setCountryId(rs.getInt("country_id"));
-                return tour;
-            }
+        return jdbcTemplate.queryForObject(GET_TOUR_BY_ID_QUERY, new Object[]{id}, (rs, rwNumber) -> {
+            Tour tour = new Tour();
+            tour.setId(rs.getInt("id"));
+            tour.setPhoto(rs.getString("photo"));
+            tour.setDate(rs.getDate("date").toLocalDate());
+            tour.setDuration(rs.getInt("duration"));
+            tour.setDescription(rs.getString("description"));
+            tour.setCost(BigDecimal.valueOf(rs.getDouble("cost")));
+            tour.setTourType(rs.getString("tour_type"));
+            tour.setHotelId(rs.getInt("hotel_id"));
+            tour.setCountryId(rs.getInt("country_id"));
+            return tour;
         });
     }
 
@@ -64,7 +58,7 @@ public class TourDaoImpl implements TourDao {
     public List<Tour> getAllTours() {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_TOURS_QUERY);
 
-        List<Tour> result = new ArrayList<Tour>();
+        List<Tour> result = new ArrayList<>();
         for(Map<String, Object> row:rows){
             Tour tour = new Tour();
             tour.setId((Integer)row.get("id"));
@@ -72,7 +66,7 @@ public class TourDaoImpl implements TourDao {
             tour.setDate(((Date)row.get("date")).toLocalDate());
             tour.setDuration((Integer) row.get("duration"));
             tour.setDescription((String)row.get("description"));
-            tour.setCost(new BigDecimal((double)row.get("cost")));
+            tour.setCost(BigDecimal.valueOf((double)row.get("cost")));
             tour.setTourType((String)row.get("tour_type"));
             tour.setHotelId((Integer)row.get("hotel_id"));
             tour.setCountryId((Integer)row.get("country_id"));

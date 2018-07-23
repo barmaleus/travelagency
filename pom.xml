@@ -1,9 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>by.rekuts</groupId>
   <artifactId>travelagency</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
 
   <name>TravelAgency</name>
 	<description>Project using Spring JDBC Template - PostgreSQL</description>
@@ -19,14 +19,14 @@
         <hikaricp.version>3.2.0</hikaricp.version>
         <junit4.version>4.12</junit4.version>
         <mockito.version>1.9.5</mockito.version>
-        <opentable.pg.version>0.7.1</opentable.pg.version>
+        <opentable.pg.version>0.12.0</opentable.pg.version>
         <flyway.version>5.1.4</flyway.version>
         <sonar.version>3.4.1.1168</sonar.version>
         <log4j2.version>2.11.0</log4j2.version>
-		<maven.site.version>3.3</maven.site.version>
-		<maven.compiler.version>3.5.1</maven.compiler.version>
-		<maven.project.info.reports.version>2.7</maven.project.info.reports.version>
-		<sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>
+		<maven.site.version>3.7.1</maven.site.version>
+		<maven.compiler.version>3.7.0</maven.compiler.version>
+		<maven.project.info.reports.version>3.0.0</maven.project.info.reports.version>
+		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
 	</properties>
 
 	<dependencies>
@@ -95,7 +95,7 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
 				<configuration>
-					<destFile>${sonar.jacoco.reportPath}</destFile>
+					<destFile>${sonar.jacoco.reportPaths}</destFile>
 					<append>true</append>
 				</configuration>
 				<executions>

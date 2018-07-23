@@ -4,11 +4,8 @@ import by.rekuts.travelagency.dao.ReviewDao;
 import by.rekuts.travelagency.dao.subjects.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,17 +37,14 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public Review getReviewById(int id) {
-        return jdbcTemplate.queryForObject(GET_REVIEW_BY_ID_QUERY, new Object[]{id}, new RowMapper<Review>(){
-            @Override
-            public Review mapRow(ResultSet rs, int rwNumber) throws SQLException {
-                Review review = new Review();
-                review.setId(rs.getInt("id"));
-                review.setDate(rs.getTimestamp("date").toLocalDateTime());
-                review.setText(rs.getString("text"));
-                review.setUserId(rs.getInt("user_id"));
-                review.setTourId(rs.getInt("tour_id"));
-                return review;
-            }
+        return jdbcTemplate.queryForObject(GET_REVIEW_BY_ID_QUERY, new Object[]{id}, (rs, rwNumber) -> {
+            Review review = new Review();
+            review.setId(rs.getInt("id"));
+            review.setDate(rs.getTimestamp("date").toLocalDateTime());
+            review.setText(rs.getString("text"));
+            review.setUserId(rs.getInt("user_id"));
+            review.setTourId(rs.getInt("tour_id"));
+            return review;
         });
     }
 
@@ -58,7 +52,7 @@ public class ReviewDaoImpl implements ReviewDao {
     public List<Review> getAllReviews() {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_REVIEWS_QUERY);
 
-        List<Review> result = new ArrayList<Review>();
+        List<Review> result = new ArrayList<>();
         for(Map<String, Object> row:rows){
             Review review = new Review();
             review.setId((Integer)row.get("id"));

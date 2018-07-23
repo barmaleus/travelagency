@@ -4,7 +4,6 @@ import by.rekuts.travelagency.dao.CountryDao;
 import by.rekuts.travelagency.dao.subjects.Country;
 import by.rekuts.travelagency.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -14,7 +14,7 @@ public class Country {
 	private String name;
 
 	/**
-	 * Constructor - creating new object
+	 * Default constructor - creating new object without parameters
 	 * @see Country#Country(int, String)
 	 */
 	public Country() {
@@ -41,7 +41,7 @@ public class Country {
 
 	/**
 	 * Method sets the value to field {@link Country#id}
-	 * @param id - id of country
+	 * @param id - id of the country
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -49,7 +49,7 @@ public class Country {
 
 	/**
 	 * Method helps get the value of field {@link Country#name}
-	 * @return name of country
+	 * @return name of the country
 	 */
 	public String getName() {
 		return name;
@@ -57,14 +57,14 @@ public class Country {
 
 	/**
 	 * Method sets the value to field {@link Country#id}
-	 * @param name - official name of country
+	 * @param name - official name of the country
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Method dispalys name and id of country
+	 * Method dispalys name and id of the country
 	 * @return string of name and id
 	 */
 	@Override

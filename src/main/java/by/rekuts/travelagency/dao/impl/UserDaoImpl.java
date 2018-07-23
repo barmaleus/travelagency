@@ -4,11 +4,8 @@ import by.rekuts.travelagency.dao.UserDao;
 import by.rekuts.travelagency.dao.subjects.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +35,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(int id) {
-        return jdbcTemplate.queryForObject(GET_USER_BY_ID_QUERY, new Object[]{id}, new RowMapper<User>(){
-            @Override
-            public User mapRow(ResultSet rs, int rwNumber) throws SQLException {
-                User user = new User();
-                user.setUserId(rs.getInt("id"));
-                user.setLogin(rs.getString("login"));
-                user.setPassword(rs.getString("password"));
-                return user;
-            }
+        return jdbcTemplate.queryForObject(GET_USER_BY_ID_QUERY, new Object[]{id}, (rs, rwNumber) -> {
+            User user = new User();
+            user.setUserId(rs.getInt("id"));
+            user.setLogin(rs.getString("login"));
+            user.setPassword(rs.getString("password"));
+            return user;
         });
     }
 
@@ -54,7 +48,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> getAllUsers() {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_USERS_QUERY);
 
-        List<User> result = new ArrayList<User>();
+        List<User> result = new ArrayList<>();
         for(Map<String, Object> row:rows){
             User user = new User();
             user.setUserId((Integer)row.get("id"));

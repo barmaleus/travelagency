@@ -4,11 +4,8 @@ import by.rekuts.travelagency.dao.CountryDao;
 import by.rekuts.travelagency.dao.subjects.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,21 +35,18 @@ public class CountryDaoImpl implements CountryDao {
 
 	@Override
 	public Country getCountryById(int id) {
-		return jdbcTemplate.queryForObject(GET_COUNTRY_BY_ID_QUERY, new Object[]{id}, new RowMapper<Country>(){
-			@Override
-			public Country mapRow(ResultSet rs, int rwNumber) throws SQLException {
-				Country country = new Country();
-				country.setId(rs.getInt("id"));
-				country.setName(rs.getString("name"));
-				return country;
-			}
+		return jdbcTemplate.queryForObject(GET_COUNTRY_BY_ID_QUERY, new Object[]{id}, (rs, rwNumber) -> {
+			Country country = new Country();
+			country.setId(rs.getInt("id"));
+			country.setName(rs.getString("name"));
+			return country;
 		});
 	}
 
 	@Override
 	public List<Country> getAllCountries() {
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_COUNTRIES_QUERY);
-		List<Country> result = new ArrayList<Country>();
+		List<Country> result = new ArrayList<>();
 		for(Map<String, Object> row:rows){
 			Country country = new Country();
 			country.setId((Integer)row.get("id"));
