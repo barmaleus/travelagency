@@ -12,9 +12,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class HotelDaoImplTest {
     private final DatabasePreparer prepHotel = new SimpleHotelPreparer("hotel");
@@ -28,14 +30,18 @@ public class HotelDaoImplTest {
         array[0] = Hotel.Features.C.getValue();
         array[1] = Hotel.Features.E.getValue();
         Connection con = dbHotel.getTestDatabase().getConnection();
-        Array sqlArray = con.createArrayOf("features", array);
-        Hotel hotel = new Hotel(8451, "Hotel Name", 5, "hotel-domain.com",new BigDecimal(-148.745164), new BigDecimal(98.4568214), sqlArray);
+        Hotel hotel = new Hotel(8451, "Hotel Name", 5, "hotel-domain.com",new BigDecimal(-148.745164), new BigDecimal(98.4568214), Arrays.asList(array));
         hotelDao.insert(hotel);
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM hotel");
-        rs.next();
-        String hotelName = rs.getString("name");
-        assertEquals(hotel.getName(), hotelName);
+        if(rs.next()) {
+            System.out.println(rs.getInt("id"));
+            System.out.println(rs.getString("name"));
+            String hotelName = rs.getString("name");
+            assertEquals(hotel.getName(), hotelName);
+        } else {
+            fail();
+        }
     }
 
     @Test
@@ -60,7 +66,7 @@ public class HotelDaoImplTest {
     }
 
     @Test
-    public void getCountryByIdTestTrue() throws SQLException {
+    public void getHotelByIdTestTrue() throws SQLException {
         HotelDao hotelDao = new HotelDaoImpl(new JdbcTemplate(dbHotel.getTestDatabase()));
         String[] array = new String[2];
         array[0] = Hotel.Features.C.getValue();
@@ -77,7 +83,7 @@ public class HotelDaoImplTest {
     }
 
     @Test
-    public void getAllCountriesTestTrue() throws SQLException {
+    public void getAllHotelsTestTrue() throws SQLException {
         HotelDao hotelDao = new HotelDaoImpl(new JdbcTemplate(dbHotel.getTestDatabase()));
         String[] array = new String[2];
         array[0] = Hotel.Features.C.getValue();

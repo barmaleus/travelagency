@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("countryService")
+@Service
 public class CountryServiceImpl implements CountryService {
 	@Autowired
 	CountryDao countryDao;

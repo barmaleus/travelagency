@@ -1,28 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.6.9
--- Dumped by pg_dump version 10.0
-
--- Started on 2018-07-18 16:01:56
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET search_path = public, pg_catalog;
-
---
--- TOC entry 2164 (class 0 OID 16385)
--- Dependencies: 185
--- Data for Name: country; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 COPY country (id, name) FROM stdin;
 1	Canada
@@ -127,13 +102,6 @@ COPY country (id, name) FROM stdin;
 100	Mayotte
 \.
 
-
---
--- TOC entry 2166 (class 0 OID 16403)
--- Dependencies: 187
--- Data for Name: hotel; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
 COPY hotel (id, name, stars, website, latitude, longitude, features) FROM stdin;
 1	Etiam Imperdiet Corporation	3	nibh.edu	-57.5303	-166.61467	{"all inclusive","free beer"}
 2	Per Foundation	4	seddui.org	-87.34183	-156.27847	{"free animators"}
@@ -236,13 +204,6 @@ COPY hotel (id, name, stars, website, latitude, longitude, features) FROM stdin;
 99	Donec At Industries	3	nuncacmattis.net	14.1761	144.59071	{"air conditioning"}
 100	Semper Egestas Urna Ltd	5	imperdieteratnonummy.ca	-73.60784	131.18484	{"free wifi"}
 \.
-
-
---
--- TOC entry 2165 (class 0 OID 16390)
--- Dependencies: 186
--- Data for Name: tour; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 COPY tour (id, photo, date, duration, description, cost, tour_type, hotel_id, country_id) FROM stdin;
 1	http://dummyimage.com/181x198.png/dddddd/000000	2017-11-14	9	Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.	$437.59	cultural	94	21
@@ -1247,13 +1208,6 @@ COPY tour (id, photo, date, duration, description, cost, tour_type, hotel_id, co
 1000	http://dummyimage.com/112x187.png/cc0000/ffffff	2018-02-27	3	Curabitur in libero ut massa volutpat convallis.	$703.15	safari	72	22
 \.
 
-
---
--- TOC entry 2167 (class 0 OID 16469)
--- Dependencies: 188
--- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
 COPY "user" (id, login, password) FROM stdin;
 1	bluegoose681	angel
 2	brownbutterfly205	hello1
@@ -1356,13 +1310,6 @@ COPY "user" (id, login, password) FROM stdin;
 99	silvergoose415	maxime
 100	goldenswan189	meister
 \.
-
-
---
--- TOC entry 2169 (class 0 OID 16496)
--- Dependencies: 190
--- Data for Name: review; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 COPY review (id, date, text, user_id, tour_id) FROM stdin;
 1	2017-10-09	Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.	44	752
@@ -2367,20 +2314,5 @@ COPY review (id, date, text, user_id, tour_id) FROM stdin;
 1000	2017-09-21	Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.	36	337
 \.
 
-
---
--- TOC entry 2168 (class 0 OID 16481)
--- Dependencies: 189
--- Data for Name: user_tour; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
 COPY user_tour (user_id, tour_id) FROM stdin;
 \.
-
-
--- Completed on 2018-07-18 16:01:56
-
---
--- PostgreSQL database dump complete
---
-
