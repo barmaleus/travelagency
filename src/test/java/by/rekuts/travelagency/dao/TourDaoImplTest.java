@@ -27,11 +27,20 @@ public class TourDaoImplTest {
     @Test
     public void insertTestTrue() throws SQLException {
         tourDao = new TourDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-        Tour tour = new Tour(9845, "photo.jpg", LocalDate.now(), 14, "Interesting tour", new BigDecimal(900), Tour.TourType.J.getValue(), 85, 67);
+        Tour tour = new Tour.TourBuilder(8952)
+                .withOptionalPhoto("photo.jpg")
+                .withOptionalDate(LocalDate.now())
+                .withOptionalDuration(14)
+                .withOptionalDescription("Interesting tour")
+                .withOptionalCost(BigDecimal.valueOf(900))
+                .withOptionalTourType(Tour.TourType.J.getValue())
+                .withOptionalHotelId(85)
+                .withOptionalCountryId(67)
+                .buildTour();
         tourDao.insert(tour);
         Connection c = db.getTestDatabase().getConnection();
         Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM tour WHERE id=9845");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM tour WHERE id=8952");
         rs.next();
         String tourText = rs.getString("description");
         LOGGER.info("Test passed!!! - " + tourText);

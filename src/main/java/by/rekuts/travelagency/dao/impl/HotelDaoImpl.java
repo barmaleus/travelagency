@@ -17,12 +17,12 @@ import java.util.List;
 
 @Repository
 public class HotelDaoImpl implements HotelDao {
-    private final static String INSERT_HOTEL_QUERY = "INSERT INTO hotel " +
+    private static final String INSERT_HOTEL_QUERY = "INSERT INTO hotel " +
             "(id, name, stars, website, latitude, longitude, features) VALUES (?, ?, ?, ?, ?, ?, ?)" ;
-    private final static String DELETE_HOTEL_QUERY = "DELETE FROM hotel WHERE id = ?";
-    private final static String GET_HOTEL_BY_ID_QUERY = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel WHERE id = ?";
-    private final static String GET_ALL_HOTELS_QUERY = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel";
-    private final static Logger LOGGER = LoggerFactory.getLogger(HotelDaoImpl.class);
+    private static final String DELETE_HOTEL_QUERY = "DELETE FROM hotel WHERE id = ?";
+    private static final String GET_HOTEL_BY_ID_QUERY = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel WHERE id = ?";
+    private static final String GET_ALL_HOTELS_QUERY = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel";
+    private static final Logger LOGGER = LoggerFactory.getLogger(HotelDaoImpl.class);
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -49,15 +49,14 @@ public class HotelDaoImpl implements HotelDao {
     @Override
     public Hotel getHotelById(int id) {
         return jdbcTemplate.queryForObject(GET_HOTEL_BY_ID_QUERY, new Object[]{id}, (rs, rwNumber) -> {
-            Hotel hotel = new Hotel();
-            hotel.setHotelId(rs.getInt("id"));
-            hotel.setName(rs.getString("name"));
-            hotel.setStars(rs.getInt("stars"));
-            hotel.setWebsite(rs.getString("website"));
-            hotel.setLatitude(rs.getBigDecimal("latitude"));
-            hotel.setLongitude(rs.getBigDecimal("longitude"));
-            hotel.setFeatures(Arrays.asList((String[])rs.getArray("features").getArray()));
-            return hotel;
+            int hotelId = rs.getInt("id");
+            String hotelName = rs.getString("name");
+            return new Hotel.HotelBuilder(hotelId, hotelName)
+                    .withOptionalStars(rs.getInt("stars"))
+                    .withOptionalWebsite(rs.getString("website"))
+                    .withOptionalLocation(rs.getBigDecimal("latitude"), rs.getBigDecimal("longitude"))
+                    .withOptionalFeatures(Arrays.asList((String[])rs.getArray("features").getArray()))
+                    .buildHotel();
         });
     }
 
@@ -66,15 +65,14 @@ public class HotelDaoImpl implements HotelDao {
         return jdbcTemplate.query(
                 GET_ALL_HOTELS_QUERY,
                 (resultSet, i) -> {
-                    Hotel hotel = new Hotel();
-                    hotel.setHotelId(resultSet.getInt(1));
-                    hotel.setName(resultSet.getString(2));
-                    hotel.setStars(resultSet.getInt(3));
-                    hotel.setWebsite(resultSet.getString(4));
-                    hotel.setLatitude(resultSet.getBigDecimal(5));
-                    hotel.setLongitude(resultSet.getBigDecimal(6));
-                    hotel.setFeatures(Arrays.asList((String[])(resultSet.getArray(7)).getArray()));
-                    return hotel;
+                    int hotelId = resultSet.getInt(1);
+                    String hotelName = resultSet.getString(2);
+                    return new Hotel.HotelBuilder(hotelId, hotelName)
+                            .withOptionalStars(resultSet.getInt(3))
+                            .withOptionalWebsite(resultSet.getString(4))
+                            .withOptionalLocation(resultSet.getBigDecimal(5), resultSet.getBigDecimal(6))
+                            .withOptionalFeatures(Arrays.asList((String[])(resultSet.getArray(7)).getArray()))
+                            .buildHotel();
                 }
         );
     }

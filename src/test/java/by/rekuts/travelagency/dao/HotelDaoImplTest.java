@@ -30,7 +30,12 @@ public class HotelDaoImplTest {
         array[0] = Hotel.Features.C.getValue();
         array[1] = Hotel.Features.E.getValue();
         Connection con = dbHotel.getTestDatabase().getConnection();
-        Hotel hotel = new Hotel(8451, "Hotel Name", 5, "hotel-domain.com",new BigDecimal(-148.745164), new BigDecimal(98.4568214), Arrays.asList(array));
+        Hotel hotel = new Hotel.HotelBuilder(8451, "Hotel Name")
+                .withOptionalStars(5)
+                .withOptionalWebsite("hotel-domain.com")
+                .withOptionalLocation(BigDecimal.valueOf(-148.745164), BigDecimal.valueOf(98.4568214))
+                .withOptionalFeatures(Arrays.asList(array))
+                .buildHotel();
         hotelDao.insert(hotel);
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM hotel");

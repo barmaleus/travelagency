@@ -6,17 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class ReviewDaoImpl implements ReviewDao {
-    private final static String INSERT_REVIEW_QUERY = "INSERT INTO review (id, date, text, user_id, tour_id) VALUES (?, ?, ?, ?, ?)" ;
-    private final static String DELETE_REVIEW_QUERY = "DELETE FROM review WHERE id = ?";
-    private final static String GET_REVIEW_BY_ID_QUERY = "SELECT id, date, text, user_id, tour_id FROM review WHERE id = ?";
-    private final static String GET_ALL_REVIEWS_QUERY = "SELECT id, date, text, user_id, tour_id FROM review";
+    private static final String INSERT_REVIEW_QUERY = "INSERT INTO review (id, date, text, user_id, tour_id) VALUES (?, ?, ?, ?, ?)" ;
+    private static final String DELETE_REVIEW_QUERY = "DELETE FROM review WHERE id = ?";
+    private static final String GET_REVIEW_BY_ID_QUERY = "SELECT id, date, text, user_id, tour_id FROM review WHERE id = ?";
+    private static final String GET_ALL_REVIEWS_QUERY = "SELECT id, date, text, user_id, tour_id FROM review";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -50,18 +47,17 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public List<Review> getAllReviews() {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_REVIEWS_QUERY);
-
-        List<Review> result = new ArrayList<>();
-        for(Map<String, Object> row:rows){
-            Review review = new Review();
-            review.setId((Integer)row.get("id"));
-            review.setDate(((Timestamp) row.get("date")).toLocalDateTime());
-            review.setText((String)row.get("text"));
-            review.setUserId((Integer)row.get("user_id"));
-            review.setTourId((Integer)row.get("tour_id"));
-            result.add(review);
-        }
-        return result;
+        return jdbcTemplate.query(
+                GET_ALL_REVIEWS_QUERY,
+                (resultSet, i) -> {
+                    Review review = new Review();
+                    review.setId(resultSet.getInt(1));
+                    review.setDate(resultSet.getTimestamp(2).toLocalDateTime());
+                    review.setText(resultSet.getString(3));
+                    review.setUserId(resultSet.getInt(4));
+                    review.setTourId(resultSet.getInt(5));
+                    return review;
+                }
+        );
     }
 }
