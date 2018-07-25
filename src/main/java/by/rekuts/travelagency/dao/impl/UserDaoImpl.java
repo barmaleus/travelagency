@@ -2,6 +2,7 @@ package by.rekuts.travelagency.dao.impl;
 
 import by.rekuts.travelagency.dao.UserDao;
 import by.rekuts.travelagency.dao.subjects.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,17 +10,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserDaoImpl implements UserDao {
     private static final String INSERT_USER_QUERY = "INSERT INTO \"user\" (\"id\", login, password) VALUES (?, ?, ?)" ;
     private static final String DELETE_USER_QUERY = "DELETE FROM \"user\" WHERE \"id\" = ?";
     private static final String GET_USER_BY_ID_QUERY = "SELECT \"id\", login, password FROM \"user\" WHERE id = ?";
     private static final String GET_ALL_USERS_QUERY = "SELECT \"id\", login, password FROM \"user\"";
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    public UserDaoImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
     public void insert(User user) {
@@ -33,11 +30,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(int id) {
-        return jdbcTemplate.queryForObject(GET_USER_BY_ID_QUERY, new Object[]{id}, (rs, rwNumber) -> {
+        return jdbcTemplate.queryForObject(
+                GET_USER_BY_ID_QUERY,
+                new Object[]{id},
+                (resultSet, rwNumber) -> {
             User user = new User();
-            user.setUserId(rs.getInt("id"));
-            user.setLogin(rs.getString("login"));
-            user.setPassword(rs.getString("password"));
+            user.setUserId(resultSet.getInt("id"));
+            user.setLogin(resultSet.getString("login"));
+            user.setPassword(resultSet.getString("password"));
             return user;
         });
     }

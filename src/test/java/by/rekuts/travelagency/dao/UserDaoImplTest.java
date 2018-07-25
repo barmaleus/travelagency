@@ -5,10 +5,9 @@ import by.rekuts.travelagency.dao.subjects.User;
 import com.opentable.db.postgres.embedded.FlywayPreparer;
 import com.opentable.db.postgres.junit.EmbeddedPostgresRules;
 import com.opentable.db.postgres.junit.PreparedDbRule;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.Connection;
@@ -19,8 +18,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@Slf4j
 public class UserDaoImplTest {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UserDaoImplTest.class);
+
     private static UserDao userDao;
     @ClassRule
     public static PreparedDbRule db = EmbeddedPostgresRules.preparedDatabase(FlywayPreparer.forClasspathLocation("db"));
@@ -35,7 +35,7 @@ public class UserDaoImplTest {
         ResultSet rs = stmt.executeQuery("SELECT * FROM \"user\" WHERE \"user\".id=84592");
         rs.next();
         String userLogin = rs.getString("login");
-        LOGGER.info("Test passed!!! - " + userLogin);
+        log.info("Test passed!!! - " + userLogin);
         assertEquals(user.getLogin(), userLogin);
     }
 
@@ -51,7 +51,7 @@ public class UserDaoImplTest {
         ResultSet rsLast = stmt.executeQuery("SELECT count(*) FROM \"user\"");
         rsLast.next();
         int countLast = rsLast.getInt("count");
-        LOGGER.info("Test passed!!! - " + (countFirst - countLast));
+        log.info("Test passed!!! - " + (countFirst - countLast));
         assertEquals(1, countFirst - countLast);
     }
 
@@ -64,7 +64,7 @@ public class UserDaoImplTest {
         ResultSet rs = stmt.executeQuery("SELECT * FROM \"user\" WHERE id=1");
         rs.next();
         String expectedLogin = rs.getString("login");
-        LOGGER.info("Test passed!!! - " + userLogin);
+        log.info("Test passed!!! - " + userLogin);
         assertEquals(expectedLogin, userLogin);
     }
 
@@ -77,7 +77,7 @@ public class UserDaoImplTest {
         ResultSet rs = stmt.executeQuery("SELECT count(*) FROM \"user\"");
         rs.next();
         int expectedCount = rs.getInt("count");
-        LOGGER.info("Test passed!!! - " + users.size());
+        log.info("Test passed!!! - " + users.size());
         assertEquals(expectedCount, users.size());
     }
 }

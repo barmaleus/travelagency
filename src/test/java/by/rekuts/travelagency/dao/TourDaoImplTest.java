@@ -5,10 +5,9 @@ import by.rekuts.travelagency.dao.subjects.Tour;
 import com.opentable.db.postgres.embedded.FlywayPreparer;
 import com.opentable.db.postgres.junit.EmbeddedPostgresRules;
 import com.opentable.db.postgres.junit.PreparedDbRule;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.math.BigDecimal;
@@ -18,37 +17,39 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@Slf4j
 public class TourDaoImplTest {
-    private final static Logger LOGGER = LoggerFactory.getLogger(TourDaoImplTest.class);
     private static TourDao tourDao;
     @ClassRule
     public static PreparedDbRule db = EmbeddedPostgresRules.preparedDatabase(FlywayPreparer.forClasspathLocation("db"));
 
     @Test
-    public void insertTestTrue() throws SQLException {
+    public void insertTest() throws SQLException {
         tourDao = new TourDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-        Tour tour = new Tour.TourBuilder(8952)
-                .withOptionalPhoto("photo.jpg")
-                .withOptionalDate(LocalDate.now())
-                .withOptionalDuration(14)
-                .withOptionalDescription("Interesting tour")
-                .withOptionalCost(BigDecimal.valueOf(900))
-                .withOptionalTourType(Tour.TourType.J.getValue())
-                .withOptionalHotelId(85)
-                .withOptionalCountryId(67)
-                .buildTour();
+        Tour tour = Tour.builder()
+                .id(8952)
+                .photo("photo.jpg")
+                .date(LocalDate.now())
+                .duration(14)
+                .description("Interesting tour")
+                .cost(BigDecimal.valueOf(900))
+                .tourType(Tour.TourType.J.getValue())
+                .hotelId(85)
+                .countryId(67)
+                .build();
+        System.out.println(tour.toString());
         tourDao.insert(tour);
         Connection c = db.getTestDatabase().getConnection();
         Statement stmt = c.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM tour WHERE id=8952");
         rs.next();
         String tourText = rs.getString("description");
-        LOGGER.info("Test passed!!! - " + tourText);
+        log.info("Test passed!!! - " + tourText);
         assertEquals(tour.getDescription(), tourText);
     }
 
     @Test
-    public void deleteTestTrue() throws SQLException {
+    public void deleteTest() throws SQLException {
         tourDao = new TourDaoImpl(new JdbcTemplate(db.getTestDatabase()));
         Connection c = db.getTestDatabase().getConnection();
         Statement stmt = c.createStatement();
@@ -59,7 +60,7 @@ public class TourDaoImplTest {
         ResultSet rsLast = stmt.executeQuery("SELECT count(*) FROM tour");
         rsLast.next();
         int countLast = rsLast.getInt("count");
-        LOGGER.info("Test passed!!! - " + (countFirst - countLast));
+        log.info("Test passed!!! - " + (countFirst - countLast));
         assertEquals(1, countFirst - countLast);
     }
 
@@ -72,7 +73,7 @@ public class TourDaoImplTest {
         ResultSet rs = stmt.executeQuery("SELECT * FROM tour WHERE id=1");
         rs.next();
         String expectedText = rs.getString("description");
-        LOGGER.info("Test passed!!! - " + tourText);
+        log.info("Test passed!!! - " + tourText);
         assertEquals(expectedText, tourText);
     }
 
@@ -85,7 +86,7 @@ public class TourDaoImplTest {
         ResultSet rs = stmt.executeQuery("SELECT count(*) FROM tour");
         rs.next();
         int expectedCount = rs.getInt("count");
-        LOGGER.info("Test passed!!! - " + tours.size());
+        log.info("Test passed!!! - " + tours.size());
         assertEquals(expectedCount, tours.size());
     }
 }

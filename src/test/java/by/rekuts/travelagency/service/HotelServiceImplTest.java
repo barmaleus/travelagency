@@ -20,24 +20,33 @@ public class HotelServiceImplTest {
 
     @Before
     public void initializeHotelsList() {
-        Hotel hotel1 = new Hotel.HotelBuilder(1, "Tourist")
-                .withOptionalStars(3)
-                .withOptionalWebsite("tourist.by")
-                .withOptionalLocation(BigDecimal.valueOf(85.15465212), BigDecimal.valueOf(-48.85465516))
-                .withOptionalFeatures(new ArrayList<>())
-                .buildHotel();
-        Hotel hotel2 = new Hotel.HotelBuilder(2, "Red Dragon")
-                .withOptionalStars(3)
-                .withOptionalWebsite("redragon.cn")
-                .withOptionalLocation(BigDecimal.valueOf(85.15465212), BigDecimal.valueOf(-48.85465516))
-                .withOptionalFeatures(new ArrayList<>())
-                .buildHotel();
-        Hotel hotel3 = new Hotel.HotelBuilder(3, "Little Italia")
-                .withOptionalStars(3)
-                .withOptionalWebsite("l-italia.by")
-                .withOptionalLocation(BigDecimal.valueOf(85.15465212), BigDecimal.valueOf(-48.85465516))
-                .withOptionalFeatures(new ArrayList<>())
-                .buildHotel();
+        Hotel hotel1 = Hotel.builder()
+                .hotelId(1)
+                .name("Tourist")
+                .stars(3)
+                .website("tourist.by")
+                .latitude(BigDecimal.valueOf(85.15465212))
+                .longitude(BigDecimal.valueOf(-48.85465516))
+                .features(new ArrayList<>())
+                .build();
+        Hotel hotel2 = Hotel.builder()
+                .hotelId(2)
+                .name("Red Dragon")
+                .stars(3)
+                .website("redragon.cn")
+                .latitude(BigDecimal.valueOf(85.15465212))
+                .longitude(BigDecimal.valueOf(-48.85465516))
+                .features(new ArrayList<>())
+                .build();
+        Hotel hotel3 = Hotel.builder()
+                .hotelId(3)
+                .name("Little Italia")
+                .stars(3)
+                .website("l-italia.by")
+                .latitude(BigDecimal.valueOf(85.15465212))
+                .longitude(BigDecimal.valueOf(-48.85465516))
+                .features(new ArrayList<>())
+                .build();
         hotels = Arrays.asList(hotel1, hotel2, hotel3);
     }
 

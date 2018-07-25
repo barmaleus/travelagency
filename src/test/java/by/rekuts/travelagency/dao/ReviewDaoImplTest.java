@@ -5,10 +5,9 @@ import by.rekuts.travelagency.dao.subjects.Review;
 import com.opentable.db.postgres.embedded.FlywayPreparer;
 import com.opentable.db.postgres.junit.EmbeddedPostgresRules;
 import com.opentable.db.postgres.junit.PreparedDbRule;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.*;
@@ -17,8 +16,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@Slf4j
 public class ReviewDaoImplTest {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ReviewDaoImplTest.class);
 
     private static ReviewDao reviewDao;
     @ClassRule
@@ -34,7 +33,7 @@ public class ReviewDaoImplTest {
         ResultSet rs = stmt.executeQuery("SELECT * FROM review WHERE id=18569");
         rs.next();
         String reviewText = rs.getString("text");
-        LOGGER.info("Test passed!!! - " + reviewText);
+        log.info("Test passed!!! - " + reviewText);
         assertEquals(review.getText(), reviewText);
     }
 
@@ -50,7 +49,7 @@ public class ReviewDaoImplTest {
         ResultSet rsLast = stmt.executeQuery("SELECT count(*) FROM review");
         rsLast.next();
         int countLast = rsLast.getInt("count");
-        LOGGER.info("Test passed!!! - " + (countFirst - countLast));
+        log.info("Test passed!!! - " + (countFirst - countLast));
         assertEquals(1, countFirst - countLast);
     }
 
@@ -63,7 +62,7 @@ public class ReviewDaoImplTest {
         ResultSet rs = stmt.executeQuery("SELECT * FROM review WHERE id=1");
         rs.next();
         String expectedText = rs.getString("text");
-        LOGGER.info("Test passed!!! - " + reviewText);
+        log.info("Test passed!!! - " + reviewText);
         assertEquals(expectedText, reviewText);
     }
 
@@ -76,7 +75,7 @@ public class ReviewDaoImplTest {
         ResultSet rs = stmt.executeQuery("SELECT count(*) FROM review");
         rs.next();
         int expectedCount = rs.getInt("count");
-        LOGGER.info("Test passed!!! - " + reviews.size());
+        log.info("Test passed!!! - " + reviews.size());
         assertEquals(expectedCount, reviews.size());
     }
 }
