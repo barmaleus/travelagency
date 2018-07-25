@@ -6,16 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class CountryDaoImpl implements CountryDao {
-	private final static String INSERT_COUNTRY_QUERY = "INSERT INTO country (id, name) VALUES (?, ?)";
-	private final static String DELETE_COUNTRY_QUERY = "DELETE FROM country WHERE id = ?";
-	private final static String GET_COUNTRY_BY_ID_QUERY = "SELECT id, name FROM country WHERE id = ?";
-	private final static String GET_ALL_COUNTRIES_QUERY = "SELECT id, name FROM country";
+	private static final String INSERT_COUNTRY_QUERY = "INSERT INTO country (id, name) VALUES (?, ?)";
+	private static final String DELETE_COUNTRY_QUERY = "DELETE FROM country WHERE id = ?";
+	private static final String GET_COUNTRY_BY_ID_QUERY = "SELECT id, name FROM country WHERE id = ?";
+	private static final String GET_ALL_COUNTRIES_QUERY = "SELECT id, name FROM country";
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
@@ -45,15 +43,15 @@ public class CountryDaoImpl implements CountryDao {
 
 	@Override
 	public List<Country> getAllCountries() {
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_COUNTRIES_QUERY);
-		List<Country> result = new ArrayList<>();
-		for(Map<String, Object> row:rows){
-			Country country = new Country();
-			country.setId((Integer)row.get("id"));
-			country.setName((String)row.get("name"));
-			result.add(country);
-		}
-		return result;
+		return jdbcTemplate.query(
+				GET_ALL_COUNTRIES_QUERY,
+				(resultSet, i) -> {
+					Country country = new Country();
+					country.setId(resultSet.getInt(1));
+					country.setName(resultSet.getString(2));
+					return country;
+				}
+		);
 	}
 	
 	

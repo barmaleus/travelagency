@@ -44,34 +44,16 @@ public class Hotel {
 	}
 
 	/**
-	 * Default constructor - creating new object without parameters
-	 * @see Hotel#Hotel(int, String, int, String, BigDecimal, BigDecimal, List)
+	 * Constructor - creating new object via HotelBuilder
 	 */
-	public Hotel() {
-	}
-
-	/**
-	 * Constructor - creating new object
-	 * @param hotelId - id of hotel
-	 * @param name - official name of hotel
-	 * @param stars - stars of hotel. It takes values from 1 to 5
-	 * @param website - web address of hotel site. String type of value
-	 * @param latitude - latitude of hotel location. BigDecimal type of value.
-	 *                    The Equator has a latitude of 0°, the North pole has a latitude of 90° north (written 90° N or +90°),
-	 *                    and the South pole has a latitude of -90°
-	 * @param longitude - longitude of hotel location. BigDecimal type of value. Longitude is in the range -180 and +180
-	 *                     specifying coordinates west and east of the Prime Meridian
-	 * @param features - list of features of hotel. String type. Valid features could be chosen from inner enum Features with method like Hotel.Features.A.getValue()
-	 * @see Hotel#Hotel()
-	 */
-	public Hotel(int hotelId, String name, int stars, String website, BigDecimal latitude, BigDecimal longitude, List<String> features) {
-		this.hotelId = hotelId;
-		this.name = name;
-		this.stars = stars;
-		this.website = website;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.features = features;
+	public Hotel(HotelBuilder hotelBuilder) {
+		this.hotelId = hotelBuilder.hotelId;
+		this.name = hotelBuilder.name;
+		this.stars = hotelBuilder.stars;
+		this.website = hotelBuilder.website;
+		this.latitude = hotelBuilder.latitude;
+		this.longitude = hotelBuilder.longitude;
+		this.features = hotelBuilder.features;
 	}
 
 	/**
@@ -195,4 +177,81 @@ public class Hotel {
 		return "Hotel: " + name + ", id: " + hotelId + ", stars: " + stars + ", website: " +
 				website + ", location: " + latitude + "," + longitude + ", features: " + features;
 	}
+
+	/**
+	 * Inner static class-creator of Hotel Class. Implements Builder Pattern.
+	 */
+	public static class HotelBuilder {
+		private int hotelId;
+		private String name;
+		private int stars;
+		private String website;
+		private BigDecimal latitude;
+		private BigDecimal longitude;
+		private List<String> features;
+
+		/**
+		 * Constructor which creates new object of HotelBuilder with required parameters <b>hotelId</b> and <b>name</b>
+		 * @param hotelId - id of the hotel
+		 * @param name - official name of the hotel
+		 */
+		public HotelBuilder(int hotelId, String name) {
+			this.hotelId = hotelId;
+			this.name = name;
+		}
+
+		/**
+		 * Method defines parameter <b>stars</b> of the HotelBuilder object
+		 * @param stars - stars of hotel. It takes values from 1 to 5
+		 * @return object of HotelBuilder class with defined parameter <b>stars</b>
+		 */
+		public HotelBuilder withOptionalStars(int stars) {
+			this.stars = stars;
+			return this;
+		}
+
+		/**
+		 * Method defines parameter <b>website</b> of the HotelBuilder object
+		 * @param website - web address of hotel site. String type of value
+		 * @return object of HotelBuilder class with defined parameter <b>website</b>
+		 */
+		public HotelBuilder withOptionalWebsite(String website) {
+			this.website = website;
+			return this;
+		}
+
+		/**
+		 * Method defines parameters <b>latitude</b> and <b>longitude</b> of the HotelBuilder object
+		 * @param latitude - latitude of hotel location. BigDecimal type of value.
+		 *                       The Equator has a latitude of 0°, the North pole has a latitude of 90° north (written 90° N or +90°),
+		 *                       and the South pole has a latitude of -90°
+		 * @param longitude - longitude of hotel location. BigDecimal type of value. Longitude is in the range -180 and +180
+		 * 	                     specifying coordinates west and east of the Prime Meridian
+		 * @return object of HotelBuilder class with defined parameters <b>latitude</b> and <b>longitude</b>
+		 */
+		public HotelBuilder withOptionalLocation(BigDecimal latitude, BigDecimal longitude) {
+			this.latitude = latitude;
+			this.longitude = longitude;
+			return this;
+		}
+
+		/**
+		 * Method defines parameter <b>features</b> of the HotelBuilder object
+		 * @param features - list of features of hotel. String type. Valid features could be chosen from inner enum Features with method like Hotel.Features.A.getValue()
+		 * @return object of HotelBuilder class with defined parameter <b>features</b>
+		 */
+		public HotelBuilder withOptionalFeatures(List<String> features) {
+			this.features = features;
+			return this;
+		}
+
+		/**
+		 * Method creates Hotel type object from the HotelBuilder object
+		 * @return object of Hotel class
+		 */
+		public Hotel buildHotel() {
+			return new Hotel(this);
+		}
+	}
+
 }

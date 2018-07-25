@@ -22,8 +22,8 @@ public class Country {
 
 	/**
 	 * Constructor - creating new object
-	 * @param id - id of country. Usually it takes from database
-	 * @param name - official name of country
+	 * @param id - id of the country
+	 * @param name - official name of the country
 	 * @see Country#Country()
 	 */
 	public Country(int id, String name) {
@@ -33,7 +33,7 @@ public class Country {
 
 	/**
 	 * Method helps get the value of field {@link Country#id}
-	 * @return id of country
+	 * @return id of the country
 	 */
 	public int getId() {
 		return id;

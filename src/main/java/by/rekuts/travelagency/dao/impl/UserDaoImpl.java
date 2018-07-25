@@ -6,16 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    private final static String INSERT_USER_QUERY = "INSERT INTO \"user\" (\"id\", login, password) VALUES (?, ?, ?)" ;
-    private final static String DELETE_USER_QUERY = "DELETE FROM \"user\" WHERE \"id\" = ?";
-    private final static String GET_USER_BY_ID_QUERY = "SELECT \"id\", login, password FROM \"user\" WHERE id = ?";
-    private final static String GET_ALL_USERS_QUERY = "SELECT \"id\", login, password FROM \"user\"";
+    private static final String INSERT_USER_QUERY = "INSERT INTO \"user\" (\"id\", login, password) VALUES (?, ?, ?)" ;
+    private static final String DELETE_USER_QUERY = "DELETE FROM \"user\" WHERE \"id\" = ?";
+    private static final String GET_USER_BY_ID_QUERY = "SELECT \"id\", login, password FROM \"user\" WHERE id = ?";
+    private static final String GET_ALL_USERS_QUERY = "SELECT \"id\", login, password FROM \"user\"";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -46,16 +44,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(GET_ALL_USERS_QUERY);
-
-        List<User> result = new ArrayList<>();
-        for(Map<String, Object> row:rows){
-            User user = new User();
-            user.setUserId((Integer)row.get("id"));
-            user.setLogin((String)row.get("login"));
-            user.setPassword((String)row.get("password"));
-            result.add(user);
-        }
-        return result;
+        return jdbcTemplate.query(
+                GET_ALL_USERS_QUERY,
+                (resultSet, i) -> {
+                    User user = new User();
+                    user.setUserId(resultSet.getInt(1));
+                    user.setLogin(resultSet.getString(2));
+                    user.setPassword(resultSet.getString(3));
+                    return user;
+                }
+        );
     }
 }
