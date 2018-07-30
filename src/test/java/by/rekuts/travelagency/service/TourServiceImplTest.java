@@ -21,40 +21,40 @@ public class TourServiceImplTest {
 
     @Before
     public void initializeToursList() {
-        Tour tour1 = Tour.builder()
-                .hotelId(1)
-                .photo("photo.jpg")
-                .date(LocalDate.now())
-                .duration(14)
-                .description("Interesting tour")
-                .cost(BigDecimal.valueOf(900))
-                .tourType(Tour.TourType.J.getValue())
-                .hotelId(68)
-                .countryId(91)
-                .build();
-        Tour tour2 = Tour.builder()
-                .hotelId(2)
-                .photo("photo.jpg")
-                .date(LocalDate.now())
-                .duration(14)
-                .description("Interesting tour")
-                .cost(BigDecimal.valueOf(900))
-                .tourType(Tour.TourType.J.getValue())
-                .hotelId(99)
-                .countryId(16)
-                .build();
-        Tour tour3 = Tour.builder()
-                .hotelId(3)
-                .photo("photo.jpg")
-                .date(LocalDate.now())
-                .duration(14)
-                .description("Interesting tour")
-                .cost(BigDecimal.valueOf(900))
-                .tourType(Tour.TourType.J.getValue())
-                .hotelId(33)
-                .countryId(14)
-                .build();
-        tours = Arrays.asList(tour1, tour2, tour3);
+//        Tour tour1 = Tour.builder()
+//                .hotelId(1)
+//                .photo("photo.jpg")
+//                .date(LocalDate.now())
+//                .duration(14)
+//                .description("Interesting tour")
+//                .cost(BigDecimal.valueOf(900))
+//                .tourType(Tour.TourType.J.getValue())
+//                .hotelId(68)
+//                .countryId(91)
+//                .build();
+//        Tour tour2 = Tour.builder()
+//                .hotelId(2)
+//                .photo("photo.jpg")
+//                .date(LocalDate.now())
+//                .duration(14)
+//                .description("Interesting tour")
+//                .cost(BigDecimal.valueOf(900))
+//                .tourType(Tour.TourType.J.getValue())
+//                .hotelId(99)
+//                .countryId(16)
+//                .build();
+//        Tour tour3 = Tour.builder()
+//                .hotelId(3)
+//                .photo("photo.jpg")
+//                .date(LocalDate.now())
+//                .duration(14)
+//                .description("Interesting tour")
+//                .cost(BigDecimal.valueOf(900))
+//                .tourType(Tour.TourType.J.getValue())
+//                .hotelId(33)
+//                .countryId(14)
+//                .build();
+//        tours = Arrays.asList(tour1, tour2, tour3);
     }
 
     @Test

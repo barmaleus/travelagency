@@ -1,149 +1,94 @@
 package by.rekuts.travelagency.dao;
 
-import by.rekuts.travelagency.dao.impl.CountryDaoImpl;
+import by.rekuts.travelagency.config.JpaConf;
 import by.rekuts.travelagency.dao.subjects.Country;
-import com.opentable.db.postgres.embedded.DatabaseConnectionPreparer;
-import com.opentable.db.postgres.embedded.DatabasePreparer;
-import com.opentable.db.postgres.embedded.EmbeddedPostgres;
-import com.opentable.db.postgres.junit.EmbeddedPostgresRules;
-import com.opentable.db.postgres.junit.PreparedDbRule;
-import org.junit.Rule;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.IOException;
-import java.sql.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
+@Slf4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = JpaConf.class)
 public class CountryDaoImplTest {
 
-	private final DatabasePreparer prepCountry = new SimpleCountryPreparer("country");
-	@Rule
-	public PreparedDbRule dbCountry = EmbeddedPostgresRules.preparedDatabase(prepCountry);
+//    @Rule
+//    public PreparedDbRule pg = EmbeddedPostgresRules.preparedDatabase(
+//            FlywayPreparer.forClasspathLocation("db"));
+
+    @Autowired
+    CountryDao countryDao;
 
     @Test
-    public void testEmbeddedDbEcho() throws SQLException, IOException
-    {
-        EmbeddedPostgres pg = EmbeddedPostgres.start();
-        Connection c = pg.getPostgresDatabase().getConnection();
-        Statement s = c.createStatement();
-        ResultSet rs = s.executeQuery("SELECT 1");
-        assertTrue(rs.next());
-        assertEquals(1, rs.getInt(1));
-        assertFalse(rs.next());
+    @Commit
+//    @Ignore
+    public void insertCountryTestTrue() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("travelAgencyPU");
+        EntityManager em = emf.createEntityManager();
+        Country country = new Country();
+        country.setName("Sealand");
+        em.getTransaction().begin();    //todo это работает, а declarative не работает
+        em.persist(country);
+        em.getTransaction().commit();
+        //todo выполняется, но я не вижу изменений в базе rollbackается
     }
 
     @Test
-    public void testDbSimpleQuery() throws SQLException {
-        Connection c = dbCountry.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        stmt.execute("INSERT INTO country (id, name) VALUES ('1', 'Country Simple Name')");
-        ResultSet rs = stmt.executeQuery("SELECT * FROM country");
-        rs.next();
-        assertEquals(1, rs.getInt("id"));
+    @Ignore
+    public void deleteCountryTest() {
+        int countFirst = countryDao.getAllCountries().size();
+        countryDao.delete(199);
+        int countLast = countryDao.getAllCountries().size();
+        Assert.assertEquals(1, countFirst - countLast);
+    }   //todo check
+
+    //OK
+    @Test
+    public void getCountryByIdTrue() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("travelAgencyPU");
+        EntityManager em = emf.createEntityManager();
+        Country  country = em.find(Country.class, 2);
+        log.info("Found country: " + country.getName());
+        Assert.assertEquals(country.getName(), countryDao.getCountryById(2).getName());
     }
 
+    //OK
     @Test
-    public void insertTest() throws SQLException {
-        CountryDao countryDao = new CountryDaoImpl(new JdbcTemplate(dbCountry.getTestDatabase()));
-        Country country = new Country(375, "Country Name");
-        countryDao.insert(country);
-        Connection c = dbCountry.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM country");
-        rs.next();
-        String countryName = rs.getString("name");
-        assertEquals(country.getName(), countryName);
-    }
+    public void getAllCountriesNamedQueryTest() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("testPU");
+        EntityManager em = emf.createEntityManager();
 
-    @Test
-    public void deleteTestTrue() throws SQLException{
-        CountryDao countryDao = new CountryDaoImpl(new JdbcTemplate(dbCountry.getTestDatabase()));
-        Country country = new Country(3750, "Great Country");
-        Connection c = dbCountry.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        stmt.execute("INSERT INTO country (id, name) VALUES ('3750', 'Country Simple Name')");
-        countryDao.delete(3750);
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM country");
-        rs.next();
-        int count = rs.getInt("count");
-        assertEquals(0, count);
-    }
-
-    @Test
-    public void deleteTestFalse() throws SQLException{
-        CountryDao countryDao = new CountryDaoImpl(new JdbcTemplate(dbCountry.getTestDatabase()));
-        Country country = new Country(3750, "Great Country");
-        Connection c = dbCountry.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        stmt.execute("INSERT INTO country (id, name) VALUES ('3750', 'Country Simple Name')");
-        countryDao.delete(country.getId());
-        ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM country");
-        rs.next();
-        int count = rs.getInt("count");
-        assertNotEquals(1, count);
-    }
-
-    @Test
-    public void getCountryByIdTestTrue() throws SQLException {
-        CountryDao countryDao = new CountryDaoImpl(new JdbcTemplate(dbCountry.getTestDatabase()));
-        Connection c = dbCountry.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        stmt.execute("INSERT INTO country (id, name) VALUES ('1850', 'Country Just Country')");
-        Country country = countryDao.getCountryById(1850);
-        assertEquals("Country Just Country", country.getName());
-    }
-
-    @Test
-    public void getCountryByIdTestFalse() throws SQLException {
-        CountryDao countryDao = new CountryDaoImpl(new JdbcTemplate(dbCountry.getTestDatabase()));
-        Connection c = dbCountry.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        stmt.execute("INSERT INTO country (id, name) VALUES ('1850', 'Country Just Country')");
-        Country country = countryDao.getCountryById(1850);
-        assertNotEquals("", country.getName());
-    }
-
-    @Test
-    public void getAllCountriesTestTrue() throws SQLException {
-        CountryDao countryDao = new CountryDaoImpl(new JdbcTemplate(dbCountry.getTestDatabase()));
-        Connection c = dbCountry.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        stmt.execute("INSERT INTO country (id, name) VALUES ('1851', 'Country First')");
-        stmt.execute("INSERT INTO country (id, name) VALUES ('18298', 'Country Second')");
-        stmt.execute("INSERT INTO country (id, name) VALUES ('6582', 'Country Third')");
-        stmt.execute("INSERT INTO country (id, name) VALUES ('458', 'Country Fourth')");
+        TypedQuery<Country> query =
+                em.createNamedQuery("Country.findAll", Country.class);
+        List<Country> results = query.getResultList();
         List<Country> countries = countryDao.getAllCountries();
-        assertEquals(4, countries.size());
-    }
-
-    @Test
-    public void getAllCountriesTestFalse() throws SQLException {
-        CountryDao countryDao = new CountryDaoImpl(new JdbcTemplate(dbCountry.getTestDatabase()));
-        Connection c = dbCountry.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        stmt.execute("INSERT INTO country (id, name) VALUES ('1851', 'Country First')");
-        stmt.execute("INSERT INTO country (id, name) VALUES ('18298', 'Country Second')");
-        stmt.execute("INSERT INTO country (id, name) VALUES ('1888', 'Country Third')");
-        List<Country> countries = countryDao.getAllCountries();
-        assertNotEquals(0, countries.size());
-    }
-}
-
-class SimpleCountryPreparer implements DatabaseConnectionPreparer {
-    private final String name;
-
-    SimpleCountryPreparer(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void prepare(Connection conn) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(String.format(
-                "CREATE TABLE %s (id int NOT NULL, name text NOT NULL, PRIMARY KEY (id))", name))) {
-            stmt.execute();
+        if (results.size() == countries.size()) {
+            for (int i = 0; i < countries.size(); i++) {
+                if(!(countries.get(i).getId() == (results.get(i).getId())) ||
+                        !countries.get(i).getName().equals(results.get(i).getName())) {
+                    Assert.fail("Objects are not equals, line: " + i);
+                }
+            }
+        } else {
+            Assert.fail("Sizes are not the same");
         }
+    }
+
+    //OK
+    @Test
+    public void getAllCountriesCriteriaQueryTest() {
+        List<Country> countries = countryDao.getAllCountries();
+        Assert.assertEquals(198, countries.size());
     }
 }

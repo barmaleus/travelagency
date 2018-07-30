@@ -1,10 +1,9 @@
 package by.rekuts.travelagency.dao.subjects;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,20 +14,43 @@ import java.util.List;
  * <b>hotelId</b>, <b>countryId</b>, <b>users</b>
  * @author Aleh_Rekuts
  */
-@Getter
-@Setter
-@Builder
-@ToString
+@Data
+@NoArgsConstructor
+@Entity
+@Table(name = "tour")
 public class Tour {
+    @Id
+    @SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
+    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)     //todo to tune
+    @Column(name="id", nullable = false)
 	private int id;
+
+    @Column(name = "photo")
 	private String photo;
+
+    @Column(name = "date")
 	private LocalDate date;
+
+    @Column(name = "duration")
 	private int duration;
+
+    @Column(name = "description")
 	private String description;
+
+    @Column(name = "cost")
 	private BigDecimal cost;
+
+    @Column(name = "tour_type")
 	private String tourType;
+
+    @Column(name = "hotel_id")
 	private int hotelId;
+
+    @Column(name = "country_id")
 	private int countryId;
+
+    @Transient //todo ???
 	private List<User> users;
 
 	/**

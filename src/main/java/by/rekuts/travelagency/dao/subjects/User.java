@@ -1,10 +1,8 @@
 package by.rekuts.travelagency.dao.subjects;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +11,25 @@ import java.util.List;
  * <b>tours</b>
  * @author Aleh_Rekuts
  */
-@Getter
-@Setter
+@Getter @Setter @ToString
 @NoArgsConstructor
-@ToString
+@Entity
+@Table(name = "\"user\"")
 public class User {
+	@Id
+	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)     //todo to tune
+	@Column(name="\"id\"", nullable = false)
 	private int userId;
+
+	@Column(name="login", nullable = false)
 	private String login;
+
+	@Column(name="password")
 	private String password;
+
+	@Transient	//todo to think
 	private List<Tour> tours;
 
 	/**

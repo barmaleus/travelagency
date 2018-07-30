@@ -2,75 +2,41 @@ package by.rekuts.travelagency.dao.impl;
 
 import by.rekuts.travelagency.dao.HotelDao;
 import by.rekuts.travelagency.dao.subjects.Hotel;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Arrays;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
-@Slf4j
 @Repository
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class HotelDaoImpl implements HotelDao {
-    private static final String INSERT_HOTEL_QUERY = "INSERT INTO hotel " +
-            "(id, name, stars, website, latitude, longitude, features) VALUES (?, ?, ?, ?, ?, ?, ?)" ;
-    private static final String DELETE_HOTEL_QUERY = "DELETE FROM hotel WHERE id = ?";
-    private static final String GET_HOTEL_BY_ID_QUERY = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel WHERE id = ?";
-    private static final String GET_ALL_HOTELS_QUERY = "SELECT id, name, stars, website, latitude, longitude, features FROM hotel";
-    private final JdbcTemplate jdbcTemplate;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void insert(Hotel hotel) {
-        Connection connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
-        try {
-            Array featuresArray = connection.createArrayOf("features", hotel.getFeatures().toArray());
-            jdbcTemplate.update(INSERT_HOTEL_QUERY, hotel.getHotelId(), hotel.getName(), hotel.getStars(), hotel.getWebsite(), hotel.getLatitude(), hotel.getLongitude(), featuresArray);
-        } catch (SQLException e) {
-            log.warn("Insert operation is failed.");
-        }
+        entityManager.persist(hotel);
     }
 
     @Override
     public void delete(int id) {
-        jdbcTemplate.update(DELETE_HOTEL_QUERY, id);
+        entityManager.remove(entityManager.find(Hotel.class, id));    //todo to test
     }
 
     @Override
     public Hotel getHotelById(int id) {
-        return jdbcTemplate.queryForObject(
-                GET_HOTEL_BY_ID_QUERY,
-                new Object[]{id},
-                (resultSet, rwNumber) -> Hotel.builder()
-                .hotelId(resultSet.getInt("id"))
-                .name(resultSet.getString("name"))
-                .stars(resultSet.getInt("stars"))
-                .website(resultSet.getString("website"))
-                .latitude(resultSet.getBigDecimal("latitude"))
-                .longitude(resultSet.getBigDecimal("longitude"))
-                .features(Arrays.asList((String[])resultSet.getArray("features").getArray()))
-                .build());
+        return entityManager.find(Hotel.class, id);
     }
 
     @Override
     public List<Hotel> getAllHotels() {
-        return jdbcTemplate.query(
-                GET_ALL_HOTELS_QUERY,
-                (resultSet, i) -> Hotel.builder()
-                        .hotelId(resultSet.getInt("id"))
-                        .name(resultSet.getString("name"))
-                        .stars(resultSet.getInt("stars"))
-                        .website(resultSet.getString("website"))
-                        .latitude(resultSet.getBigDecimal("latitude"))
-                        .longitude(resultSet.getBigDecimal("longitude"))
-                        .features(Arrays.asList((String[])resultSet.getArray("features").getArray()))
-                        .build()
-        );
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Hotel> criteriaQuery = builder.createQuery(Hotel.class);
+        Root<Hotel> root = criteriaQuery.from(Hotel.class);
+        criteriaQuery.select(root);
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }

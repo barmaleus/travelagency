@@ -1,7 +1,10 @@
 package by.rekuts.travelagency.dao.subjects;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
@@ -10,15 +13,28 @@ import java.time.LocalDateTime;
  * <b>userId</b>, <b>tourId</b>
  * @author Aleh_Rekuts
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Entity
+@Table(name = "review")
 public class Review {
+	@Id
+	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)     //todo to tune
+	@Column(name="id", nullable = false)
 	private int id;
+
+	@Column(name="date")
 	private LocalDateTime date;
+
+	@Column(name="text")
 	private String text;
+
+	@Column(name="user_id")
 	private int userId;
+
+	@Column(name="tour_id")
 	private int tourId;
 }

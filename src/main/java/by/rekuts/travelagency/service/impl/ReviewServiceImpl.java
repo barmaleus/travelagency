@@ -4,9 +4,11 @@ import by.rekuts.travelagency.dao.ReviewDao;
 import by.rekuts.travelagency.dao.subjects.Review;
 import by.rekuts.travelagency.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ReviewServiceImpl implements ReviewService {
     @Autowired
     ReviewDao reviewDao;

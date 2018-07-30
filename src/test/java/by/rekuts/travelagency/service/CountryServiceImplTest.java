@@ -33,30 +33,30 @@ public class CountryServiceImplTest {
         verify(countryService, times(2)).insert(any());
     }
 
-    @Test
-    public void deleteTest() {
-        CountryServiceImpl countryService = mock(CountryServiceImpl.class);
-        doNothing().when(countryService).insert(new Country());
-        countryService.delete(1);
-        countryService.insert(new Country(3525, "Any Country"));
-        verify(countryService, times(1)).delete(anyInt());
-    }
-
-    @Test
-    public void getCountryByIdTestTrue(){
-        CountryServiceImpl countryService = mock(CountryServiceImpl.class);
-        when(countryService.getCountryById(2)).thenReturn(countries.get(1));
-        Country country = countryService.getCountryById(2);
-        assertEquals("India", country.getName());
-    }
-
-    @Test
-    public void getCountryByIdTestFalse(){
-        CountryServiceImpl countryService = mock(CountryServiceImpl.class);
-        when(countryService.getCountryById(2)).thenReturn(countries.get(1));
-        Country country = countryService.getCountryById(2);
-        assertNotEquals("Russia", country.getName());
-    }
+//    @Test
+//    public void deleteTest() {
+//        CountryServiceImpl countryService = mock(CountryServiceImpl.class);
+//        doNothing().when(countryService).insert(new Country());
+//        countryService.delete(1);
+//        countryService.insert(new Country(3525, "Any Country"));
+//        verify(countryService, times(1)).delete(anyInt());
+//    }
+//
+//    @Test
+//    public void getCountryByIdTestTrue(){
+//        CountryServiceImpl countryService = mock(CountryServiceImpl.class);
+//        when(countryService.getCountryById(2)).thenReturn(countries.get(1));
+//        Country country = countryService.getCountryById(2);
+//        assertEquals("India", country.getName());
+//    }
+//
+//    @Test
+//    public void getCountryByIdTestFalse(){
+//        CountryServiceImpl countryService = mock(CountryServiceImpl.class);
+//        when(countryService.getCountryById(2)).thenReturn(countries.get(1));
+//        Country country = countryService.getCountryById(2);
+//        assertNotEquals("Russia", country.getName());
+//    }
 
     @Test
     public void getAllCountriesTestTrue(){
