@@ -1,13 +1,10 @@
 package by.rekuts.travelagency.service;
 
-import by.rekuts.travelagency.dao.subjects.Tour;
+import by.rekuts.travelagency.domain.Tour;
 import by.rekuts.travelagency.service.impl.TourServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

@@ -1,10 +1,12 @@
-package by.rekuts.travelagency.dao.subjects;
+package by.rekuts.travelagency.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
@@ -26,15 +28,18 @@ public class Review {
 	@Column(name="id", nullable = false)
 	private int id;
 
+	@NotNull
 	@Column(name="date")
 	private LocalDateTime date;
 
 	@Column(name="text")
 	private String text;
 
+	@NotNull
 	@Column(name="user_id")
 	private int userId;
 
+	@NotNull
 	@Column(name="tour_id")
 	private int tourId;
 }

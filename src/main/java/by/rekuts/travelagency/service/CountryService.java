@@ -3,7 +3,7 @@ package by.rekuts.travelagency.service;
 import java.util.List;
 
 import by.rekuts.travelagency.dao.CountryDao;
-import by.rekuts.travelagency.dao.subjects.Country;
+import by.rekuts.travelagency.domain.Country;
 
 /**
  * Interface CountryService concerns to Service layer.

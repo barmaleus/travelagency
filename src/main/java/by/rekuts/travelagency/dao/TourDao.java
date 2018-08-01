@@ -1,8 +1,11 @@
 package by.rekuts.travelagency.dao;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
-import by.rekuts.travelagency.dao.subjects.Tour;
+import by.rekuts.travelagency.domain.Country;
+import by.rekuts.travelagency.domain.Tour;
 
 /**
  * Interface TourService concerns to DAO layer.
@@ -34,4 +37,7 @@ public interface TourDao {
 	 * @return list of all tours from database
 	 */
 	List<Tour> getAllTours();
+
+	//todo javadoc
+	List<Tour> getToursByCriteria(Country country, LocalDate date, Integer duration, Tour.TourType tourType, BigDecimal minCost, BigDecimal maxCost, Integer stars);
 }

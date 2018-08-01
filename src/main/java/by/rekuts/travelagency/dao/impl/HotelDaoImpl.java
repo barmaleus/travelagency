@@ -1,16 +1,19 @@
 package by.rekuts.travelagency.dao.impl;
 
 import by.rekuts.travelagency.dao.HotelDao;
-import by.rekuts.travelagency.dao.subjects.Hotel;
+import by.rekuts.travelagency.domain.Hotel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+@Slf4j
 @Repository
 public class HotelDaoImpl implements HotelDao {
     @PersistenceContext
@@ -23,7 +26,16 @@ public class HotelDaoImpl implements HotelDao {
 
     @Override
     public void delete(int id) {
-        entityManager.remove(entityManager.find(Hotel.class, id));    //todo to test
+        TypedQuery<Integer> query = entityManager.createQuery(
+                "SELECT t.id FROM Tour AS t WHERE hotel_id = ?1", Integer.class);
+        query.setParameter(1, id);
+        List<Integer> results = query.getResultList();
+        if (results == null || results.size() == 0) {
+            entityManager.remove(entityManager.find(Hotel.class, id));
+            log.info("Hotel deleted");
+        } else {
+            log.info("Can't delete hotel. There are some foreign keys references on it.");
+        }
     }
 
     @Override

@@ -2,7 +2,7 @@ package by.rekuts.travelagency.dao;
 
 import java.util.List;
 
-import by.rekuts.travelagency.dao.subjects.Country;
+import by.rekuts.travelagency.domain.Country;
 
 /**
  * Interface CountryDao concerns to DAO layer.

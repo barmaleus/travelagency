@@ -1,92 +1,75 @@
 package by.rekuts.travelagency.dao;
 
-import by.rekuts.travelagency.dao.impl.TourDaoImpl;
-import by.rekuts.travelagency.dao.subjects.Tour;
-import com.opentable.db.postgres.embedded.FlywayPreparer;
-import com.opentable.db.postgres.junit.EmbeddedPostgresRules;
-import com.opentable.db.postgres.junit.PreparedDbRule;
+import by.rekuts.travelagency.config.TestRepositoryConfig;
+import by.rekuts.travelagency.domain.Tour;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.ClassRule;
+import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
 @Slf4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestRepositoryConfig.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@ActiveProfiles("testScope")
+@Transactional
 public class TourDaoImplTest {
-    private static TourDao tourDao;
-    @ClassRule
-    public static PreparedDbRule db = EmbeddedPostgresRules.preparedDatabase(FlywayPreparer.forClasspathLocation("db"));
+
+    @Autowired
+    TourDao tourDao;
 
     @Test
-    public void insertTest() throws SQLException {
-//        tourDao = new TourDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-//        Tour tour = Tour.builder()
-//                .id(8952)
-//                .photo("photo.jpg")
-//                .date(LocalDate.now())
-//                .duration(14)
-//                .description("Interesting tour")
-//                .cost(BigDecimal.valueOf(900))
-//                .tourType(Tour.TourType.J.getValue())
-//                .hotelId(85)
-//                .countryId(67)
-//                .build();
-//        System.out.println(tour.toString());
-//        tourDao.insert(tour);
-//        Connection c = db.getTestDatabase().getConnection();
-//        Statement stmt = c.createStatement();
-//        ResultSet rs = stmt.executeQuery("SELECT * FROM tour WHERE id=8952");
-//        rs.next();
-//        String tourText = rs.getString("description");
-//        log.info("Test passed!!! - " + tourText);
-//        assertEquals(tour.getDescription(), tourText);
+    public void insertTest() {
+        Tour tour = new Tour();
+        tour.setPhoto("photo.jpg");
+        tour.setDate(LocalDate.now());
+        tour.setDuration(14);
+        tour.setDescription("Interesting tour");
+        tour.setCost(BigDecimal.valueOf(900));
+        tour.setTourType(Tour.TourType.cultural);
+        tour.setHotelId(85);
+        tour.setCountryId(67);
+        int countFirst = tourDao.getAllTours().size();
+        tourDao.insert(tour);
+        int countLast = tourDao.getAllTours().size();
+        Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
-    public void deleteTest() throws SQLException {
-//        tourDao = new TourDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-//        Connection c = db.getTestDatabase().getConnection();
-//        Statement stmt = c.createStatement();
-//        ResultSet rsFirst = stmt.executeQuery("SELECT count(*) FROM tour");
-//        rsFirst.next();
-//        int countFirst = rsFirst.getInt("count");
-//        tourDao.delete(48);
-//        ResultSet rsLast = stmt.executeQuery("SELECT count(*) FROM tour");
-//        rsLast.next();
-//        int countLast = rsLast.getInt("count");
-//        log.info("Test passed!!! - " + (countFirst - countLast));
-//        assertEquals(1, countFirst - countLast);
+    public void deleteTest() {
+        int countFirst = tourDao.getAllTours().size();
+        tourDao.delete(1);
+        int countLast = tourDao.getAllTours().size();
+        Assert.assertEquals(1, countFirst - countLast);
     }
 
     @Test
-    public void getTourByIdTest() throws SQLException {
-//        tourDao = new TourDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-//        String tourText = tourDao.getTourById(1).getDescription();
-//        Connection c = db.getTestDatabase().getConnection();
-//        Statement stmt = c.createStatement();
-//        ResultSet rs = stmt.executeQuery("SELECT * FROM tour WHERE id=1");
-//        rs.next();
-//        String expectedText = rs.getString("description");
-//        log.info("Test passed!!! - " + tourText);
-//        assertEquals(expectedText, tourText);
+    public void getTourByIdTest() {
+        Tour tour = tourDao.getTourById(1);
+        log.info("Found country: " + tour.getDescription());
+        String description = "Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.";
+        Assert.assertEquals(description, tour.getDescription());
     }
 
     @Test
-    public void getAllToursTest() throws SQLException {
-//        tourDao = new TourDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-//        List<Tour> tours = tourDao.getAllTours();
-//        Connection c = db.getTestDatabase().getConnection();
-//        Statement stmt = c.createStatement();
-//        ResultSet rs = stmt.executeQuery("SELECT count(*) FROM tour");
-//        rs.next();
-//        int expectedCount = rs.getInt("count");
-//        log.info("Test passed!!! - " + tours.size());
-//        assertEquals(expectedCount, tours.size());
+    public void getAllToursTest() {
+        List<Tour> tours = tourDao.getAllTours();
+        Assert.assertEquals(1000, tours.size());
+    }
+
+    @Test   //todo ignore
+    public void getToursByCriteriaTest() {
+        List<Tour> tours = tourDao.getToursByCriteria(null, null, null, Tour.TourType.health, BigDecimal.valueOf(500.00), BigDecimal.valueOf(700.00), null);
+        Assert.assertEquals(1000, tours.size());
     }
 }

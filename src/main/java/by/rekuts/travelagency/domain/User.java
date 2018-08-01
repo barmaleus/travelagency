@@ -1,8 +1,10 @@
-package by.rekuts.travelagency.dao.subjects;
+package by.rekuts.travelagency.domain;
 
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,11 @@ import java.util.List;
  * <b>tours</b>
  * @author Aleh_Rekuts
  */
-@Getter @Setter @ToString
+@Data @ToString(exclude = "tours")
 @NoArgsConstructor
 @Entity
 @Table(name = "\"user\"")
-public class User {
+public class User implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
@@ -23,13 +25,19 @@ public class User {
 	@Column(name="\"id\"", nullable = false)
 	private int userId;
 
+	@NotNull
 	@Column(name="login", nullable = false)
 	private String login;
 
 	@Column(name="password")
 	private String password;
 
-	@Transient	//todo to think
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(
+			name = "user_tour",
+			joinColumns = { @JoinColumn(name = "user_id") },
+			inverseJoinColumns = { @JoinColumn(name = "tour_id") }
+	)
 	private List<Tour> tours;
 
 	/**

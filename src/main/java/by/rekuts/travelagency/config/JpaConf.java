@@ -32,7 +32,7 @@ public class JpaConf {
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         factoryBean.setJpaVendorAdapter(vendorAdapter);
         factoryBean.setDataSource(getDataSource());
-        factoryBean.setPersistenceUnitName("testPU");
+        factoryBean.setPersistenceUnitName("travelAgencyPU");
         factoryBean.setPackagesToScan("by.rekuts.travelagency");
         factoryBean.setJpaProperties(jpaProperties());
         return factoryBean;
@@ -40,9 +40,6 @@ public class JpaConf {
 
     @Bean
     public DataSource getDataSource() {
-//        HikariConfig config = new HikariConfig("/hibernate.properties");
-//        HikariDataSource dataSource = new HikariDataSource(config);
-
         HikariConfig config = new HikariConfig();
         config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
         config.setUsername("postgres");

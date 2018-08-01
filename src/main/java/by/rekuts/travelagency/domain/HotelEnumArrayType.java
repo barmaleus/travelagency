@@ -1,38 +1,45 @@
-package by.rekuts.travelagency.dao.subjects;
+package by.rekuts.travelagency.domain;
 
-import by.rekuts.travelagency.dao.subjects.Hotel.Features;
+import by.rekuts.travelagency.domain.Hotel.Features;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class EnumArrayType implements UserType {
+public class HotelEnumArrayType implements UserType {
 
     private static final int SQL_TYPE = Types.ARRAY;
-
 
     @Override
     public Object nullSafeGet(ResultSet rs, String[] strings, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws SQLException {
         Array dbArray = rs.getArray(strings[0]);
         Object[] array = (Object[]) dbArray.getArray();
-        List<Features> features = new ArrayList<>();
-        Arrays.stream(array).forEach(feature -> features.add(Features.valueOf(feature + "")));
+        List<String> features = new ArrayList<>();
+        for(Object ob : array) {
+            for(Hotel.Features f : Features.values()) {
+                if (f.getValue().equals(ob.toString())) {
+                    features.add(ob.toString());
+                }
+            }
+        }
         return features;
     }
 
     @Override
     public void nullSafeSet(PreparedStatement statement, Object object, int i, SharedSessionContractImplementor sharedSessionContractImplementor) throws SQLException {
         Connection connection = statement.getConnection();
-
-        List<Features> castObject = (List<Features>) object;
-        Object[] features = castObject.stream().map(Enum::name).toArray();
-        Array array = connection.createArrayOf("feature", features);
-
+        Array array;
+        if (object != null) {
+            List<String> list = (List<String>) object;
+            Object[] features = list.toArray();
+            array = connection.createArrayOf("features", features);
+        } else {
+            array = null;
+        }
         statement.setArray(i, array);
     }
 

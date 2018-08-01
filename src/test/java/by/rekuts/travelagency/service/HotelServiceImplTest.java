@@ -1,6 +1,6 @@
 //package by.rekuts.travelagency.service;
 //
-//import by.rekuts.travelagency.dao.subjects.Hotel;
+//import by.rekuts.travelagency.domain.Hotel;
 //import by.rekuts.travelagency.service.impl.HotelServiceImpl;
 //import org.junit.Before;
 //import org.junit.Test;

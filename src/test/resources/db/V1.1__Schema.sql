@@ -39,6 +39,13 @@ CREATE TABLE country (
 
 ALTER TABLE country OWNER TO postgres;
 
+CREATE SEQUENCE gpa_sequence
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE hotel (
     id integer NOT NULL,
     name text NOT NULL,

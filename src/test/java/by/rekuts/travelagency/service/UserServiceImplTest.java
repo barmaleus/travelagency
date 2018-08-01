@@ -1,6 +1,6 @@
 package by.rekuts.travelagency.service;
 
-import by.rekuts.travelagency.dao.subjects.User;
+import by.rekuts.travelagency.domain.User;
 import by.rekuts.travelagency.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;

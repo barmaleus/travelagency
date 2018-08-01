@@ -1,10 +1,11 @@
-package by.rekuts.travelagency.dao.subjects;
+package by.rekuts.travelagency.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -27,6 +28,7 @@ public class Country implements Serializable {
 	@Column(name="id", nullable = false)
 	private int id;
 
+	@NotNull
 	@Column(name = "name", nullable = false)
 	private String name;
 }

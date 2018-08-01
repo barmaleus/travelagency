@@ -2,7 +2,7 @@ package by.rekuts.travelagency.dao;
 
 import java.util.List;
 
-import by.rekuts.travelagency.dao.subjects.Review;
+import by.rekuts.travelagency.domain.Review;
 
 /**
  * Interface ReviewService concerns to DAO layer.

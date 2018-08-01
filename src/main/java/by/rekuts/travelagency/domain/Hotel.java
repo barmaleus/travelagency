@@ -1,4 +1,4 @@
-package by.rekuts.travelagency.dao.subjects;
+package by.rekuts.travelagency.domain;
 
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -6,6 +6,10 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -14,15 +18,14 @@ import java.util.List;
  * <b>website</b>, <b>latitude</b>, <b>longitude</b>, <b> features</b>
  * @author Aleh_Rekuts
  */
-@Data
-@NoArgsConstructor
+@Data @NoArgsConstructor
 @Entity
 @Table(name = "hotel")
 @TypeDefs({@TypeDef(
         name = "features",
-        typeClass = EnumArrayType.class
+        typeClass = HotelEnumArrayType.class
 )})
-public class Hotel {
+public class Hotel implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
@@ -30,24 +33,28 @@ public class Hotel {
 	@Column(name="id", nullable = false)
 	private int hotelId;
 
+	@NotNull
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@Min(1) @Max(5)
 	@Column(name = "stars")
 	private int stars;
 
 	@Column(name = "website")
 	private String website;
 
+	@Min(-90) @Max(90)
 	@Column(name = "latitude")
 	private BigDecimal latitude;
 
+	@Min(-180) @Max(180)
 	@Column(name = "longitude")
 	private BigDecimal longitude;
 
 	@Column(name = "features")
     @Type(type="features")
-	private List<String> features;  //todo
+	private List<String> features;
 
 	/**
 	 * Inner to class Hotel enum Features. It stores the names of features of hotels in the values.

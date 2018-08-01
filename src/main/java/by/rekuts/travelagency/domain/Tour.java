@@ -1,9 +1,14 @@
-package by.rekuts.travelagency.dao.subjects;
+package by.rekuts.travelagency.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +23,11 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "tour")
-public class Tour {
+@TypeDef(
+        name = "tour_enum",
+        typeClass = TourEnumType.class
+)
+public class Tour implements Serializable {
     @Id
     @SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
@@ -38,44 +47,39 @@ public class Tour {
     @Column(name = "description")
 	private String description;
 
+    @PositiveOrZero
     @Column(name = "cost")
 	private BigDecimal cost;
 
     @Column(name = "tour_type")
-	private String tourType;
+    @Type(type = "tour_enum")
+    @Enumerated(EnumType.STRING)
+    private TourType tourType;
 
+    @NotNull
     @Column(name = "hotel_id")
 	private int hotelId;
 
+    @NotNull
     @Column(name = "country_id")
 	private int countryId;
 
-    @Transient //todo ???
+    @ManyToMany(mappedBy = "tours")
 	private List<User> users;
 
 	/**
 	 * Inner to class Tour enum TourType. It stores the names of tour types in the values.
 	 */
-	public enum TourType{
-		A("safari"),
-		B("rural"),
-		C("mountain"),
-		D("ski"),
-		E("ecotourism"),
-		F("health"),
-		G("cruise"),
-		H("education"),
-		I("adventure"),
-		J("cultural");
-		
-		private final String tourType;
-		
-		TourType(String tourType) {
-			this.tourType = tourType;
-		}
-
-		public String getValue() {
-			return tourType;
-		}
+	public enum TourType {
+	    safari,
+        rural,
+        mountain,
+        ski,
+        ecotourism,
+        health,
+        cruise,
+        education,
+        adventure,
+        cultural
 	}
 }

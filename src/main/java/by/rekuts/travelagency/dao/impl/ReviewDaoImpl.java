@@ -1,7 +1,7 @@
 package by.rekuts.travelagency.dao.impl;
 
 import by.rekuts.travelagency.dao.ReviewDao;
-import by.rekuts.travelagency.dao.subjects.Review;
+import by.rekuts.travelagency.domain.Review;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

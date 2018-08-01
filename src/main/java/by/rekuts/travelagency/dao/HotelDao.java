@@ -2,7 +2,7 @@ package by.rekuts.travelagency.dao;
 
 import java.util.List;
 
-import by.rekuts.travelagency.dao.subjects.Hotel;
+import by.rekuts.travelagency.domain.Hotel;
 
 /**
  * Interface HotelService concerns to DAO layer .
