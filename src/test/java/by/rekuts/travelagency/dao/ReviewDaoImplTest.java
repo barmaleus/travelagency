@@ -28,13 +28,17 @@ public class ReviewDaoImplTest {
 
     @Autowired
     ReviewDao reviewDao;
+    @Autowired
+    TourDao tourDao;
+    @Autowired
+    UserDao userDao;
 
     @Test
     public void insertReviewTestTrue() {
         Review review = new Review();
         review.setText("Review text");
-        review.setTourId(1);
-        review.setUserId(1);
+        review.setTour(tourDao.getTourById(1));
+        review.setUser(userDao.getUserById(1));
         int countFirst = reviewDao.getAllReviews().size();
         reviewDao.insert(review);
         int countLast = reviewDao.getAllReviews().size();
@@ -62,5 +66,19 @@ public class ReviewDaoImplTest {
     public void getAllReviewTest() {
         List<Review> reviews = reviewDao.getAllReviews();
         Assert.assertEquals(1000, reviews.size());
+    }
+
+    @Test
+    public void getReviewsForSpecificUser() {
+        int userId = 1;
+        List<Review> reviews = reviewDao.getReviewsByUserId(userId);
+        Assert.assertEquals(9, reviews.size());
+    }
+
+    @Test
+    public void getReviewsForSpecificTour() {
+        int userId = 1;
+        List<Review> reviews = reviewDao.getReviewsByTourId(userId);
+        Assert.assertEquals(2, reviews.size());
     }
 }

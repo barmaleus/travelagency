@@ -19,8 +19,7 @@ import java.util.List;
  * <b>hotelId</b>, <b>countryId</b>, <b>users</b>
  * @author Aleh_Rekuts
  */
-@Data
-@NoArgsConstructor
+@Data @NoArgsConstructor
 @Entity
 @Table(name = "tour")
 @TypeDef(
@@ -31,7 +30,6 @@ public class Tour implements Serializable {
     @Id
     @SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)     //todo to tune
     @Column(name="id", nullable = false)
 	private int id;
 
@@ -57,12 +55,14 @@ public class Tour implements Serializable {
     private TourType tourType;
 
     @NotNull
-    @Column(name = "hotel_id")
-	private int hotelId;
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+	private Hotel hotel;
 
     @NotNull
-    @Column(name = "country_id")
-	private int countryId;
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 
     @ManyToMany(mappedBy = "tours")
 	private List<User> users;

@@ -63,7 +63,7 @@ public class HotelDaoImplTest {
     @Test
     public void getAllHotelsTestTrue() {
         List<Hotel> hotels = hotelDao.getAllHotels();
-        Assert.assertEquals(100, hotels.size());
+        Assert.assertEquals(101, hotels.size());
     }
 }
 

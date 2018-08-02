@@ -24,7 +24,6 @@ public class Review implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)     //todo to tune
 	@Column(name="id", nullable = false)
 	private int id;
 
@@ -36,10 +35,12 @@ public class Review implements Serializable {
 	private String text;
 
 	@NotNull
-	@Column(name="user_id")
-	private int userId;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@NotNull
-	@Column(name="tour_id")
-	private int tourId;
+	@ManyToOne
+	@JoinColumn(name = "tour_id")
+	private Tour tour;
 }

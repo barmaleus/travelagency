@@ -27,6 +27,10 @@ public class TourDaoImplTest {
 
     @Autowired
     TourDao tourDao;
+    @Autowired
+    HotelDao hotelDao;
+    @Autowired
+    CountryDao countryDao;
 
     @Test
     public void insertTest() {
@@ -37,8 +41,8 @@ public class TourDaoImplTest {
         tour.setDescription("Interesting tour");
         tour.setCost(BigDecimal.valueOf(900));
         tour.setTourType(Tour.TourType.cultural);
-        tour.setHotelId(85);
-        tour.setCountryId(67);
+        tour.setHotel(hotelDao.getHotelById(85));
+        tour.setCountry(countryDao.getCountryById(67));
         int countFirst = tourDao.getAllTours().size();
         tourDao.insert(tour);
         int countLast = tourDao.getAllTours().size();
@@ -67,9 +71,16 @@ public class TourDaoImplTest {
         Assert.assertEquals(1000, tours.size());
     }
 
-    @Test   //todo ignore
+    @Test
     public void getToursByCriteriaTest() {
-        List<Tour> tours = tourDao.getToursByCriteria(null, null, null, Tour.TourType.health, BigDecimal.valueOf(500.00), BigDecimal.valueOf(700.00), null);
-        Assert.assertEquals(1000, tours.size());
+        List<Tour> tours = tourDao.getToursByCriteria(countryDao.getCountryById(1), null, null, Tour.TourType.cultural, BigDecimal.valueOf(100.00), BigDecimal.valueOf(800.00), null);
+        Assert.assertEquals(2, tours.size());
+    }
+
+    @Test
+    public void getToursByUserId() {
+        int userId = 101;
+        List<Tour> tours = tourDao.getToursByUserId(userId);
+        Assert.assertEquals(2, tours.size());
     }
 }

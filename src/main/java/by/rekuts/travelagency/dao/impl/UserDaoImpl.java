@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.dao.impl;
 
+import by.rekuts.travelagency.aspects.LogReturn;
 import by.rekuts.travelagency.dao.UserDao;
 import by.rekuts.travelagency.domain.User;
 import org.springframework.stereotype.Repository;
@@ -23,9 +24,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void delete(int id) {
-        entityManager.remove(entityManager.find(User.class, id));    //todo to test
+        entityManager.remove(entityManager.find(User.class, id));
     }
 
+    @LogReturn
     @Override
     public User getUserById(int id) {
         return entityManager.find(User.class, id);

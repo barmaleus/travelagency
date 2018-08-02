@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.dao.impl;
 
+import by.rekuts.travelagency.aspects.LogReturn;
 import by.rekuts.travelagency.dao.HotelDao;
 import by.rekuts.travelagency.domain.Hotel;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class HotelDaoImpl implements HotelDao {
         }
     }
 
+    @LogReturn
     @Override
     public Hotel getHotelById(int id) {
         return entityManager.find(Hotel.class, id);

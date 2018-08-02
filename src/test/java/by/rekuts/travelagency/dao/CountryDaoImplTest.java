@@ -22,14 +22,6 @@ import java.util.List;
 @Transactional
 public class CountryDaoImplTest {
 
-    // todo embedded database tests
-//    @Rule
-//    public PreparedDbRule pg = EmbeddedPostgresRules.preparedDatabase(
-//            FlywayPreparer.forClasspathLocation("db"));
-
-//    @ClassRule
-//    public static PreparedDbRule db = EmbeddedPostgresRules.preparedDatabase(FlywayPreparer.forClasspathLocation("db"));
-
     @Autowired
     CountryDao countryDao;
 

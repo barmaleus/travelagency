@@ -32,4 +32,14 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Review> getAllReviews() {
         return reviewDao.getAllReviews();
     }
+
+    @Override
+    public List<Review> getReviewsByUserId(int userId) {
+        return reviewDao.getReviewsByUserId(userId);
+    }
+
+    @Override
+    public List<Review> getReviewsByTourId(int tourId) {
+        return reviewDao.getReviewsByTourId(tourId);
+    }
 }

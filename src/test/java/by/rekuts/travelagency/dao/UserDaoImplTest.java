@@ -66,6 +66,6 @@ public class UserDaoImplTest {
     @Test
     public void getAllUsersTest() {
         List<User> users = userDao.getAllUsers();
-       Assert.assertEquals(100, users.size());
+       Assert.assertEquals(101, users.size());
     }
 }

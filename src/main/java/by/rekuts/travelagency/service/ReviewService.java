@@ -40,4 +40,16 @@ public interface ReviewService {
      * @return list of all reviews from database
      */
     List<Review> getAllReviews();
+
+    /**
+     * This method calls {@link ReviewDao#getReviewsByUserId(int)}
+     * @return list of all reviews from database for a specific user by his id
+     */
+    List<Review> getReviewsByUserId(int userId);
+
+    /**
+     * This method calls {@link ReviewDao#getReviewsByTourId(int)}
+     * @return list of all reviews from database for a specific tour by its id
+     */
+    List<Review> getReviewsByTourId(int tourId);
 }

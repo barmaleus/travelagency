@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.dao.impl;
 
+import by.rekuts.travelagency.aspects.LogReturn;
 import by.rekuts.travelagency.dao.CountryDao;
 import by.rekuts.travelagency.domain.Country;
 import org.springframework.stereotype.Repository;
@@ -21,9 +22,10 @@ public class CountryDaoImpl implements CountryDao {
 
 	@Override
 	public void delete(int id) {
-	    entityManager.remove(entityManager.find(Country.class, id));    //todo to test
+	    entityManager.remove(entityManager.find(Country.class, id));
 	}
 
+	@LogReturn
     @Override
     public Country getCountryById(int id) {
         return entityManager.find(Country.class, id);

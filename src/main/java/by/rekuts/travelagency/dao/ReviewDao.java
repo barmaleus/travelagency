@@ -34,4 +34,14 @@ public interface ReviewDao {
 	 * @return list of all reviews from database
 	 */
 	List<Review> getAllReviews();
+
+    /**
+     * @return list of all reviews from database for a specific user by his id
+     */
+	List<Review> getReviewsByUserId(int userId);
+
+    /**
+     * @return list of all reviews from database for a specific tour by its id
+     */
+    List<Review> getReviewsByTourId(int tourId);
 }

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 @EnableTransactionManagement
 @PropertySource("classpath:db")
 @Import(JpaConf.class)
+@EnableAspectJAutoProxy
 public class TestRepositoryConfig {
 
     @Bean

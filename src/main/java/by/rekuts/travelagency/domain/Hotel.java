@@ -29,7 +29,6 @@ public class Hotel implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)     //todo to tune
 	@Column(name="id", nullable = false)
 	private int hotelId;
 

@@ -38,6 +38,22 @@ public interface TourDao {
 	 */
 	List<Tour> getAllTours();
 
-	//todo javadoc
-	List<Tour> getToursByCriteria(Country country, LocalDate date, Integer duration, Tour.TourType tourType, BigDecimal minCost, BigDecimal maxCost, Integer stars);
+    /**
+     * This method returns list of tours by parameters
+     * @param country - object of country
+     * @param date - date in LocalDate format
+     * @param duration - duration of tour, days
+     * @param tourType - type of travel
+     * @param minCost - lower bound of price
+     * @param maxCost - upper bound of price
+     * @param stars - hotel stars
+     * @return - list of tours by specified parameters
+     */
+	List<Tour> getToursByCriteria(Country country, LocalDate date, Integer duration,
+                                  Tour.TourType tourType, BigDecimal minCost, BigDecimal maxCost, Integer stars);
+
+    /**
+     * @return list of tours from database for a specified user by his id
+     */
+	List<Tour> getToursByUserId(int userId);
 }
