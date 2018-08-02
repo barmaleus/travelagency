@@ -1,83 +1,71 @@
 package by.rekuts.travelagency.dao;
 
-import by.rekuts.travelagency.dao.impl.UserDaoImpl;
-import by.rekuts.travelagency.dao.subjects.User;
-import com.opentable.db.postgres.embedded.FlywayPreparer;
-import com.opentable.db.postgres.junit.EmbeddedPostgresRules;
-import com.opentable.db.postgres.junit.PreparedDbRule;
-import org.junit.ClassRule;
+import by.rekuts.travelagency.config.JpaConf;
+import by.rekuts.travelagency.domain.User;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
+@Slf4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = JpaConf.class)
+@Transactional
 public class UserDaoImplTest {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UserDaoImplTest.class);
-    private static UserDao userDao;
-    @ClassRule
-    public static PreparedDbRule db = EmbeddedPostgresRules.preparedDatabase(FlywayPreparer.forClasspathLocation("db"));
+
+    @Autowired
+    UserDao userDao;
+
+    @Autowired
+    TourDao tourDao;
 
     @Test
-    public void insertTestTrue() throws SQLException {
-        userDao = new UserDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-        User user = new User(84592, "CoolLogin", "PrettyDificultPassword");
+    public void insertTestTrue() {
+        User user = new User();
+        user.setLogin("Userok");
+        user.setPassword("veryDifficultPassword");
+        int countFirst = userDao.getAllUsers().size();
         userDao.insert(user);
-        Connection c = db.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM \"user\" WHERE \"user\".id=84592");
-        rs.next();
-        String userLogin = rs.getString("login");
-        LOGGER.info("Test passed!!! - " + userLogin);
-        assertEquals(user.getLogin(), userLogin);
+        int countLast = userDao.getAllUsers().size();
+        Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
-    public void deleteTestTrue() throws SQLException {
-        userDao = new UserDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-        Connection c = db.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rsFirst = stmt.executeQuery("SELECT count(*) FROM \"user\"");
-        rsFirst.next();
-        int countFirst = rsFirst.getInt("count");
-        userDao.delete(86);
-        ResultSet rsLast = stmt.executeQuery("SELECT count(*) FROM \"user\"");
-        rsLast.next();
-        int countLast = rsLast.getInt("count");
-        LOGGER.info("Test passed!!! - " + (countFirst - countLast));
-        assertEquals(1, countFirst - countLast);
+    public void deleteUserTestTrue() {
+        int countFirst = userDao.getAllUsers().size();
+        userDao.delete(1);
+        int countLast = userDao.getAllUsers().size();
+        Assert.assertEquals(1, countFirst - countLast);
     }
 
     @Test
-    public void getUserByIdTest() throws SQLException {
-        userDao = new UserDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-        String userLogin = userDao.getUserById(1).getLogin();
-        Connection c = db.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM \"user\" WHERE id=1");
-        rs.next();
-        String expectedLogin = rs.getString("login");
-        LOGGER.info("Test passed!!! - " + userLogin);
-        assertEquals(expectedLogin, userLogin);
+    public void getUserByIdTest() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("travelAgencyPU");
+        EntityManager em = emf.createEntityManager();
+        User user = em.find(User.class, 2);
+        log.info("User was found: " + user.getLogin());
+        Assert.assertEquals(user.getLogin(), userDao.getUserById(2).getLogin());
     }
 
     @Test
-    public void getAllUsersTest() throws SQLException {
-        userDao = new UserDaoImpl(new JdbcTemplate(db.getTestDatabase()));
+    public void getUserByIdWithToursTest() {
+        User user = userDao.getUserById(101);
+        log.info(user.getTours().toString());
+        Assert.assertEquals(2, user.getTours().size());
+    }
+
+    @Test
+    public void getAllUsersTest() {
         List<User> users = userDao.getAllUsers();
-        Connection c = db.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT count(*) FROM \"user\"");
-        rs.next();
-        int expectedCount = rs.getInt("count");
-        LOGGER.info("Test passed!!! - " + users.size());
-        assertEquals(expectedCount, users.size());
+       Assert.assertEquals(101, users.size());
     }
 }

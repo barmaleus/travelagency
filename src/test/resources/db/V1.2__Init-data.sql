@@ -1309,6 +1309,7 @@ COPY "user" (id, login, password) FROM stdin;
 98	blackzebra579	frosch
 99	silvergoose415	maxime
 100	goldenswan189	meister
+101	login	password
 \.
 
 COPY review (id, date, text, user_id, tour_id) FROM stdin;

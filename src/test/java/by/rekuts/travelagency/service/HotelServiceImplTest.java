@@ -1,6 +1,6 @@
 package by.rekuts.travelagency.service;
 
-import by.rekuts.travelagency.dao.subjects.Hotel;
+import by.rekuts.travelagency.domain.Hotel;
 import by.rekuts.travelagency.service.impl.HotelServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,24 +20,30 @@ public class HotelServiceImplTest {
 
     @Before
     public void initializeHotelsList() {
-        Hotel hotel1 = new Hotel.HotelBuilder(1, "Tourist")
-                .withOptionalStars(3)
-                .withOptionalWebsite("tourist.by")
-                .withOptionalLocation(BigDecimal.valueOf(85.15465212), BigDecimal.valueOf(-48.85465516))
-                .withOptionalFeatures(new ArrayList<>())
-                .buildHotel();
-        Hotel hotel2 = new Hotel.HotelBuilder(2, "Red Dragon")
-                .withOptionalStars(3)
-                .withOptionalWebsite("redragon.cn")
-                .withOptionalLocation(BigDecimal.valueOf(85.15465212), BigDecimal.valueOf(-48.85465516))
-                .withOptionalFeatures(new ArrayList<>())
-                .buildHotel();
-        Hotel hotel3 = new Hotel.HotelBuilder(3, "Little Italia")
-                .withOptionalStars(3)
-                .withOptionalWebsite("l-italia.by")
-                .withOptionalLocation(BigDecimal.valueOf(85.15465212), BigDecimal.valueOf(-48.85465516))
-                .withOptionalFeatures(new ArrayList<>())
-                .buildHotel();
+        Hotel hotel1 = new Hotel();
+        hotel1.setHotelId(1);
+        hotel1.setName("Tourist");
+        hotel1.setStars(3);
+        hotel1.setWebsite("tourist.by");
+        hotel1.setLatitude(BigDecimal.valueOf(85.15465212));
+        hotel1.setLongitude(BigDecimal.valueOf(-48.85465516));
+        hotel1.setFeatures(new ArrayList<>());
+        Hotel hotel2 = new Hotel();
+        hotel2.setHotelId(2);
+        hotel2.setName("Red Dragon");
+        hotel2.setStars(3);
+        hotel2.setWebsite("redragon.cn");
+        hotel2.setLatitude(BigDecimal.valueOf(85.15465212));
+        hotel2.setLongitude(BigDecimal.valueOf(-48.85465516));
+        hotel2.setFeatures(new ArrayList<>());
+        Hotel hotel3 = new Hotel();
+        hotel3.setHotelId(3);
+        hotel3.setName("Little Italia");
+        hotel3.setStars(3);
+        hotel3.setWebsite("l-italia.by");
+        hotel3.setLatitude(BigDecimal.valueOf(85.15465212));
+        hotel3.setLongitude(BigDecimal.valueOf(-48.85465516));
+        hotel3.setFeatures(new ArrayList<>());
         hotels = Arrays.asList(hotel1, hotel2, hotel3);
     }
 

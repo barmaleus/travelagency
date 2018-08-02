@@ -1,63 +1,66 @@
 package by.rekuts.travelagency.dao.impl;
 
+import by.rekuts.travelagency.aspects.LogReturn;
 import by.rekuts.travelagency.dao.ReviewDao;
-import by.rekuts.travelagency.dao.subjects.Review;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import by.rekuts.travelagency.domain.Review;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
 public class ReviewDaoImpl implements ReviewDao {
-    private static final String INSERT_REVIEW_QUERY = "INSERT INTO review (id, date, text, user_id, tour_id) VALUES (?, ?, ?, ?, ?)" ;
-    private static final String DELETE_REVIEW_QUERY = "DELETE FROM review WHERE id = ?";
-    private static final String GET_REVIEW_BY_ID_QUERY = "SELECT id, date, text, user_id, tour_id FROM review WHERE id = ?";
-    private static final String GET_ALL_REVIEWS_QUERY = "SELECT id, date, text, user_id, tour_id FROM review";
-
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    public ReviewDaoImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void insert(Review review) {
-        jdbcTemplate.update(INSERT_REVIEW_QUERY, review.getId(), review.getDate(), review.getText(), review.getUserId(), review.getTourId());
+        entityManager.persist(review);
     }
 
     @Override
     public void delete(int id) {
-        jdbcTemplate.update(DELETE_REVIEW_QUERY, id);
+        entityManager.remove(entityManager.find(Review.class, id));
     }
 
+    @LogReturn
     @Override
     public Review getReviewById(int id) {
-        return jdbcTemplate.queryForObject(GET_REVIEW_BY_ID_QUERY, new Object[]{id}, (rs, rwNumber) -> {
-            Review review = new Review();
-            review.setId(rs.getInt("id"));
-            review.setDate(rs.getTimestamp("date").toLocalDateTime());
-            review.setText(rs.getString("text"));
-            review.setUserId(rs.getInt("user_id"));
-            review.setTourId(rs.getInt("tour_id"));
-            return review;
-        });
+        return entityManager.find(Review.class, id);
     }
 
     @Override
     public List<Review> getAllReviews() {
-        return jdbcTemplate.query(
-                GET_ALL_REVIEWS_QUERY,
-                (resultSet, i) -> {
-                    Review review = new Review();
-                    review.setId(resultSet.getInt(1));
-                    review.setDate(resultSet.getTimestamp(2).toLocalDateTime());
-                    review.setText(resultSet.getString(3));
-                    review.setUserId(resultSet.getInt(4));
-                    review.setTourId(resultSet.getInt(5));
-                    return review;
-                }
-        );
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Review> criteriaQuery = builder.createQuery(Review.class);
+        Root<Review> root = criteriaQuery.from(Review.class);
+        criteriaQuery.select(root);
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    @LogReturn
+    @Override
+    public List<Review> getReviewsByUserId(int userId) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Review> criteriaQuery = builder.createQuery(Review.class);
+        Root<Review> reviewRoot = criteriaQuery.from(Review.class);
+        criteriaQuery.select(reviewRoot);
+        criteriaQuery.where(builder.equal(reviewRoot.get("user"), userId));
+        return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    @LogReturn
+    @Override
+    public List<Review> getReviewsByTourId(int tourId) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Review> criteriaQuery = builder.createQuery(Review.class);
+        Root<Review> tourRoot = criteriaQuery.from(Review.class);
+        criteriaQuery.select(tourRoot);
+        criteriaQuery.where(builder.equal(tourRoot.get("tour"), tourId));
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }

@@ -1,7 +1,7 @@
 package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.dao.HotelDao;
-import by.rekuts.travelagency.dao.subjects.Hotel;
+import by.rekuts.travelagency.domain.Hotel;
 
 import java.util.List;
 

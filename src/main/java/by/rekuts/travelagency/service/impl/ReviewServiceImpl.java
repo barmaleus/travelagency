@@ -1,12 +1,14 @@
 package by.rekuts.travelagency.service.impl;
 
 import by.rekuts.travelagency.dao.ReviewDao;
-import by.rekuts.travelagency.dao.subjects.Review;
+import by.rekuts.travelagency.domain.Review;
 import by.rekuts.travelagency.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ReviewServiceImpl implements ReviewService {
     @Autowired
     ReviewDao reviewDao;
@@ -29,5 +31,15 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<Review> getAllReviews() {
         return reviewDao.getAllReviews();
+    }
+
+    @Override
+    public List<Review> getReviewsByUserId(int userId) {
+        return reviewDao.getReviewsByUserId(userId);
+    }
+
+    @Override
+    public List<Review> getReviewsByTourId(int tourId) {
+        return reviewDao.getReviewsByTourId(tourId);
     }
 }

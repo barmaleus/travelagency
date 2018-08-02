@@ -1,6 +1,8 @@
 package by.rekuts.travelagency.service;
 
-import by.rekuts.travelagency.dao.subjects.Review;
+import by.rekuts.travelagency.dao.TourDao;
+import by.rekuts.travelagency.dao.UserDao;
+import by.rekuts.travelagency.domain.Review;
 import by.rekuts.travelagency.service.impl.ReviewServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,10 +22,12 @@ public class ReviewServiceImplTest {
 
     @Before
     public void initializeReviewsList() {
+        UserDao userDao = mock(UserDao.class);
+        TourDao tourDao = mock(TourDao.class);
         reviews = Arrays.asList(
-                new Review(1, LocalDateTime.now(), "review text", 5, 67),
-                new Review(2, LocalDateTime.now(), "review text", 4, 86),
-                new Review(3, LocalDateTime.now(), "review text", 9, 3));
+                new Review(1, LocalDateTime.now(), "review text1", userDao.getUserById(5), tourDao.getTourById(67)),
+                new Review(2, LocalDateTime.now(), "review text2", userDao.getUserById(4), tourDao.getTourById(86)),
+                new Review(3, LocalDateTime.now(), "review text3", userDao.getUserById(9), tourDao.getTourById(3)));
     }
 
     @Test
@@ -49,7 +53,7 @@ public class ReviewServiceImplTest {
         ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
         when(reviewService.getReviewById(2)).thenReturn(reviews.get(1));
         Review review = reviewService.getReviewById(2);
-        assertEquals(86, review.getTourId());
+        assertEquals("review text2", review.getText());
     }
 
     @Test
@@ -57,7 +61,7 @@ public class ReviewServiceImplTest {
         ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
         when(reviewService.getReviewById(2)).thenReturn(reviews.get(1));
         Review review = reviewService.getReviewById(2);
-        assertNotEquals(67, review.getTourId());
+        assertNotEquals("review text1", review.getText());
     }
 
     @Test
@@ -74,5 +78,21 @@ public class ReviewServiceImplTest {
         when(reviewService.getAllReviews()).thenReturn(reviews);
         List<Review> reviewList = reviewService.getAllReviews();
         assertNotEquals(0, reviewList.size());
+    }
+
+    @Test
+    public void getReviewsByUserIdTest() {
+        ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
+        when(reviewService.getReviewsByUserId(4)).thenReturn(Arrays.asList(reviews.get(1)));
+        List<Review> reviews = reviewService.getReviewsByUserId(4);
+        assertEquals("review text2", reviews.get(0).getText());
+    }
+
+    @Test
+    public void getReviewsByTourIdTest() {
+        ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
+        when(reviewService.getReviewsByTourId(86)).thenReturn(Arrays.asList(reviews.get(1)));
+        List<Review> reviews = reviewService.getReviewsByTourId(86);
+        assertEquals("review text2", reviews.get(0).getText());
     }
 }

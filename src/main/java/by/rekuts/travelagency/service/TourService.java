@@ -1,8 +1,11 @@
 package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.dao.TourDao;
-import by.rekuts.travelagency.dao.subjects.Tour;
+import by.rekuts.travelagency.domain.Country;
+import by.rekuts.travelagency.domain.Tour;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -40,4 +43,24 @@ public interface TourService {
      * @return list of all tours from database
      */
     List<Tour> getAllTours();
+
+    /**
+     * This method calls {@link TourDao#getToursByCriteria(Country, LocalDate, Integer, Tour.TourType, BigDecimal, BigDecimal, Integer)}
+     * @param country - object of country
+     * @param date - date in LocalDate format
+     * @param duration - duration of tour, days
+     * @param tourType - type of travel
+     * @param minCost - lower bound of price
+     * @param maxCost - upper bound of price
+     * @param stars - hotel stars
+     * @return - list of tours by specified parameters
+     */
+    List<Tour> getToursByCriteria(Country country, LocalDate date, Integer duration,
+                                  Tour.TourType tourType, BigDecimal minCost, BigDecimal maxCost, Integer stars);
+
+    /**
+     * This method calls {@link TourDao#getToursByUserId(int)}
+     * @return list of tours from database for a specified user by his id
+     */
+    List<Tour> getToursByUserId(int userId);
 }

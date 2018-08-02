@@ -1,82 +1,84 @@
 package by.rekuts.travelagency.dao;
 
-import by.rekuts.travelagency.dao.impl.ReviewDaoImpl;
-import by.rekuts.travelagency.dao.subjects.Review;
-import com.opentable.db.postgres.embedded.FlywayPreparer;
-import com.opentable.db.postgres.junit.EmbeddedPostgresRules;
-import com.opentable.db.postgres.junit.PreparedDbRule;
-import org.junit.ClassRule;
+import by.rekuts.travelagency.config.TestRepositoryConfig;
+import by.rekuts.travelagency.domain.Review;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.*;
-import java.time.LocalDateTime;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
+@Slf4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestRepositoryConfig.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@ActiveProfiles("testScope")
+@Transactional
 public class ReviewDaoImplTest {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ReviewDaoImplTest.class);
 
-    private static ReviewDao reviewDao;
-    @ClassRule
-    public static PreparedDbRule db = EmbeddedPostgresRules.preparedDatabase(FlywayPreparer.forClasspathLocation("db"));
+    @Autowired
+    ReviewDao reviewDao;
+    @Autowired
+    TourDao tourDao;
+    @Autowired
+    UserDao userDao;
 
     @Test
-    public void insertTestTrue() throws SQLException {
-        reviewDao = new ReviewDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-        Review review = new Review(18569, LocalDateTime.now(), "Review text", 45, 19);
+    public void insertReviewTestTrue() {
+        Review review = new Review();
+        review.setText("Review text");
+        review.setTour(tourDao.getTourById(1));
+        review.setUser(userDao.getUserById(1));
+        int countFirst = reviewDao.getAllReviews().size();
         reviewDao.insert(review);
-        Connection c = db.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM review WHERE id=18569");
-        rs.next();
-        String reviewText = rs.getString("text");
-        LOGGER.info("Test passed!!! - " + reviewText);
-        assertEquals(review.getText(), reviewText);
+        int countLast = reviewDao.getAllReviews().size();
+        Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
-    public void deleteTestTrue() throws SQLException {
-        reviewDao = new ReviewDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-        Connection c = db.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rsFirst = stmt.executeQuery("SELECT count(*) FROM review");
-        rsFirst.next();
-        int countFirst = rsFirst.getInt("count");
+    public void deleteReviewTestTrue() {
+        int countFirst = reviewDao.getAllReviews().size();
         reviewDao.delete(1);
-        ResultSet rsLast = stmt.executeQuery("SELECT count(*) FROM review");
-        rsLast.next();
-        int countLast = rsLast.getInt("count");
-        LOGGER.info("Test passed!!! - " + (countFirst - countLast));
-        assertEquals(1, countFirst - countLast);
+        int countLast = reviewDao.getAllReviews().size();
+        Assert.assertEquals(1, countFirst - countLast);
     }
 
     @Test
-    public void getReviewByIdTest() throws SQLException {
-        reviewDao = new ReviewDaoImpl(new JdbcTemplate(db.getTestDatabase()));
-        String reviewText = reviewDao.getReviewById(1).getText();
-        Connection c = db.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM review WHERE id=1");
-        rs.next();
-        String expectedText = rs.getString("text");
-        LOGGER.info("Test passed!!! - " + reviewText);
-        assertEquals(expectedText, reviewText);
+    public void getReviewByIdTest() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("travelAgencyPU");
+        EntityManager em = emf.createEntityManager();
+        Review  review = em.find(Review.class, 2);
+        log.info("Found review: " + review.getText());
+        Assert.assertEquals(review.getText(), reviewDao.getReviewById(2).getText());
     }
 
     @Test
-    public void getAllReviewTest() throws SQLException {
-        reviewDao = new ReviewDaoImpl(new JdbcTemplate(db.getTestDatabase()));
+    public void getAllReviewTest() {
         List<Review> reviews = reviewDao.getAllReviews();
-        Connection c = db.getTestDatabase().getConnection();
-        Statement stmt = c.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT count(*) FROM review");
-        rs.next();
-        int expectedCount = rs.getInt("count");
-        LOGGER.info("Test passed!!! - " + reviews.size());
-        assertEquals(expectedCount, reviews.size());
+        Assert.assertEquals(1000, reviews.size());
+    }
+
+    @Test
+    public void getReviewsForSpecificUser() {
+        int userId = 1;
+        List<Review> reviews = reviewDao.getReviewsByUserId(userId);
+        Assert.assertEquals(9, reviews.size());
+    }
+
+    @Test
+    public void getReviewsForSpecificTour() {
+        int userId = 1;
+        List<Review> reviews = reviewDao.getReviewsByTourId(userId);
+        Assert.assertEquals(2, reviews.size());
     }
 }

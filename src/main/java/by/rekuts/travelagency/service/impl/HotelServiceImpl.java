@@ -1,7 +1,7 @@
 package by.rekuts.travelagency.service.impl;
 
 import by.rekuts.travelagency.dao.HotelDao;
-import by.rekuts.travelagency.dao.subjects.Hotel;
+import by.rekuts.travelagency.domain.Hotel;
 import by.rekuts.travelagency.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

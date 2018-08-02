@@ -23,6 +23,10 @@
         <flyway.version>5.1.4</flyway.version>
         <sonar.version>3.4.1.1168</sonar.version>
         <log4j2.version>2.11.0</log4j2.version>
+        <aspectj.weaver.version>1.9.1</aspectj.weaver.version>
+		<lombok.version>1.18.0</lombok.version>
+		<hibernate.version>5.3.3.Final</hibernate.version>
+		<hibernate.validator.version>6.0.11.Final</hibernate.validator.version>
 		<maven.site.version>3.7.1</maven.site.version>
 		<maven.compiler.version>3.7.0</maven.compiler.version>
 		<maven.project.info.reports.version>3.0.0</maven.project.info.reports.version>
@@ -37,13 +41,45 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-            <version>${spring.version}</version>
+			<artifactId>spring-test</artifactId>
+			<version>4.3.18.RELEASE</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.weaver.version}</version>
+        </dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-hikaricp</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.validator.version}</version>
 		</dependency>
 
 		<dependency>
@@ -85,6 +121,13 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>${log4j2.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
