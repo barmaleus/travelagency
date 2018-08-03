@@ -1,13 +1,8 @@
 package by.rekuts.travelagency.config;
 
-import java.util.Properties;
-import javax.sql.DataSource;
-
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -15,14 +10,15 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.sql.DataSource;
+import java.util.Properties;
+
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:hibernate.properties")
 @ComponentScan(basePackages = "by.rekuts.travelagency")
 @EnableAspectJAutoProxy
 public class JpaConf {
-    @Autowired
-    private Environment env;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean getEntityManagerFactoryBean() {
@@ -45,17 +41,15 @@ public class JpaConf {
         config.addDataSourceProperty("databaseName", "travelagency");
         config.addDataSourceProperty("serverName", "127.0.0.1");
 
-        HikariDataSource dataSource = new HikariDataSource(config);
-        return dataSource;
+        return new HikariDataSource(config);
     }
     @Bean
     public PlatformTransactionManager txManager(){
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager(
+        return new JpaTransactionManager(
                 getEntityManagerFactoryBean().getObject());
-        return jpaTransactionManager;
     }
     private Properties jpaProperties() {
-        Properties properties = new Properties();;
+        Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL95Dialect");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.format_sql", "true");

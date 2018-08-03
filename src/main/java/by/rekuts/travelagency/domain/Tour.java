@@ -56,12 +56,12 @@ public class Tour implements Serializable {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "hotel_id")
+    @JoinColumn(name = "hotel_id", nullable = false)
 	private Hotel hotel;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "country_id")
+    @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 
     @ManyToMany(mappedBy = "tours")

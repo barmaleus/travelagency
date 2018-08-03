@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -16,12 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("testScope")
 @Transactional
 public class ReviewDaoImplTest {
@@ -37,6 +36,7 @@ public class ReviewDaoImplTest {
     public void insertReviewTestTrue() {
         Review review = new Review();
         review.setText("Review text");
+        review.setDate(LocalDateTime.now());
         review.setTour(tourDao.getTourById(1));
         review.setUser(userDao.getUserById(1));
         int countFirst = reviewDao.getAllReviews().size();

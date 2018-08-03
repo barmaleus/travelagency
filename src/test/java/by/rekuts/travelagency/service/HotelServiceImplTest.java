@@ -1,9 +1,15 @@
 package by.rekuts.travelagency.service;
 
+import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.Hotel;
 import by.rekuts.travelagency.service.impl.HotelServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +21,10 @@ import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestRepositoryConfig.class)
+@ActiveProfiles("testScope")
+@Transactional
 public class HotelServiceImplTest {
     private List<Hotel> hotels;
 

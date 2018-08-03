@@ -1,9 +1,15 @@
 package by.rekuts.travelagency.service;
 
+import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.Country;
 import by.rekuts.travelagency.service.impl.CountryServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +19,13 @@ import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestRepositoryConfig.class)
+@ActiveProfiles("testScope")
+@Transactional
 public class CountryServiceImplTest {
-    private List<Country> countries;
 
+    private List<Country> countries;
     @Before
     public void initializeCountriesList() {
         countries = Arrays.asList(
@@ -25,12 +35,12 @@ public class CountryServiceImplTest {
     }
 
     @Test
-    public void insertTest(){
-        CountryServiceImpl countryService = mock(CountryServiceImpl.class);
-        doNothing().when(countryService).insert(new Country());
-        countryService.insert(new Country());
-        countryService.insert(new Country(3525, "Any Country"));
-        verify(countryService, times(2)).insert(any());
+    public void insertCountryMockTest(){
+        CountryServiceImpl countryServiceMock = mock(CountryServiceImpl.class);
+        doNothing().when(countryServiceMock).insert(new Country());
+        countryServiceMock.insert(new Country());
+        countryServiceMock.insert(new Country(3525, "Any Country"));
+        verify(countryServiceMock, times(2)).insert(any());
     }
 
     @Test
