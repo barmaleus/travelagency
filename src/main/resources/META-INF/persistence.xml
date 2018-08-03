@@ -19,5 +19,8 @@
     <persistence-unit name="testPU">
         <description>Test Persistent Unit</description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+        </properties>
     </persistence-unit>
 </persistence>

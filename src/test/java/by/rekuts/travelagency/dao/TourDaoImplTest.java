@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,7 +19,6 @@ import java.util.List;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("testScope")
 @Transactional
 public class TourDaoImplTest {
@@ -75,6 +73,12 @@ public class TourDaoImplTest {
     public void getToursByCriteriaTest() {
         List<Tour> tours = tourDao.getToursByCriteria(countryDao.getCountryById(1), null, null, Tour.TourType.cultural, BigDecimal.valueOf(100.00), BigDecimal.valueOf(800.00), null);
         Assert.assertEquals(2, tours.size());
+    }
+
+    @Test
+    public void getToursByCriteriaTest2() {
+        List<Tour> tours = tourDao.getToursByCriteria(null, null, 10, null, BigDecimal.valueOf(100.00), null, 4);
+        Assert.assertEquals(13, tours.size());
     }
 
     @Test

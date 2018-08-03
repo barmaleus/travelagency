@@ -1,11 +1,17 @@
 package by.rekuts.travelagency.service;
 
+import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.dao.TourDao;
 import by.rekuts.travelagency.dao.UserDao;
 import by.rekuts.travelagency.domain.Review;
 import by.rekuts.travelagency.service.impl.ReviewServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -17,6 +23,10 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestRepositoryConfig.class)
+@ActiveProfiles("testScope")
+@Transactional
 public class ReviewServiceImplTest {
     private List<Review> reviews;
 

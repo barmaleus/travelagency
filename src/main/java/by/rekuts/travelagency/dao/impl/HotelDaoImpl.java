@@ -31,7 +31,7 @@ public class HotelDaoImpl implements HotelDao {
                 "SELECT t.id FROM Tour AS t WHERE hotel_id = ?1", Integer.class);
         query.setParameter(1, id);
         List<Integer> results = query.getResultList();
-        if (results == null || results.size() == 0) {
+        if (results == null || results.isEmpty()) {
             entityManager.remove(entityManager.find(Hotel.class, id));
             log.info("Hotel deleted");
         } else {

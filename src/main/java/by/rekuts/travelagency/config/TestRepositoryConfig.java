@@ -13,7 +13,6 @@ import java.sql.SQLException;
 @ComponentScan("by.rekuts.travelagency")
 @EnableTransactionManagement
 @PropertySource("classpath:db")
-@Import(JpaConf.class)
 @EnableAspectJAutoProxy
 public class TestRepositoryConfig {
 

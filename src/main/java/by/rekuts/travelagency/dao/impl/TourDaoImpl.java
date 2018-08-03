@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -101,18 +100,16 @@ public class TourDaoImpl implements TourDao {
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
+    @SuppressWarnings(value = "unchecked")
     @LogReturn
     @Override
     public List<Tour> getToursByUserId(int userId) {
-        Query nativeQuery = entityManager.createNativeQuery("SELECT ut.tour_id FROM user_tour ut WHERE ut.user_id = ?");
+        Query nativeQuery = entityManager.createNativeQuery("SELECT id, photo, date, duration, description, cost, tour_type, hotel_id, country_id " +
+                "FROM tour t INNER JOIN user_tour t2 on t.id = t2.tour_id WHERE t2.user_id = ?", Tour.class);
         nativeQuery.setParameter(1, userId);
-        List<Integer> list = nativeQuery.getResultList();
-        List<Tour> tours = new ArrayList<>();
-        for(Integer i : list) {
-            TypedQuery<Tour> typedQuery =
-                    entityManager.createQuery("SELECT t FROM Tour t WHERE t.id = ?1", Tour.class);
-            typedQuery.setParameter(1, i);
-            tours.add(typedQuery.getSingleResult());
+        List<Tour> tours = nativeQuery.getResultList();
+        for (Tour t : tours) {
+            System.out.println(t.toString());
         }
         return tours;
     }

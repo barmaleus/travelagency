@@ -28,19 +28,20 @@ public class Review implements Serializable {
 	private int id;
 
 	@NotNull
-	@Column(name="date")
+	@Column(name="date", nullable = false)
 	private LocalDateTime date;
 
-	@Column(name="text")
+	@NotNull
+	@Column(name="text", nullable = false)
 	private String text;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "tour_id")
+	@JoinColumn(name = "tour_id", nullable = false)
 	private Tour tour;
 }

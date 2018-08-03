@@ -3,7 +3,6 @@ package by.rekuts.travelagency.domain;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -21,10 +20,10 @@ import java.util.List;
 @Data @NoArgsConstructor
 @Entity
 @Table(name = "hotel")
-@TypeDefs({@TypeDef(
+@TypeDef(
         name = "features",
         typeClass = HotelEnumArrayType.class
-)})
+)
 public class Hotel implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
