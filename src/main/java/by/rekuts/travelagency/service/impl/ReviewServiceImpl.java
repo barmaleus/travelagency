@@ -1,6 +1,7 @@
 package by.rekuts.travelagency.service.impl;
 
-import by.rekuts.travelagency.dao.ReviewDao;
+import by.rekuts.travelagency.repository.ReviewRepository;
+import by.rekuts.travelagency.repository.Specification;
 import by.rekuts.travelagency.domain.Review;
 import by.rekuts.travelagency.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,35 +12,20 @@ import java.util.List;
 @Service
 public class ReviewServiceImpl implements ReviewService {
     @Autowired
-    ReviewDao reviewDao;
+    ReviewRepository reviewRepository;
 
     @Override
     public void insert(Review review) {
-        reviewDao.insert(review);
+        reviewRepository.insert(review);
     }
 
     @Override
     public void delete(int id) {
-        reviewDao.delete(id);
+        reviewRepository.delete(id);
     }
 
     @Override
-    public Review getReviewById(int id) {
-        return reviewDao.getReviewById(id);
-    }
-
-    @Override
-    public List<Review> getAllReviews() {
-        return reviewDao.getAllReviews();
-    }
-
-    @Override
-    public List<Review> getReviewsByUserId(int userId) {
-        return reviewDao.getReviewsByUserId(userId);
-    }
-
-    @Override
-    public List<Review> getReviewsByTourId(int tourId) {
-        return reviewDao.getReviewsByTourId(tourId);
+    public List<Review> getList(Specification specification) {
+        return reviewRepository.getList(specification);
     }
 }

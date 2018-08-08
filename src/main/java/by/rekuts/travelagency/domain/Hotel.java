@@ -29,7 +29,7 @@ public class Hotel implements Serializable {
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
 	@Column(name="id", nullable = false)
-	private int hotelId;
+	private int id;
 
 	@NotNull
 	@Column(name = "name", nullable = false)

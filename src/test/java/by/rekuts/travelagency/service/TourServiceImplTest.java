@@ -1,9 +1,10 @@
 package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
-import by.rekuts.travelagency.dao.CountryDao;
-import by.rekuts.travelagency.dao.HotelDao;
+import by.rekuts.travelagency.domain.Country;
+import by.rekuts.travelagency.domain.Hotel;
 import by.rekuts.travelagency.domain.Tour;
+import by.rekuts.travelagency.repository.TourSpecification;
 import by.rekuts.travelagency.service.impl.TourServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -33,8 +35,10 @@ public class TourServiceImplTest {
 
     @Before
     public void initializeToursList() {
-        HotelDao hotelDao = mock(HotelDao.class);
-        CountryDao countryDao = mock(CountryDao.class);
+        Hotel hotel1 = new Hotel();
+        hotel1.setId(68);
+        Country country1 = new Country();
+        country1.setId(91);
         Tour tour1 = new Tour();
         tour1.setId(1);
         tour1.setPhoto("photo.jpg");
@@ -43,8 +47,12 @@ public class TourServiceImplTest {
         tour1.setDescription("Interesting tour1");
         tour1.setCost(BigDecimal.valueOf(900));
         tour1.setTourType(Tour.TourType.cultural);
-        tour1.setHotel(hotelDao.getHotelById(68));
-        tour1.setCountry(countryDao.getCountryById(91));
+        tour1.setHotel(hotel1);
+        tour1.setCountry(country1);
+        Hotel hotel2 = new Hotel();
+        hotel2.setId(99);
+        Country country2 = new Country();
+        country2.setId(16);
         Tour tour2 = new Tour();
         tour2.setId(2);
         tour2.setPhoto("photo.jpg");
@@ -53,8 +61,12 @@ public class TourServiceImplTest {
         tour2.setDescription("Interesting tour2");
         tour2.setCost(BigDecimal.valueOf(900));
         tour2.setTourType(Tour.TourType.safari);
-        tour2.setHotel(hotelDao.getHotelById(99));
-        tour2.setCountry(countryDao.getCountryById(16));
+        tour2.setHotel(hotel2);
+        tour2.setCountry(country2);
+        Hotel hotel3 = new Hotel();
+        hotel3.setId(33);
+        Country country3 = new Country();
+        country3.setId(14);
         Tour tour3 = new Tour();
         tour3.setId(3);
         tour3.setPhoto("photo.jpg");
@@ -63,8 +75,8 @@ public class TourServiceImplTest {
         tour3.setDescription("Interesting tour3");
         tour3.setCost(BigDecimal.valueOf(900));
         tour3.setTourType(Tour.TourType.safari);
-        tour3.setHotel(hotelDao.getHotelById(33));
-        tour3.setCountry(countryDao.getCountryById(14));
+        tour3.setHotel(hotel3);
+        tour1.setCountry(country3);
         tours = Arrays.asList(tour1, tour2, tour3);
     }
 
@@ -87,52 +99,58 @@ public class TourServiceImplTest {
     }
 
     @Test
-    public void getReviewByIdTestTrue() {
+    public void getTourByIdTestTrue() {
         TourServiceImpl tourService = mock(TourServiceImpl.class);
-        when(tourService.getTourById(2)).thenReturn(tours.get(1));
-        Tour tour = tourService.getTourById(2);
+        TourSpecification specification = new TourSpecification(2);
+        List<Tour> singletonList = Collections.singletonList(tours.get(1));
+        when(tourService.getList(specification)).thenReturn(singletonList);
+        Tour tour = tourService.getList(specification).get(0);
         assertEquals("Interesting tour2", tour.getDescription());
     }
 
     @Test
-    public void getReviewByIdTestFalse() {
+    public void getTourByIdTestFalse() {
         TourServiceImpl tourService = mock(TourServiceImpl.class);
-        when(tourService.getTourById(2)).thenReturn(tours.get(1));
-        Tour tour = tourService.getTourById(2);
+        TourSpecification specification = new TourSpecification(2);
+        List<Tour> singletonList = Collections.singletonList(tours.get(1));
+        when(tourService.getList(specification)).thenReturn(singletonList);
+        Tour tour = tourService.getList(specification).get(0);
         assertNotEquals("Interesting tour1", tour.getDescription());
     }
 
     @Test
-    public void getAllReviewsTestTrue() {
+    public void getAllToursTestTrue() {
         TourServiceImpl tourService = mock(TourServiceImpl.class);
-        when(tourService.getAllTours()).thenReturn(tours);
-        List<Tour> tourList = tourService.getAllTours();
+        TourSpecification specification = new TourSpecification();
+        when(tourService.getList(specification)).thenReturn(tours);
+        List<Tour> tourList = tourService.getList(specification);
         assertEquals(3, tourList.size());
     }
 
     @Test
-    public void getAllReviewsTestFalse() {
+    public void getAllToursTestFalse() {
         TourServiceImpl tourService = mock(TourServiceImpl.class);
-        when(tourService.getAllTours()).thenReturn(tours);
-        List<Tour> tourList = tourService.getAllTours();
+        TourSpecification specification = new TourSpecification();
+        when(tourService.getList(specification)).thenReturn(tours);
+        List<Tour> tourList = tourService.getList(specification);
         assertNotEquals(0, tourList.size());
     }
 
-    @Test
-    public void getToursByCriteria() {
-        TourServiceImpl tourService = mock(TourServiceImpl.class);
-        when(tourService.getToursByCriteria(null, null, null, Tour.TourType.safari,
-                null, null, null)).thenReturn(Arrays.asList(tours.get(1), tours.get(2)));
-        List<Tour> result = tourService.getToursByCriteria(null, null, null,
-                Tour.TourType.safari, null, null, null);
-        assertEquals(2, result.size());
-    }
-
-    @Test
-    public void getToursByUserId() {
-        TourServiceImpl tourService = mock(TourServiceImpl.class);
-        when(tourService.getToursByUserId(2)).thenReturn(tours);
-        List<Tour> result = tourService.getToursByUserId(2);
-        assertEquals(3, result.size());
-    }
+//    @Test
+//    public void getToursByCriteria() {
+//        TourServiceImpl tourService = mock(TourServiceImpl.class);
+//        when(tourService.getToursByCriteria(null, null, null, Tour.TourType.safari,
+//                null, null, null)).thenReturn(Arrays.asList(tours.get(1), tours.get(2)));
+//        List<Tour> result = tourService.getToursByCriteria(null, null, null,
+//                Tour.TourType.safari, null, null, null);
+//        assertEquals(2, result.size());
+//    }
+//
+//    @Test
+//    public void getToursByUserId() {
+//        TourServiceImpl tourService = mock(TourServiceImpl.class);
+//        when(tourService.getToursByUserId(2)).thenReturn(tours);
+//        List<Tour> result = tourService.getToursByUserId(2);
+//        assertEquals(3, result.size());
+//    }
 }

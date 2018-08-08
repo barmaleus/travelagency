@@ -34,7 +34,7 @@ SET default_with_oids = false;
 
 CREATE TABLE country (
     id integer NOT NULL,
-    name character(80) NOT NULL
+    name character(40) NOT NULL
 );
 
 ALTER TABLE country OWNER TO postgres;
@@ -74,7 +74,7 @@ CREATE TABLE tour (
     date date,
     duration integer,
     description text,
-    cost money,
+    cost numeric,
     tour_type tour_type,
     hotel_id integer,
     country_id integer

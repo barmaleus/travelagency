@@ -1,6 +1,7 @@
 package by.rekuts.travelagency.service.impl;
 
-import by.rekuts.travelagency.dao.UserDao;
+import by.rekuts.travelagency.repository.Specification;
+import by.rekuts.travelagency.repository.UserRepository;
 import by.rekuts.travelagency.domain.User;
 import by.rekuts.travelagency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +12,20 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserDao userDao;
+    UserRepository userRepository;
 
     @Override
     public void insert(User user) {
-        userDao.insert(user);
+        userRepository.insert(user);
     }
 
     @Override
     public void delete(int id) {
-        userDao.delete(id);
+        userRepository.delete(id);
     }
 
     @Override
-    public User getUserById(int id) {
-        return userDao.getUserById(id);
-    }
-
-    @Override
-    public List<User> getAllUsers() {
-        return userDao.getAllUsers();
+    public List<User> getList(Specification specification) {
+        return userRepository.getList(specification);
     }
 }

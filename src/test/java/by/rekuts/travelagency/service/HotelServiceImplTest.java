@@ -2,6 +2,7 @@ package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.Hotel;
+import by.rekuts.travelagency.repository.HotelSpecification;
 import by.rekuts.travelagency.service.impl.HotelServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -31,7 +33,7 @@ public class HotelServiceImplTest {
     @Before
     public void initializeHotelsList() {
         Hotel hotel1 = new Hotel();
-        hotel1.setHotelId(1);
+        hotel1.setId(1);
         hotel1.setName("Tourist");
         hotel1.setStars(3);
         hotel1.setWebsite("tourist.by");
@@ -39,7 +41,7 @@ public class HotelServiceImplTest {
         hotel1.setLongitude(BigDecimal.valueOf(-48.85465516));
         hotel1.setFeatures(new ArrayList<>());
         Hotel hotel2 = new Hotel();
-        hotel2.setHotelId(2);
+        hotel2.setId(2);
         hotel2.setName("Red Dragon");
         hotel2.setStars(3);
         hotel2.setWebsite("redragon.cn");
@@ -47,7 +49,7 @@ public class HotelServiceImplTest {
         hotel2.setLongitude(BigDecimal.valueOf(-48.85465516));
         hotel2.setFeatures(new ArrayList<>());
         Hotel hotel3 = new Hotel();
-        hotel3.setHotelId(3);
+        hotel3.setId(3);
         hotel3.setName("Little Italia");
         hotel3.setStars(3);
         hotel3.setWebsite("l-italia.by");
@@ -78,32 +80,38 @@ public class HotelServiceImplTest {
     @Test
     public void getHotelByIdTestTrue() {
         HotelServiceImpl hotelService = mock(HotelServiceImpl.class);
-        when(hotelService.getHotelById(2)).thenReturn(hotels.get(1));
-        Hotel hotel = hotelService.getHotelById(2);
+        HotelSpecification specification = new HotelSpecification(2);
+        List<Hotel> singletonList = Collections.singletonList(hotels.get(1));
+        when(hotelService.getList(specification)).thenReturn(singletonList);
+        Hotel hotel = hotelService.getList(specification).get(0);
         assertEquals("Red Dragon", hotel.getName());
     }
 
     @Test
     public void getHotelByIdTestFalse() {
         HotelServiceImpl hotelService = mock(HotelServiceImpl.class);
-        when(hotelService.getHotelById(2)).thenReturn(hotels.get(1));
-        Hotel hotel = hotelService.getHotelById(2);
+        HotelSpecification specification = new HotelSpecification(2);
+        List<Hotel> singletonList = Collections.singletonList(hotels.get(1));
+        when(hotelService.getList(specification)).thenReturn(singletonList);
+        Hotel hotel = hotelService.getList(specification).get(0);
         assertNotEquals("Tourist", hotel.getName());
     }
 
     @Test
     public void getAllHotelsTestTrue() {
         HotelServiceImpl hotelServiceMock = mock(HotelServiceImpl.class);
-        when(hotelServiceMock.getAllHotels()).thenReturn(hotels);
-        List<Hotel> hotelList = hotelServiceMock.getAllHotels();
+        HotelSpecification specification = new HotelSpecification();
+        when(hotelServiceMock.getList(specification)).thenReturn(hotels);
+        List<Hotel> hotelList = hotelServiceMock.getList(specification);
         assertEquals(3, hotelList.size());
     }
 
     @Test
     public void getAllHotelsTestFalse() {
         HotelServiceImpl hotelServiceMock = mock(HotelServiceImpl.class);
-        when(hotelServiceMock.getAllHotels()).thenReturn(hotels);
-        List<Hotel> hotelList = hotelServiceMock.getAllHotels();
+        HotelSpecification specification = new HotelSpecification();
+        when(hotelServiceMock.getList(specification)).thenReturn(hotels);
+        List<Hotel> hotelList = hotelServiceMock.getList(specification);
         assertNotEquals(0, hotelList.size());
     }
 }

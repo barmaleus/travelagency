@@ -18,7 +18,7 @@ public class TestRepositoryConfig {
 
     @Bean
     @Profile("testScope")
-    public DataSource travalAgencyDataSourse() throws IOException, SQLException {
+    public DataSource travelAgencyDataSource() throws IOException, SQLException {
         final FlywayPreparer preparer = FlywayPreparer.forClasspathLocation("db");
         EmbeddedPostgres embeddedPostgres = EmbeddedPostgres.start();
         final DataSource postgresDatabase = embeddedPostgres.getPostgresDatabase();
