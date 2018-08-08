@@ -1,6 +1,7 @@
 package by.rekuts.travelagency.service.impl;
 
-import by.rekuts.travelagency.dao.HotelDao;
+import by.rekuts.travelagency.repository.HotelRepository;
+import by.rekuts.travelagency.repository.Specification;
 import by.rekuts.travelagency.domain.Hotel;
 import by.rekuts.travelagency.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +12,20 @@ import java.util.List;
 @Service
 public class HotelServiceImpl implements HotelService {
     @Autowired
-    HotelDao hotelDao;
+    HotelRepository hotelRepository;
 
     @Override
     public void insert(Hotel hotel) {
-        hotelDao.insert(hotel);
+        hotelRepository.insert(hotel);
     }
 
     @Override
     public void delete(int id) {
-        hotelDao.delete(id);
+        hotelRepository.delete(id);
     }
 
     @Override
-    public Hotel getHotelById(int id) {
-        return hotelDao.getHotelById(id);
-    }
-
-    @Override
-    public List<Hotel> getAllHotels() {
-        return hotelDao.getAllHotels();
+    public List<Hotel> getList(Specification specification) {
+        return hotelRepository.getList(specification);
     }
 }

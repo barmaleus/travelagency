@@ -1,7 +1,10 @@
 package by.rekuts.travelagency.service.integration;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
+import by.rekuts.travelagency.repository.ReviewSpecification;
+import by.rekuts.travelagency.repository.TourSpecification;
 import by.rekuts.travelagency.domain.Review;
+import by.rekuts.travelagency.repository.UserSpecification;
 import by.rekuts.travelagency.service.ReviewService;
 import by.rekuts.travelagency.service.TourService;
 import by.rekuts.travelagency.service.UserService;
@@ -39,15 +42,15 @@ public class ReviewServiceImplTest {
     public void initializeReview() {
         review.setDate(LocalDateTime.now());
         review.setText("Interesting tour");
-        review.setUser(userService.getUserById(5));
-        review.setTour(tourService.getTourById(47));
+        review.setUser(userService.getList(new UserSpecification(5)).get(0));
+        review.setTour(tourService.getList(new TourSpecification(47)).get(0));
     }
 
     @Test
     public void insertReviewTest(){
-        int countReviewsFirst = reviewService.getAllReviews().size();
+        int countReviewsFirst = reviewService.getList(new ReviewSpecification()).size();
         reviewService.insert(review);
-        int countReviewsLast = reviewService.getAllReviews().size();
+        int countReviewsLast = reviewService.getList(new ReviewSpecification()).size();
         assertEquals(1, countReviewsLast - countReviewsFirst);
     }
 
@@ -59,45 +62,56 @@ public class ReviewServiceImplTest {
 
     @Test
     public void deleteReviewTest(){
-        int countReviewsFirst = reviewService.getAllReviews().size();
+        int countReviewsFirst = reviewService.getList(new ReviewSpecification()).size();
         reviewService.delete(1);
-        int countReviewsLast = reviewService.getAllReviews().size();
+        int countReviewsLast = reviewService.getList(new ReviewSpecification()).size();
         assertEquals(1, countReviewsFirst - countReviewsLast);
     }
 
     @Test
     public void getReviewByIdTestTrue() {
-        Review review = reviewService.getReviewById(2);
+        Review review = reviewService.getList(new ReviewSpecification(2)).get(0);
         assertEquals("Integer ac neque. Duis bibendum.", review.getText());
     }
 
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void getReviewByIdTestFalse1() {
+        reviewService.getList(new ReviewSpecification(1001)).get(0);
+    }
+
     @Test
-    public void getReviewByIdTestFalse() {
-        Review review = reviewService.getReviewById(1001);
-        assertEquals(null, review);
+    public void getReviewByIdTestFalse2() {
+        List<Review> reviews = reviewService.getList(new ReviewSpecification(1001));
+        assertTrue(reviews.isEmpty());
     }
 
     @Test
     public void getAllReviewsTestTrue() {
-        List<Review> reviewList = reviewService.getAllReviews();
+        List<Review> reviewList = reviewService.getList(new ReviewSpecification());
         assertEquals(1000, reviewList.size());
     }
 
     @Test
     public void getReviewsByUserIdTest() {
-        List<Review> reviews = reviewService.getReviewsByUserId(4);
+        ReviewSpecification specification = new ReviewSpecification();
+        specification.setUserId(4);
+        List<Review> reviews = reviewService.getList(specification);
         assertEquals("Phasellus id sapien in sapien iaculis congue.", reviews.get(0).getText());
     }
 
     @Test
     public void getReviewsByTourIdTestTrue() {
-        List<Review> reviews = reviewService.getReviewsByTourId(81);
+        ReviewSpecification specification = new ReviewSpecification();
+        specification.setTourId(81);
+        List<Review> reviews = reviewService.getList(specification);
         assertEquals("Fusce consequat. Nulla nisl.", reviews.get(0).getText());
     }
 
     @Test
     public void getReviewsByTourIdTestFasle() {
-        List<Review> reviews = reviewService.getReviewsByTourId(86);
+        ReviewSpecification specification = new ReviewSpecification();
+        specification.setTourId(85);
+        List<Review> reviews = reviewService.getList(specification);
         assertTrue(reviews.isEmpty());
     }
 }

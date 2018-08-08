@@ -1,6 +1,7 @@
 package by.rekuts.travelagency.service;
 
-import by.rekuts.travelagency.dao.UserDao;
+import by.rekuts.travelagency.repository.Specification;
+import by.rekuts.travelagency.repository.UserRepository;
 import by.rekuts.travelagency.domain.User;
 
 import java.util.List;
@@ -8,12 +9,12 @@ import java.util.List;
 /**
  * Interface UserService concerns to Service layer.
  * Realisations of this interface has access to DAO layer
- * in the face of UserDao interface and could call its methods.
+ * in the face of UserRepository interface and could call its methods.
  */
 public interface UserService {
 
     /**
-     * This method calls {@link UserDao#insert(User)}
+     * This method calls {@link UserRepository#insert(User)}
      * It inserts object of User class to database
      * @param user - object of user
      * @see User
@@ -21,23 +22,16 @@ public interface UserService {
     void insert(User user);
 
     /**
-     * This method calls {@link UserDao#delete(int)}
+     * This method calls {@link UserRepository#delete(int)}
      * It deletes user with id <b>id</b> from database
      * @param id - id of the user
-     * @see User#userId
+     * @see User#id
      */
     void delete(int id);
 
     /**
-     * This method calls {@link UserDao#getUserById(int)}
-     * @param id - id of the user
-     * @return object of the user with id <b>id</b> from database if it exist
+     * This method calls {@link UserRepository#getList(Specification)}
+     * @return list of all users from database or list with one user by id usind specification
      */
-    User getUserById(int id);
-
-    /**
-     * This method calls {@link UserDao#getAllUsers()}
-     * @return list of all users from database
-     */
-    List<User> getAllUsers();
+    List<User> getList(Specification specification);
 }

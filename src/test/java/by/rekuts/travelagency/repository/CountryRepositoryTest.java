@@ -1,4 +1,4 @@
-package by.rekuts.travelagency.dao;
+package by.rekuts.travelagency.repository;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.Country;
@@ -22,26 +22,29 @@ import java.util.List;
 @ContextConfiguration(classes = TestRepositoryConfig.class)
 @ActiveProfiles("testScope")
 @Transactional
-public class CountryDaoImplTest {
+public class CountryRepositoryTest {
 
     @Autowired
-    CountryDao countryDao;
+    CountryRepository countryRepository;
 
     @Test
     public void insertCountryTestTrue() {
         Country country = new Country();
         country.setName("Užupis");
-        int countFirst = countryDao.getAllCountries().size();
-        countryDao.insert(country);
-        int countLast = countryDao.getAllCountries().size();
+        CountrySpecification specification = new CountrySpecification();
+        int countFirst = countryRepository.getList(specification).size();
+        countryRepository.insert(country);
+        int countLast = countryRepository.getList(specification).size();
         Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
     public void deleteCountryTest() {
-        int countFirst = countryDao.getAllCountries().size();
-        countryDao.delete(230);
-        int countLast = countryDao.getAllCountries().size();
+        CountrySpecification specification = new CountrySpecification();
+        specification.setId(230);
+        int countFirst = countryRepository.getList(specification).size();
+        countryRepository.delete(230);
+        int countLast = countryRepository.getList(specification).size();
         Assert.assertEquals(1, countFirst - countLast);
     }
 
@@ -51,12 +54,13 @@ public class CountryDaoImplTest {
         EntityManager em = emf.createEntityManager();
         Country  country = em.find(Country.class, 2);
         log.info("Found country: " + country.getName());
-        Assert.assertEquals(country.getName(), countryDao.getCountryById(2).getName());
+        Assert.assertEquals(country.getName(), (countryRepository.getList(new CountrySpecification(2)).get(0)).getName());
     }
 
     @Test
     public void getAllCountriesTest() {
-        List<Country> countries = countryDao.getAllCountries();
+        CountrySpecification specification = new CountrySpecification();
+        List<Country> countries = countryRepository.getList(specification);
         Assert.assertEquals(199, countries.size());
     }
 }

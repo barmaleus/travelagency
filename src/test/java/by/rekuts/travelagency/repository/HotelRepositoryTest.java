@@ -1,4 +1,4 @@
-package by.rekuts.travelagency.dao;
+package by.rekuts.travelagency.repository;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.Hotel;
@@ -20,10 +20,10 @@ import java.util.List;
 @ContextConfiguration(classes = TestRepositoryConfig.class)
 @ActiveProfiles("testScope")
 @Transactional
-public class HotelDaoImplTest {
+public class HotelRepositoryTest {
 
     @Autowired
-    HotelDao hotelDao;
+    HotelRepository hotelRepository;
 
     @Test
     public void insertTest() {
@@ -34,37 +34,37 @@ public class HotelDaoImplTest {
         hotel.setLatitude(BigDecimal.valueOf(44.5468));
         hotel.setLongitude(BigDecimal.valueOf(-78.64));
         hotel.setFeatures(new ArrayList<>(Arrays.asList(Hotel.Features.A.getValue(), Hotel.Features.C.getValue())));
-        int countFirst = hotelDao.getAllHotels().size();
-        hotelDao.insert(hotel);
-        int countLast = hotelDao.getAllHotels().size();
+        int countFirst = hotelRepository.getList(new HotelSpecification()).size();
+        hotelRepository.insert(hotel);
+        int countLast = hotelRepository.getList(new HotelSpecification()).size();
         Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
     public void deleteHotelWithRefferenceTestFalse() {
-        int countFirst = hotelDao.getAllHotels().size();
-        hotelDao.delete(100);
-        int countLast = hotelDao.getAllHotels().size();
+        int countFirst = hotelRepository.getList(new HotelSpecification()).size();
+        hotelRepository.delete(100);
+        int countLast = hotelRepository.getList(new HotelSpecification()).size();
         Assert.assertEquals(0, countFirst - countLast);
     }
 
     @Test
     public void deleteHotelTestTrue() {
-        int countFirst = hotelDao.getAllHotels().size();
-        hotelDao.delete(101);
-        int countLast = hotelDao.getAllHotels().size();
+        int countFirst = hotelRepository.getList(new HotelSpecification()).size();
+        hotelRepository.delete(101);
+        int countLast = hotelRepository.getList(new HotelSpecification()).size();
         Assert.assertEquals(1, countFirst - countLast);
     }
 
     @Test
     public void getHotelByIdTestTrue() {
-        Hotel hotel = hotelDao.getHotelById(1);
+        Hotel hotel = hotelRepository.getList(new HotelSpecification(1)).get(0);
         Assert.assertEquals("Etiam Imperdiet Corporation", hotel.getName());
     }
 
     @Test
     public void getAllHotelsTestTrue() {
-        List<Hotel> hotels = hotelDao.getAllHotels();
+        List<Hotel> hotels = hotelRepository.getList(new HotelSpecification());
         Assert.assertEquals(101, hotels.size());
     }
 }

@@ -1,6 +1,7 @@
 package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
+import by.rekuts.travelagency.repository.CountrySpecification;
 import by.rekuts.travelagency.domain.Country;
 import by.rekuts.travelagency.service.impl.CountryServiceImpl;
 import org.junit.Before;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -55,32 +57,38 @@ public class CountryServiceImplTest {
     @Test
     public void getCountryByIdTestTrue(){
         CountryServiceImpl countryService = mock(CountryServiceImpl.class);
-        when(countryService.getCountryById(2)).thenReturn(countries.get(1));
-        Country country = countryService.getCountryById(2);
+        CountrySpecification specification = new CountrySpecification(2);
+        List<Country> singletonList = Collections.singletonList(countries.get(1));
+        when(countryService.getList(specification)).thenReturn(singletonList);
+        Country country = countryService.getList(specification).get(0);
         assertEquals("India", country.getName());
     }
 
     @Test
     public void getCountryByIdTestFalse(){
         CountryServiceImpl countryService = mock(CountryServiceImpl.class);
-        when(countryService.getCountryById(2)).thenReturn(countries.get(1));
-        Country country = countryService.getCountryById(2);
+        CountrySpecification specification = new CountrySpecification(2);
+        List<Country> singletonList = Collections.singletonList(countries.get(1));
+        when(countryService.getList(specification)).thenReturn(singletonList);
+        Country country = countryService.getList(specification).get(0);
         assertNotEquals("Russia", country.getName());
     }
 
     @Test
     public void getAllCountriesTestTrue(){
         CountryServiceImpl countryServiceMock = mock(CountryServiceImpl.class);
-        when(countryServiceMock.getAllCountries()).thenReturn(countries);
-        List<Country> countryList = countryServiceMock.getAllCountries();
+        CountrySpecification specification = new CountrySpecification();
+        when(countryServiceMock.getList(specification)).thenReturn(countries);
+        List<Country> countryList = countryServiceMock.getList(specification);
         assertEquals(3, countryList.size());
     }
 
     @Test
     public void getAllCountriesTestFalse() {
         CountryServiceImpl countryServiceMock = mock(CountryServiceImpl.class);
-        when(countryServiceMock.getAllCountries()).thenReturn(countries);
-        List<Country> countryList = countryServiceMock.getAllCountries();
+        CountrySpecification specification = new CountrySpecification();
+        when(countryServiceMock.getList(specification)).thenReturn(countries);
+        List<Country> countryList = countryServiceMock.getList(specification);
         assertNotEquals(0, countryList.size());
     }
 }

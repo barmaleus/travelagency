@@ -1,4 +1,4 @@
-package by.rekuts.travelagency.dao;
+package by.rekuts.travelagency.repository;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.Review;
@@ -23,33 +23,33 @@ import java.util.List;
 @ContextConfiguration(classes = TestRepositoryConfig.class)
 @ActiveProfiles("testScope")
 @Transactional
-public class ReviewDaoImplTest {
+public class ReviewRepositoryImplTest {
 
     @Autowired
-    ReviewDao reviewDao;
+    ReviewRepository reviewRepository;
     @Autowired
-    TourDao tourDao;
+    TourRepository tourRepository;
     @Autowired
-    UserDao userDao;
+    UserRepository userRepository;
 
     @Test
     public void insertReviewTestTrue() {
         Review review = new Review();
         review.setText("Review text");
         review.setDate(LocalDateTime.now());
-        review.setTour(tourDao.getTourById(1));
-        review.setUser(userDao.getUserById(1));
-        int countFirst = reviewDao.getAllReviews().size();
-        reviewDao.insert(review);
-        int countLast = reviewDao.getAllReviews().size();
+        review.setTour(tourRepository.getList(new TourSpecification(1)).get(0));
+        review.setUser(userRepository.getList(new UserSpecification(1)).get(0));
+        int countFirst = reviewRepository.getList(new ReviewSpecification()).size();
+        reviewRepository.insert(review);
+        int countLast = reviewRepository.getList(new ReviewSpecification()).size();
         Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
     public void deleteReviewTestTrue() {
-        int countFirst = reviewDao.getAllReviews().size();
-        reviewDao.delete(1);
-        int countLast = reviewDao.getAllReviews().size();
+        int countFirst = reviewRepository.getList(new ReviewSpecification()).size();
+        reviewRepository.delete(1);
+        int countLast = reviewRepository.getList(new ReviewSpecification()).size();
         Assert.assertEquals(1, countFirst - countLast);
     }
 
@@ -59,26 +59,30 @@ public class ReviewDaoImplTest {
         EntityManager em = emf.createEntityManager();
         Review  review = em.find(Review.class, 2);
         log.info("Found review: " + review.getText());
-        Assert.assertEquals(review.getText(), reviewDao.getReviewById(2).getText());
+        Assert.assertEquals(review.getText(), reviewRepository.getList(new ReviewSpecification(2)).get(0).getText());
     }
 
     @Test
     public void getAllReviewTest() {
-        List<Review> reviews = reviewDao.getAllReviews();
+        List<Review> reviews = reviewRepository.getList(new ReviewSpecification());
         Assert.assertEquals(1000, reviews.size());
     }
 
     @Test
     public void getReviewsForSpecificUser() {
         int userId = 1;
-        List<Review> reviews = reviewDao.getReviewsByUserId(userId);
+        ReviewSpecification specification = new ReviewSpecification();
+        specification.setUserId(userId);
+        List<Review> reviews = reviewRepository.getList(specification);
         Assert.assertEquals(9, reviews.size());
     }
 
     @Test
     public void getReviewsForSpecificTour() {
-        int userId = 1;
-        List<Review> reviews = reviewDao.getReviewsByTourId(userId);
+        int tourId = 1;
+        ReviewSpecification specification = new ReviewSpecification();
+        specification.setTourId(tourId);
+        List<Review> reviews = reviewRepository.getList(specification);
         Assert.assertEquals(2, reviews.size());
     }
 }

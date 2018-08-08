@@ -1,14 +1,14 @@
-package by.rekuts.travelagency.dao;
+package by.rekuts.travelagency.repository;
 
 import java.util.List;
 
 import by.rekuts.travelagency.domain.Country;
 
 /**
- * Interface CountryDao concerns to DAO layer.
+ * Interface CountryRepository concerns to DAO layer.
  * Realisations of this interface do some CRUD operations with Country objects in database.
  */
-public interface CountryDao {
+public interface CountryRepository {
 
 	/**
 	 * This method inserts object of Country class to database
@@ -25,13 +25,7 @@ public interface CountryDao {
 	void delete(int id);
 
 	/**
-	 * @param id - id of the country
-	 * @return object of the country with id <b>id</b> from database if it exist
+	 * @return list of all countries from database or by id
 	 */
-	Country getCountryById(int id);
-
-	/**
-	 * @return list of all countries from database
-	 */
-	List<Country> getAllCountries();
+	List<Country> getList(Specification specification);
 }

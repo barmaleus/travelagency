@@ -1,6 +1,7 @@
 package by.rekuts.travelagency.service.integration;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
+import by.rekuts.travelagency.repository.HotelSpecification;
 import by.rekuts.travelagency.domain.Hotel;
 import by.rekuts.travelagency.service.HotelService;
 import org.junit.Assert;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
@@ -42,9 +44,9 @@ public class HotelSerivceImplTest {
 
     @Test
     public void insertHotelTest(){
-        int countHotelsFirst = hotelService.getAllHotels().size();
+        int countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
         hotelService.insert(hotel);
-        int countHotelsLast = hotelService.getAllHotels().size();
+        int countHotelsLast = hotelService.getList(new HotelSpecification()).size();
         assertEquals(1, countHotelsLast - countHotelsFirst);
     }
 
@@ -56,36 +58,41 @@ public class HotelSerivceImplTest {
 
     @Test
     public void deleteHotelTestTrue(){
-        int countHotelsFirst = hotelService.getAllHotels().size();
+        int countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
         hotelService.delete(101);
-        int countHotelsLast = hotelService.getAllHotels().size();
+        int countHotelsLast = hotelService.getList(new HotelSpecification()).size();
         assertEquals(1, countHotelsFirst - countHotelsLast);
     }
 
     @Test
     public void deleteHotelTestFalseForeignKeys(){
-        int countHotelsFirst = hotelService.getAllHotels().size();
+        int countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
         hotelService.delete(1);
-        int countHotelsLast = hotelService.getAllHotels().size();
+        int countHotelsLast = hotelService.getList(new HotelSpecification()).size();
         assertEquals(0, countHotelsFirst - countHotelsLast);
     }
 
     @Test
     public void getHotelByIdTrue(){
-        Hotel gettedHotel = hotelService.getHotelById(101);
+        Hotel gettedHotel = hotelService.getList(new HotelSpecification(101)).get(0);
 
         assertEquals("Tourist", gettedHotel.getName());
     }
 
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void getHotelByIdFalse1(){
+        hotelService.getList(new HotelSpecification(102)).get(0);
+    }
+
     @Test
-    public void getHotelByIdFalse(){
-        Hotel gettedHotel = hotelService.getHotelById(102);
-        assertEquals(null, gettedHotel);
+    public void getHotelByIdFalse2(){
+        List<Hotel> hotels = hotelService.getList(new HotelSpecification(102));
+        assertTrue(hotels.isEmpty());
     }
 
     @Test
     public void getAllHotelsTestTrue() {
-        List<Hotel> hotels = hotelService.getAllHotels();
+        List<Hotel> hotels = hotelService.getList(new HotelSpecification());
         Assert.assertEquals(101, hotels.size());
     }
 }

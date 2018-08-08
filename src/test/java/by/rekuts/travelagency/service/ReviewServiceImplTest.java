@@ -1,9 +1,10 @@
 package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
-import by.rekuts.travelagency.dao.TourDao;
-import by.rekuts.travelagency.dao.UserDao;
 import by.rekuts.travelagency.domain.Review;
+import by.rekuts.travelagency.domain.Tour;
+import by.rekuts.travelagency.domain.User;
+import by.rekuts.travelagency.repository.ReviewSpecification;
 import by.rekuts.travelagency.service.impl.ReviewServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -32,12 +34,37 @@ public class ReviewServiceImplTest {
 
     @Before
     public void initializeReviewsList() {
-        UserDao userDao = mock(UserDao.class);
-        TourDao tourDao = mock(TourDao.class);
-        reviews = Arrays.asList(
-                new Review(1, LocalDateTime.now(), "review text1", userDao.getUserById(5), tourDao.getTourById(67)),
-                new Review(2, LocalDateTime.now(), "review text2", userDao.getUserById(4), tourDao.getTourById(86)),
-                new Review(3, LocalDateTime.now(), "review text3", userDao.getUserById(9), tourDao.getTourById(3)));
+        User user1 = new User();
+        user1.setId(5);
+        Tour tour1 = new Tour();
+        tour1.setId(67);
+        Review review1 = new Review();
+        review1.setId(1);
+        review1.setDate(LocalDateTime.now());
+        review1.setText("review text1");
+        review1.setUser(user1);
+        review1.setTour(tour1);
+        User user2 = new User();
+        user2.setId(4);
+        Tour tour2 = new Tour();
+        tour2.setId(86);
+        Review review2 = new Review();
+        review2.setId(2);
+        review2.setDate(LocalDateTime.now());
+        review2.setText("review text2");
+        review2.setUser(user2);
+        review2.setTour(tour2);
+        User user3 = new User();
+        user3.setId(9);
+        Tour tour3 = new Tour();
+        tour3.setId(3);
+        Review review3 = new Review();
+        review3.setId(3);
+        review3.setDate(LocalDateTime.now());
+        review3.setText("review text3");
+        review3.setUser(user3);
+        review3.setTour(tour3);
+        reviews = Arrays.asList(review1, review2, review3);
     }
 
     @Test
@@ -61,48 +88,60 @@ public class ReviewServiceImplTest {
     @Test
     public void getReviewByIdTestTrue() {
         ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
-        when(reviewService.getReviewById(2)).thenReturn(reviews.get(1));
-        Review review = reviewService.getReviewById(2);
+        ReviewSpecification specification = new ReviewSpecification(2);
+        List<Review> singletonList = Collections.singletonList(reviews.get(1));
+        when(reviewService.getList(specification)).thenReturn(singletonList);
+        Review review = reviewService.getList(specification).get(0);
         assertEquals("review text2", review.getText());
     }
 
     @Test
     public void getReviewByIdTestFalse() {
         ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
-        when(reviewService.getReviewById(2)).thenReturn(reviews.get(1));
-        Review review = reviewService.getReviewById(2);
+        ReviewSpecification specification = new ReviewSpecification(2);
+        List<Review> singletonList = Collections.singletonList(reviews.get(1));
+        when(reviewService.getList(specification)).thenReturn(singletonList);
+        Review review = reviewService.getList(specification).get(0);
         assertNotEquals("review text1", review.getText());
     }
 
     @Test
     public void getAllReviewsTestTrue() {
         ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
-        when(reviewService.getAllReviews()).thenReturn(reviews);
-        List<Review> reviewList = reviewService.getAllReviews();
+        ReviewSpecification specification = new ReviewSpecification();
+        when(reviewService.getList(specification)).thenReturn(reviews);
+        List<Review> reviewList = reviewService.getList(specification);
         assertEquals(3, reviewList.size());
     }
 
     @Test
     public void getAllReviewsTestFalse() {
         ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
-        when(reviewService.getAllReviews()).thenReturn(reviews);
-        List<Review> reviewList = reviewService.getAllReviews();
+        ReviewSpecification specification = new ReviewSpecification();
+        when(reviewService.getList(specification)).thenReturn(reviews);
+        List<Review> reviewList = reviewService.getList(specification);
         assertNotEquals(0, reviewList.size());
     }
 
     @Test
     public void getReviewsByUserIdTest() {
         ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
-        when(reviewService.getReviewsByUserId(4)).thenReturn(Arrays.asList(reviews.get(1)));
-        List<Review> reviews = reviewService.getReviewsByUserId(4);
+        ReviewSpecification specification = new ReviewSpecification();
+        specification.setUserId(4);
+        List<Review> singletonList = Collections.singletonList(reviews.get(1));
+        when(reviewService.getList(specification)).thenReturn(singletonList);
+        List<Review> reviews = reviewService.getList(specification);
         assertEquals("review text2", reviews.get(0).getText());
     }
 
     @Test
     public void getReviewsByTourIdTest() {
         ReviewServiceImpl reviewService = mock(ReviewServiceImpl.class);
-        when(reviewService.getReviewsByTourId(86)).thenReturn(Arrays.asList(reviews.get(1)));
-        List<Review> reviews = reviewService.getReviewsByTourId(86);
+        ReviewSpecification specification = new ReviewSpecification();
+        specification.setTourId(86);
+        List<Review> singletonList = Collections.singletonList(reviews.get(1));
+        when(reviewService.getList(specification)).thenReturn(singletonList);
+        List<Review> reviews = reviewService.getList(specification);
         assertEquals("review text2", reviews.get(0).getText());
     }
 }

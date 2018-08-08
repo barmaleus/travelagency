@@ -2,6 +2,7 @@ package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.User;
+import by.rekuts.travelagency.repository.UserSpecification;
 import by.rekuts.travelagency.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -35,7 +37,6 @@ public class UserServiceImplTest {
                 new User(3, "superlogin3", "thisispassword"));
     }
 
-
     @Test
     public void insertTest(){
         UserServiceImpl userService = mock(UserServiceImpl.class);
@@ -55,34 +56,40 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void getReviewByIdTestTrue() {
+    public void getUserByIdTestTrue() {
         UserServiceImpl userService = mock(UserServiceImpl.class);
-        when(userService.getUserById(2)).thenReturn(users.get(1));
-        User user = userService.getUserById(2);
+        UserSpecification specification = new UserSpecification(2);
+        List<User> singletonList = Collections.singletonList(users.get(1));
+        when(userService.getList(specification)).thenReturn(singletonList);
+        User user = userService.getList(specification).get(0);
         assertEquals("superlogin2", user.getLogin());
     }
 
     @Test
-    public void getReviewByIdTestFalse() {
+    public void getUserByIdTestFalse() {
         UserServiceImpl userService = mock(UserServiceImpl.class);
-        when(userService.getUserById(2)).thenReturn(users.get(1));
-        User user = userService.getUserById(2);
+        UserSpecification specification = new UserSpecification(2);
+        List<User> singletonList = Collections.singletonList(users.get(1));
+        when(userService.getList(specification)).thenReturn(singletonList);
+        User user = userService.getList(specification).get(0);
         assertNotEquals("superlogin1", user.getLogin());
     }
 
     @Test
-    public void getAllReviewsTestTrue() {
+    public void getAllUsersTestTrue() {
         UserServiceImpl userService = mock(UserServiceImpl.class);
-        when(userService.getAllUsers()).thenReturn(users);
-        List<User> tourList = userService.getAllUsers();
+        UserSpecification specification = new UserSpecification();
+        when(userService.getList(specification)).thenReturn(users);
+        List<User> tourList = userService.getList(specification);
         assertEquals(3, tourList.size());
     }
 
     @Test
-    public void getAllReviewsTestFalse() {
+    public void getAllUsersTestFalse() {
         UserServiceImpl userService = mock(UserServiceImpl.class);
-        when(userService.getAllUsers()).thenReturn(users);
-        List<User> tourList = userService.getAllUsers();
+        UserSpecification specification = new UserSpecification();
+        when(userService.getList(specification)).thenReturn(users);
+        List<User> tourList = userService.getList(specification);
         assertNotEquals(0, tourList.size());
     }
 }

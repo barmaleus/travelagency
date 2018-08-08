@@ -22,7 +22,7 @@ public class User implements Serializable {
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
 	@Column(name="\"id\"", nullable = false)
-	private int userId;
+	private int id;
 
 	@NotNull
 	@Column(name="login", nullable = false)
@@ -41,13 +41,13 @@ public class User implements Serializable {
 
 	/**
 	 * Constructor - creating new object
-	 * @param userId - id of the user
+	 * @param id - id of the user
 	 * @param login - username of user
 	 * @param password - password of user
 	 * @see User#User()
 	 */
-	public User(int userId, String login, String password) {
-		this.userId = userId;
+	public User(int id, String login, String password) {
+		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.tours = new ArrayList<>();
