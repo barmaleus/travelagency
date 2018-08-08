@@ -1,6 +1,7 @@
 package by.rekuts.travelagency.service.integration;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
+import by.rekuts.travelagency.repository.CountrySpecification;
 import by.rekuts.travelagency.domain.Country;
 import by.rekuts.travelagency.service.CountryService;
 import org.junit.Test;
@@ -29,9 +30,9 @@ public class CountryServiceImplTest {
     public void insertCountryTest(){
         Country country = new Country();
         country.setName("Any Country");
-        int countCountriesFirst = countryService.getAllCountries().size();
+        int countCountriesFirst = countryService.getList(new CountrySpecification()).size();
         countryService.insert(country);
-        int countCountriesLast = countryService.getAllCountries().size();
+        int countCountriesLast = countryService.getList(new CountrySpecification()).size();
         assertEquals(1, countCountriesLast - countCountriesFirst);
     }
 
@@ -43,33 +44,33 @@ public class CountryServiceImplTest {
 
     @Test
     public void deleteTest() {
-        int countCountriesFirst = countryService.getAllCountries().size();
+        int countCountriesFirst = countryService.getList(new CountrySpecification()).size();
         countryService.delete(1);
-        int countCountriesLast = countryService.getAllCountries().size();
+        int countCountriesLast = countryService.getList(new CountrySpecification()).size();
         assertEquals(1, countCountriesFirst - countCountriesLast);
     }
 
     @Test
     public void getCountryByIdTestTrue(){
-        Country country = countryService.getCountryById(2);
+        Country country = countryService.getList(new CountrySpecification(2)).get(0);
         assertEquals("Albania", country.getName().trim());
     }
 
     @Test
     public void getCountryByIdTestFalse(){
-        Country country = countryService.getCountryById(2);
+        Country country = countryService.getList(new CountrySpecification(2)).get(0);
         assertNotEquals("Albania ", country.getName());
     }
 
     @Test
     public void getAllCountriesTestTrue(){
-        List<Country> countryList = countryService.getAllCountries();
+        List<Country> countryList = countryService.getList(new CountrySpecification());
         assertEquals(199, countryList.size());
     }
 
     @Test
     public void getAllCountriesTestFalse() {
-        List<Country> countryList = countryService.getAllCountries();
+        List<Country> countryList = countryService.getList(new CountrySpecification());
         assertNotEquals(0, countryList.size());
     }
 }

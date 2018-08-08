@@ -1,6 +1,7 @@
 package by.rekuts.travelagency.service.impl;
 
-import by.rekuts.travelagency.dao.CountryDao;
+import by.rekuts.travelagency.repository.CountryRepository;
+import by.rekuts.travelagency.repository.Specification;
 import by.rekuts.travelagency.domain.Country;
 import by.rekuts.travelagency.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,29 +13,23 @@ import java.util.List;
 @Service
 public class CountryServiceImpl implements CountryService {
 	@Autowired
-	CountryDao countryDao;
+	CountryRepository countryRepository;
 
 	@Transactional
 	@Override
 	public void insert(Country country) {
-		countryDao.insert(country);
+		countryRepository.insert(country);
 	}
 
 	@Transactional
 	@Override
 	public void delete(int id) {
-		countryDao.delete(id);
+		countryRepository.delete(id);
 	}
 
 	@Transactional
 	@Override
-	public Country getCountryById(int id) {
-		return countryDao.getCountryById(id);
-	}
-
-	@Transactional
-	@Override
-	public List<Country> getAllCountries() {
-		return countryDao.getAllCountries();
+	public List<Country> getList(Specification specification) {
+		return countryRepository.getList(specification);
 	}
 }

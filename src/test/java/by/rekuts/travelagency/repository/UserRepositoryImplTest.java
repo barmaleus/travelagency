@@ -1,8 +1,7 @@
-package by.rekuts.travelagency.dao;
+package by.rekuts.travelagency.repository;
 
 import by.rekuts.travelagency.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.User;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,35 +16,34 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
-@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
 @ActiveProfiles("testScope")
 @Transactional
-public class UserDaoImplTest {
+public class UserRepositoryImplTest {
 
     @Autowired
-    UserDao userDao;
+    UserRepository userRepository;
 
     @Autowired
-    TourDao tourDao;
+    TourRepository tourRepository;
 
     @Test
     public void insertTestTrue() {
         User user = new User();
         user.setLogin("Userok");
         user.setPassword("veryDifficultPassword");
-        int countFirst = userDao.getAllUsers().size();
-        userDao.insert(user);
-        int countLast = userDao.getAllUsers().size();
+        int countFirst = userRepository.getList(new UserSpecification()).size();
+        userRepository.insert(user);
+        int countLast = userRepository.getList(new UserSpecification()).size();
         Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
     public void deleteUserTestTrue() {
-        int countFirst = userDao.getAllUsers().size();
-        userDao.delete(1);
-        int countLast = userDao.getAllUsers().size();
+        int countFirst = userRepository.getList(new UserSpecification()).size();
+        userRepository.delete(1);
+        int countLast = userRepository.getList(new UserSpecification()).size();
         Assert.assertEquals(1, countFirst - countLast);
     }
 
@@ -54,20 +52,18 @@ public class UserDaoImplTest {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("travelAgencyPU");
         EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, 2);
-        log.info("User was found: " + user.getLogin());
-        Assert.assertEquals(user.getLogin(), userDao.getUserById(2).getLogin());
+        Assert.assertEquals(user.getLogin(), userRepository.getList(new UserSpecification(2)).get(0).getLogin());
     }
 
     @Test
     public void getUserByIdWithToursTest() {
-        User user = userDao.getUserById(101);
-        log.info(user.getTours().toString());
+        User user = userRepository.getList(new UserSpecification(101)).get(0);
         Assert.assertEquals(2, user.getTours().size());
     }
 
     @Test
     public void getAllUsersTest() {
-        List<User> users = userDao.getAllUsers();
+        List<User> users = userRepository.getList(new UserSpecification());
        Assert.assertEquals(101, users.size());
     }
 }

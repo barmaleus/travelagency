@@ -1,4 +1,4 @@
-package by.rekuts.travelagency.dao;
+package by.rekuts.travelagency.repository;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import by.rekuts.travelagency.domain.Hotel;
  * Interface HotelService concerns to DAO layer .
  * Realisations of this interface do some CRUD operations with Hotel objects in database.
  */
-public interface HotelDao {
+public interface HotelRepository {
 
 	/**
 	 * This method inserts object of Hotel class to database
@@ -20,18 +20,12 @@ public interface HotelDao {
 	/**
 	 * This method deletes hotel with id <b>id</b> from database
 	 * @param id - id of the hotel
-	 * @see Hotel#hotelId
+	 * @see Hotel#id
 	 */
 	void delete(int id);
 
 	/**
-	 * @param id - id of the hotel
-	 * @return object of the hotel with id <b>id</b> from database if it exist
+	 * @return list of all hotels from database or list with one hotel selected by id
 	 */
-	Hotel getHotelById(int id);
-
-	/**
-	 * @return list of all hotels from database
-	 */
-	List<Hotel> getAllHotels();
+	List<Hotel> getList(Specification specification);
 }
