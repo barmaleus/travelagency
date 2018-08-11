@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>travel-agency</artifactId>
-		<groupId>by.rekuts</groupId>
+		<groupId>by.rekuts.travelagency</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>by.rekuts</groupId>
+	<groupId>by.rekuts.travelagency</groupId>
 	<artifactId>logic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
