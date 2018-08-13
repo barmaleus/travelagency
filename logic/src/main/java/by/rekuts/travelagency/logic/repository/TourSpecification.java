@@ -2,14 +2,12 @@ package by.rekuts.travelagency.logic.repository;
 
 import by.rekuts.travelagency.logic.domain.Hotel;
 import by.rekuts.travelagency.logic.domain.Tour;
+import by.rekuts.travelagency.logic.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;

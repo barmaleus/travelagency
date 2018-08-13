@@ -64,7 +64,7 @@ public class Tour implements Serializable {
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 
-    @ManyToMany(mappedBy = "tours", fetch = FetchType.EAGER, cascade = CascadeType.ALL) //todo
+    @ManyToMany(mappedBy = "tours", cascade = CascadeType.ALL)
 	private List<User> users;
 
 	/**

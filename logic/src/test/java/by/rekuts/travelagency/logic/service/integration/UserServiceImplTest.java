@@ -57,24 +57,24 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void getReviewByIdTestTrue() {
+    public void getUserByIdTestTrue() {
         User user = userService.getList(new UserSpecification(1)).get(0);
         assertEquals("bluegoose681", user.getLogin());
     }
 
     @Test (expected = IndexOutOfBoundsException.class)
-    public void getReviewByIdTestFalse1() {
+    public void getUserByIdTestFalse1() {
         userService.getList(new UserSpecification(102)).get(0);
     }
 
     @Test
-    public void getReviewByIdTestFalse2() {
+    public void getUserByIdTestFalse2() {
         List<User> users = userService.getList(new UserSpecification(102));
         assertTrue(users.isEmpty());
     }
 
     @Test
-    public void getAllReviewsTestTrue() {
+    public void getAllUsersTestTrue() {
         List<User> tourList = userService.getList(new UserSpecification());
         assertEquals(101, tourList.size());
     }

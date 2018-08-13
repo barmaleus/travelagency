@@ -21,10 +21,13 @@
         <maven.war.plugin>3.2.2</maven.war.plugin>
         <maven.dependency.plugin>3.1.1</maven.dependency.plugin>
         <spring.version>4.3.18.RELEASE</spring.version>
+        <spring.security.version>4.2.7.RELEASE</spring.security.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <freemarker.version>2.3.23</freemarker.version>
         <tomcat.version>2.2</tomcat.version>
         <travelagency.version>0.0.1-SNAPSHOT</travelagency.version>
+        <lombok.version>1.18.0</lombok.version>
+        <log4j2.version>2.11.0</log4j2.version>
     </properties>
     
     <dependencies>
@@ -56,11 +59,34 @@
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-core</artifactId>-->
+            <!--<version>${spring.security.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security</groupId>-->
+            <!--<artifactId>spring-security-web</artifactId>-->
+            <!--<version>${spring.security.version}</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>${freemarker.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

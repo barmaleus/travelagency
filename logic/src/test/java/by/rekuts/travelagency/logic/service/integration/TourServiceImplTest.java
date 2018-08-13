@@ -74,24 +74,24 @@ public class TourServiceImplTest {
     }
 
     @Test
-    public void getReviewByIdTestTrue() {
+    public void getTourByIdTestTrue() {
         Tour tour = tourService.getList(new TourSpecification(4)).get(0);
         assertEquals("Nam dui.", tour.getDescription());
     }
 
     @Test (expected = IndexOutOfBoundsException.class)
-    public void getReviewByIdTestFalse1() {
+    public void getTourByIdTestFalse1() {
         tourService.getList(new TourSpecification(1001)).get(0);
     }
 
     @Test
-    public void getReviewByIdTestFalse2() {
+    public void getTourByIdTestFalse2() {
         List<Tour> tours = tourService.getList(new TourSpecification(1001));
         assertTrue(tours.isEmpty());
     }
 
     @Test
-    public void getAllReviewsTest() {
+    public void getAllToursTest() {
         List<Tour> tourList = tourService.getList(new TourSpecification());
         assertEquals(1000, tourList.size());
     }
