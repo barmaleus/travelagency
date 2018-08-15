@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Travel Agency :: Home</title>
+    <title>Travel Agency :: Tour</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -20,14 +20,30 @@
         <#include "templates/header.ftl">
         <div class="uui-main-container">
             <main>
-                <#list tours as tour>
-                    <article>
-                        ${tour.country.name} ${tour.cost} ${tour.tourType.name()} ${tour.date}
-                        <a href="/home/${tour.id}">Show details</a>
-                    </article>
-                </#list>
+                <div>
+                ${tour.country.name} <br>
+                    Date: ${tour.date} <br>
+                    Duration: ${tour.duration} days<br>
+                    <img src="${tour.photo}"> <br>
+                    Hotel:
+                    <a href="/hotels/${tour.hotel.id}">${tour.hotel.name}</a>,
+                    ${tour.hotel.stars} stars <br>
+                    Description: <br>
+                    ${tour.description} <br>
+                    Cost: $${tour.cost} <br>
+                </div>
+                Reviews:
+                <br>
+            <#list reviews as review>
+                <article>
+                    <a href="/users/${review.user.id}">${review.user.login}</a> ${review.date}
+                    <br>
+                    ${review.text}
+                </article>
+            </#list>
             </main>
         </div>
+
         <#include "templates/footer.ftl">
     </div>
 </body>
