@@ -20,12 +20,23 @@
         <#include "templates/header.ftl">
         <div class="uui-main-container">
             <main>
-                <#list tours as tour>
-                    <article>
-                        ${tour.country.name} ${tour.cost} ${tour.tourType.name()} ${tour.date}
-                        <a href="/home/${tour.id}">Show details</a>
-                    </article>
-                </#list>
+                <div class="promo-section">
+                    <div class="section-wrapper">
+                        <div class="row">
+                            <#list tours as tour>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <section class="uui-animated-image-panel" style="margin: 10px">
+                                        <a href="/home/${tour.id}">
+                                            <span class="animated-panel-image"><img src="${tour.photo}"></span>
+                                            <span class="animated-panel-title">${tour.country.name} ${tour.date}</span>
+                                            <span class="animated-panel-footer">${tour.duration} days for $${tour.cost}</span>
+                                        </a>
+                                    </section>
+                                </div>
+                            </#list>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
         <#include "templates/footer.ftl">
