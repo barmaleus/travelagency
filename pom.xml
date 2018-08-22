@@ -10,7 +10,7 @@
 
   <description>
     Project of Travel Agency application. Technologies are used: Spring, JPA, Postgres, Jenkins, JUnit and Mokito.
-    Current tecknology stack:
+    Current technology stack:
     •	Build tool: Maven (multi-module project).
     •	Servlet container: Apache Tomcat (use tomcat-maven-plugin for deploy/redeploy features).
     •	Front-end library and styles: EPAM UUI (https://uui.epam.com/).
@@ -22,5 +22,8 @@
   <modules>
     <module>logic</module>
     <module>view</module>
+    <module>domain</module>
+    <module>repository</module>
+    <module>service</module>
   </modules>
 </project>

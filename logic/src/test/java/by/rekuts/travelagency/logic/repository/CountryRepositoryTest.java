@@ -1,7 +1,7 @@
 //package by.rekuts.travelagency.logic.repository;
 //
-//import by.rekuts.travelagency.logic.config.TestRepositoryConfig;
-//import by.rekuts.travelagency.logic.domain.Country;
+//import by.rekuts.travelagency.domain.config.TestRepositoryConfig;
+//import by.rekuts.travelagency.domain.Country;
 //import lombok.extern.slf4j.Slf4j;
 //import org.junit.Assert;
 //import org.junit.Test;

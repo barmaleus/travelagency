@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,30 +20,37 @@
 <div class="wrapper">
     <#include "templates/header.ftl">
     <div class="uui-main-container">
-        <main>
-            <h1>Sign In</h1>
-
-            <form role="form" action="/sign-in" method="post">
-            <#--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-            <#--<input type="hidden" name="loginform" value="loginform"/>-->
-                <div>
-                    <label for="login">Login</label>
-                    <input type="text" name="login" id="login" required autofocus/>
+        <main class="text-center">
+            <div class="uui-login-panel">
+                <div class="login-panel-body">
+                    <div class="login-panel-section">
+                        <h1 class="section-title">Sign In</h1>
+                        <form role="form" action='<@spring.url "j_spring_security_check"/>' method="post">
+                            <div>
+                                <label for="login" class="text"><p class="uui-big-text text-uppercase">Login</p></label>
+                                <br>
+                                <input type="text" name="j_username" id="login" class="uui-form-element large" required autofocus/>
+                            </div>
+                            <br>
+                            <div>
+                                <label for="password" class="text"><p class="uui-big-text text-uppercase">Password</p></label>
+                                <input type="password" name="j_password" id="password" class="uui-form-element large" required/>
+                            </div>
+                            <br>
+                            <div>
+                                <label for="remember-me" class="text"><p class="uui-big-text">Remember me  </p></label>
+                                <input type="checkbox" name="_spring_security_remember_me" id="remember-me" class="uui-checkbox large"/>
+                            </div>
+                            <br>
+                            <button type="submit" class="uui-button large blue">Sign in</button>
+                        </form>
+                        
+                    <#--<#if error.isPresent()>-->
+                    <#--<p>The login or password you have entered is invalid, try again.</p>-->
+                    <#--</#if>-->
+                    </div>
                 </div>
-                <div>
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" required/>
-                </div>
-                <div>
-                    <label for="remember-me">Remember me</label>
-                    <input type="checkbox" name="remember-me" id="remember-me"/>
-                </div>
-                <button type="submit">Sign in</button>
-            </form>
-
-        <#--<#if error.isPresent()>-->
-        <#--<p>The login or password you have entered is invalid, try again.</p>-->
-        <#--</#if>-->
+            </div>
         </main>
     </div>
     <#include "templates/footer.ftl">

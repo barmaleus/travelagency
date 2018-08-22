@@ -1,9 +1,9 @@
 //package by.rekuts.travelagency.logic.service.integration;
 //
-//import by.rekuts.travelagency.logic.config.TestRepositoryConfig;
-//import by.rekuts.travelagency.logic.repository.CountrySpecification;
-//import by.rekuts.travelagency.logic.domain.Country;
-//import by.rekuts.travelagency.logic.service.CountryService;
+//import by.rekuts.travelagency.domain.config.TestRepositoryConfig;
+//import by.rekuts.travelagency.repository.CountrySpecification;
+//import by.rekuts.travelagency.domain.Country;
+//import by.rekuts.travelagency.service.CountryService;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.springframework.beans.factory.annotation.Autowired;

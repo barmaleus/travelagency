@@ -19,15 +19,29 @@
 <div class="wrapper">
     <#include "templates/header.ftl">
     <div class="uui-main-container">
-        <main>
-            <h1>Sign Up</h1>
+        <main class="text-center">
+            <div class="uui-login-panel">
+                <div class="login-panel-body">
+                    <div class="login-panel-section">
+                        <h1 class="section-title">Sign Up</h1>
 
-            <form role="form" action="/sign-up" method="post">
-                <input name="login" type="text" placeholder="login" required autofocus/>
-                <input name="password" type="password" placeholder="password" required/>
-            <#--<input name="password" type="password" placeholder="confirm password" required/>-->
-                <input name="submit" type="submit"/>
-            </form>
+                        <form role="form" action="/sign-up" method="post">
+                            <div>
+                                <label for="login"><h2>Login</h2></label>
+                                <input name="login" type="text" placeholder="login" class="uui-form-element large" required autofocus/>
+                            </div>
+                            <br>
+                            <div>
+                                <label for="password"><h2>Password</h2></label>
+                                <input name="password" type="password" placeholder="password" class="uui-form-element large" required/>
+                            </div>
+                            <br>
+                        <#--<input name="password" type="password" placeholder="confirm password" required/>-->
+                            <button type="submit" class="uui-button large blue">Sign up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
     <#include "templates/footer.ftl">

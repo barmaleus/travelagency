@@ -1,13 +1,13 @@
 //package by.rekuts.travelagency.logic.service.integration;
 //
-//import by.rekuts.travelagency.logic.config.TestRepositoryConfig;
-//import by.rekuts.travelagency.logic.repository.ReviewSpecification;
-//import by.rekuts.travelagency.logic.repository.TourSpecification;
-//import by.rekuts.travelagency.logic.domain.Review;
-//import by.rekuts.travelagency.logic.repository.UserSpecification;
-//import by.rekuts.travelagency.logic.service.ReviewService;
-//import by.rekuts.travelagency.logic.service.TourService;
-//import by.rekuts.travelagency.logic.service.UserService;
+//import by.rekuts.travelagency.domain.config.TestRepositoryConfig;
+//import by.rekuts.travelagency.repository.ReviewSpecification;
+//import by.rekuts.travelagency.repository.TourSpecification;
+//import by.rekuts.travelagency.domain.Review;
+//import by.rekuts.travelagency.repository.UserSpecification;
+//import by.rekuts.travelagency.service.ReviewService;
+//import by.rekuts.travelagency.service.TourService;
+//import by.rekuts.travelagency.service.UserService;
 //import org.junit.Before;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;

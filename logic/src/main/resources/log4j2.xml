@@ -2,7 +2,7 @@
 <configuration status="WARN">
     <appenders>
         <RollingFile name="rollingfile" fileName="logs/travelagency.log">
-            <FilePattern>logs/%d{yyyy-MM-dd-hh}-%i-TattooParlor.log</FilePattern>
+            <FilePattern>logs/%d{yyyy-MM-dd-hh}-%i-TravelAgency.log</FilePattern>
             <PatternLayout pattern="%d{ISO8601} [%-5p] (%F:%L) - %m%n"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="500 KB"/>

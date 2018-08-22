@@ -1,9 +1,9 @@
 //package by.rekuts.travelagency.logic.service.integration;
 //
-//import by.rekuts.travelagency.logic.config.TestRepositoryConfig;
-//import by.rekuts.travelagency.logic.repository.HotelSpecification;
-//import by.rekuts.travelagency.logic.domain.Hotel;
-//import by.rekuts.travelagency.logic.service.HotelService;
+//import by.rekuts.travelagency.domain.config.TestRepositoryConfig;
+//import by.rekuts.travelagency.repository.HotelSpecification;
+//import by.rekuts.travelagency.domain.Hotel;
+//import by.rekuts.travelagency.service.HotelService;
 //import org.junit.Assert;
 //import org.junit.Before;
 //import org.junit.Test;

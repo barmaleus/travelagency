@@ -1,7 +1,7 @@
 //package by.rekuts.travelagency.logic.repository;
 //
-//import by.rekuts.travelagency.logic.config.TestRepositoryConfig;
-//import by.rekuts.travelagency.logic.domain.User;
+//import by.rekuts.travelagency.domain.config.TestRepositoryConfig;
+//import by.rekuts.travelagency.domain.User;
 //import org.junit.Assert;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;

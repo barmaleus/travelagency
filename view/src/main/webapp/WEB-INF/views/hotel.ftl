@@ -50,7 +50,9 @@
                         </#list>
                         <h2>Location:</h2>
                         Coordinates: ${hotel.latitude} ${hotel.longitude}
+
                         <div id="map"></div>
+
                         <script>
                             function initMap() {
                                 var uluru = {lat: ${hotel.latitude}, lng: ${hotel.longitude} };
@@ -62,8 +64,6 @@
                         <script async defer
                                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA50YqdWhaTZL_IVtYhvpufEDsH7HrT7Is&callback=initMap">
                         </script>
-
-
 
                     </div>
                 </div>

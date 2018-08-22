@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
@@ -13,16 +14,19 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages = {
         "by.rekuts.travelagency.view.controller",
-        "by.rekuts.travelagency.logic.service",
-        "by.rekuts.travelagency.logic.config"
+        "by.rekuts.travelagency.service"
 })
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
-@Override
-public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
 
-}
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/sign-in").setViewName("sign-in");
+    }
 
     @Bean
     public FreeMarkerConfigurer freemarkerConfig() {

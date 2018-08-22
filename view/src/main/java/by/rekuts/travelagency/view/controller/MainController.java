@@ -1,29 +1,22 @@
 package by.rekuts.travelagency.view.controller;
 
-import by.rekuts.travelagency.logic.domain.Hotel;
-import by.rekuts.travelagency.logic.domain.Review;
-import by.rekuts.travelagency.logic.domain.Tour;
-import by.rekuts.travelagency.logic.domain.User;
-import by.rekuts.travelagency.logic.repository.HotelSpecification;
-import by.rekuts.travelagency.logic.repository.ReviewSpecification;
-import by.rekuts.travelagency.logic.repository.TourSpecification;
-import by.rekuts.travelagency.logic.repository.UserSpecification;
-import by.rekuts.travelagency.logic.service.*;
+import by.rekuts.travelagency.domain.*;
+import by.rekuts.travelagency.repository.*;
+import by.rekuts.travelagency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes("sessionUser")
-@ComponentScan(resourcePattern = "/styles")
+@ComponentScan(resourcePattern = "/styles", basePackages = "by.rekuts.**")
 public class MainController {
 
     @Autowired
@@ -38,11 +31,11 @@ public class MainController {
     HotelService hotelService;
 
     @Transactional
-    @GetMapping
+    @GetMapping(value = {"/", "/tours"})
     public String viewTours(ModelMap model) {
         List<Tour> tours = tourService.getList(new TourSpecification());
         model.addAttribute("tours", tours);
-        return "home";
+        return "tours";
     }
 
     @GetMapping(value = "/users")
@@ -50,6 +43,27 @@ public class MainController {
         List<User> users = userService.getList(new UserSpecification());
         model.addAttribute("users", users);
         return "users";
+    }
+
+    @GetMapping(value = "/countries")
+    public String viewCountries(ModelMap model) {
+        List<Country> countries = countryService.getList(new CountrySpecification());
+        model.addAttribute("countries", countries);
+        return "countries";
+    }
+
+    @GetMapping(value = "/hotels")
+    public String viewHotels(ModelMap model) {
+        List<Hotel> hotels = hotelService.getList(new HotelSpecification());
+        model.addAttribute("hotels", hotels);
+        return "hotels";
+    }
+
+    @GetMapping(value = "/reviews")
+    public String viewReviews(ModelMap model) {
+        List<Review> reviews = reviewService.getList(new ReviewSpecification());
+        model.addAttribute("reviews", reviews);
+        return "reviews";
     }
 
     @GetMapping(value = "/sign-up")
@@ -60,29 +74,16 @@ public class MainController {
     @PostMapping("/sign-up")
     public String signUp(@ModelAttribute User user) {
         userService.insert(user);
-        return "redirect:/users";
+        return "redirect:/tours";
     }
 
-    @GetMapping(value = "/sign-in")
-    public String getSignIn() {
-        return "sign-in";
-    }
-
-    @PostMapping("/sign-in")
-    public String signIn(@ModelAttribute User user) {
-        List<User> users = userService.getList(new UserSpecification());
-        for (User someUser : users) {
-            if (someUser.getLogin().equals(user.getLogin()) && someUser.getPassword().equals(user.getPassword())) {
-                //user must be loggined
-
-                return "redirect:/users";
-            }
-        }
-        return "sign-in";
+    @GetMapping(value = "/new-user")
+    public String getNewUser() {
+        return "new-user";
     }
 
     @Transactional
-    @GetMapping(value = "/home/{tourId}")
+    @GetMapping(value = "/tours/{tourId}")
     public String getTour(@PathVariable("tourId") int tourId, Model model) {
         Tour tour = tourService.getList(new TourSpecification(tourId)).get(0);
         ReviewSpecification specification = new ReviewSpecification();
@@ -100,6 +101,21 @@ public class MainController {
         TourSpecification specification = new TourSpecification();
         specification.setUserId(userId);
         List<Tour> tours = tourService.getList(specification);
+        model.addAttribute("user", user);
+        model.addAttribute("tours", tours);
+        return "user";
+    }
+
+    @Transactional
+    @GetMapping(value = "/profile")
+    public String getProfile(Model model) {
+        String login = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserSpecification specification = new UserSpecification();
+        specification.setLogin(login);
+        User user = userService.getList(specification).get(0);
+        TourSpecification tourSpecification = new TourSpecification();
+        tourSpecification.setUserId(user.getId());
+        List<Tour> tours = tourService.getList(tourSpecification);
         model.addAttribute("user", user);
         model.addAttribute("tours", tours);
         return "user";

@@ -25,12 +25,22 @@
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <freemarker.version>2.3.23</freemarker.version>
         <tomcat.version>2.2</tomcat.version>
-        <travelagency.version>0.0.1-SNAPSHOT</travelagency.version>
-        <lombok.version>1.18.0</lombok.version>
+        <travelagency.version>1.0-SNAPSHOT</travelagency.version>
         <log4j2.version>2.11.0</log4j2.version>
     </properties>
     
     <dependencies>
+        <dependency>
+            <groupId>by.rekuts.travelagency</groupId>
+            <artifactId>repository</artifactId>
+            <version>${travelagency.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>by.rekuts.travelagency</groupId>
+            <artifactId>service</artifactId>
+            <version>${travelagency.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat.maven</groupId>
             <artifactId>tomcat-maven-plugin</artifactId>
@@ -45,11 +55,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>by.rekuts.travelagency</groupId>
-            <artifactId>logic</artifactId>
-            <version>${travelagency.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
@@ -59,16 +64,26 @@
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-core</artifactId>-->
-            <!--<version>${spring.security.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.security</groupId>-->
-            <!--<artifactId>spring-security-web</artifactId>-->
-            <!--<version>${spring.security.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -80,13 +95,6 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j2.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
