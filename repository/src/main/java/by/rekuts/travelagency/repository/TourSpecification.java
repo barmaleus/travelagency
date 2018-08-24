@@ -2,7 +2,6 @@ package by.rekuts.travelagency.repository;
 
 import by.rekuts.travelagency.domain.Hotel;
 import by.rekuts.travelagency.domain.Tour;
-import by.rekuts.travelagency.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

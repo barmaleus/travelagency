@@ -35,4 +35,9 @@ public interface TourService {
      * minimal cost or maximal cost, type of tour, amount of stars of tour hotel, user id)
      */
     List<Tour> getList(Specification specification);
+
+    /**
+     * @param csvFileContent - path to .csv file with tours.
+     */
+    void importCsvTours(String csvFileContent);
 }

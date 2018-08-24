@@ -27,6 +27,9 @@
         <tomcat.version>2.2</tomcat.version>
         <travelagency.version>1.0-SNAPSHOT</travelagency.version>
         <log4j2.version>2.11.0</log4j2.version>
+        <jacoco.version>0.8.1</jacoco.version>
+        <maven.project.info.reports.version>3.0.0</maven.project.info.reports.version>
+        <sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
     </properties>
     
     <dependencies>
@@ -135,7 +138,36 @@
                     </execution>
                 </executions>
             </plugin>
+
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <configuration>
+                    <destFile>${sonar.jacoco.reportPaths}</destFile>
+                    <append>true</append>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven.project.info.reports.version}</version>
+            </plugin>
         </plugins>
     </build>
-
 </project>

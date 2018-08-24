@@ -53,7 +53,7 @@
                                 <#list tours as tour>
                                 <tr>
                                     <td>${tour.id}</td>
-                                    <td><a href="/home/${tour.id}">${tour.country.name}</a></td>
+                                    <td><a href="/tours/${tour.id}">${tour.country.name}</a></td>
                                     <td>${tour.date}</td>
                                     <td>${tour.duration} days</td>
                                     <td>

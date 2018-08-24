@@ -40,7 +40,7 @@
                                         <li><a href="/countries" onclick="return false;">Countries</a></li>
                                     </ul>
                                 <li>
-                                    <a href="/loader"><span>Load tours</span></a>
+                                    <a href="import"><span>Load tours</span></a>
                                 </li>
                             <#--todo end-->
 

@@ -15,20 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
 @ComponentScan(resourcePattern = "/styles", basePackages = "by.rekuts.**")
 public class MainController {
 
     @Autowired
     private TourService tourService;
     @Autowired
-    CountryService countryService;
+    private CountryService countryService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    ReviewService reviewService;
+    private ReviewService reviewService;
     @Autowired
-    HotelService hotelService;
+    private HotelService hotelService;
 
     @Transactional
     @GetMapping(value = {"/", "/tours"})

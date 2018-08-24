@@ -1,8 +1,8 @@
 package by.rekuts.travelagency.repository.impl;
 
-import by.rekuts.travelagency.repository.HotelRepository;
 import by.rekuts.travelagency.repository.HotelSpecification;
 import by.rekuts.travelagency.repository.Specification;
+import by.rekuts.travelagency.repository.HotelRepository;
 import by.rekuts.travelagency.domain.Hotel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

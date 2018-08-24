@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.service.impl;
 
+import by.rekuts.travelagency.repository.impl.CSVTourLoaderImpl;
 import by.rekuts.travelagency.repository.Specification;
 import by.rekuts.travelagency.repository.TourRepository;
 import by.rekuts.travelagency.domain.Tour;
@@ -14,6 +15,8 @@ import java.util.List;
 public class TourServiceImpl implements TourService {
     @Autowired
     TourRepository tourRepository;
+    @Autowired
+    CSVTourLoaderImpl csvTourLoaderImpl;
 
     @Transactional
     @Override
@@ -31,5 +34,11 @@ public class TourServiceImpl implements TourService {
     @Override
     public List<Tour> getList(Specification specification) {
         return tourRepository.getList(specification);
+    }
+
+    @Transactional
+    @Override
+    public void importCsvTours(String csvFileContent) {
+        csvTourLoaderImpl.importCsvTours(csvFileContent);
     }
 }

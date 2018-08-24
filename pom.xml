@@ -20,7 +20,6 @@
   </description>
 
   <modules>
-    <module>logic</module>
     <module>view</module>
     <module>domain</module>
     <module>repository</module>

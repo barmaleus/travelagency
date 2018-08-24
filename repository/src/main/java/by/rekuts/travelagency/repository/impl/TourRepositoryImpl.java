@@ -1,9 +1,9 @@
 package by.rekuts.travelagency.repository.impl;
 
+import by.rekuts.travelagency.domain.Tour;
 import by.rekuts.travelagency.repository.Specification;
 import by.rekuts.travelagency.repository.TourRepository;
 import by.rekuts.travelagency.repository.TourSpecification;
-import by.rekuts.travelagency.domain.Tour;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
