@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {
-        "by.rekuts.travelagency.view.controller",
+        "by.rekuts.travelagency.view",
         "by.rekuts.travelagency.service"
 })
 public class WebConfiguration extends WebMvcConfigurerAdapter {
@@ -28,6 +28,13 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/sign-in").setViewName("sign-in");
+        registry.addViewController("/sign-up").setViewName("sign-up");
+        registry.addViewController("/import").setViewName("import");
+        registry.addViewController("/importStatus").setViewName("importStatus");
+        registry.addViewController("/new-user").setViewName("new-user");
+        registry.addViewController("/new-country").setViewName("new-country");
+        registry.addViewController("/new-tour").setViewName("new-tour");
+        registry.addViewController("/new-hotel").setViewName("new-hotel");
     }
 
     @Bean
@@ -46,7 +53,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
         FreeMarkerViewResolver viewResolver = new FreeMarkerViewResolver();
         viewResolver.setSuffix(".ftl");
-        viewResolver.setCache(false);   //todo Set to true during production
+        viewResolver.setCache(true);
         viewResolver.setContentType("text/html;charset=UTF-8");
         viewResolver.setOrder(0);
 

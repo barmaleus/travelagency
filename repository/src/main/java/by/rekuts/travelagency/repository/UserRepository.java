@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.repository;
 
+import by.rekuts.travelagency.domain.Tour;
 import by.rekuts.travelagency.domain.User;
 
 import java.util.List;
@@ -29,4 +30,18 @@ public interface UserRepository {
 	 * @return list of all users from database, or list with one user by id
 	 */
 	List<User> getList(Specification specification);
+
+	/**
+	 * It adds tour to favorites (List of tours in User class)
+	 * @param user - changed user
+	 * @param tour - tour, added to favorites
+	 */
+	void addTourToFavorites(User user, Tour tour);
+
+	/**
+	 * It removes tour from favorites tours list (List of tours in User class)
+	 * @param user - changed user
+	 * @param tour - tour, removed from favorites
+	 */
+	void removeTourFromFavorites(User user, Tour tour);
 }

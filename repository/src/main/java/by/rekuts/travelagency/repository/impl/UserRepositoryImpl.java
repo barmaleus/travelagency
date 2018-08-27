@@ -1,13 +1,18 @@
 package by.rekuts.travelagency.repository.impl;
 
+import by.rekuts.travelagency.domain.Tour;
 import by.rekuts.travelagency.repository.Specification;
 import by.rekuts.travelagency.repository.UserRepository;
 import by.rekuts.travelagency.domain.User;
 import by.rekuts.travelagency.repository.UserSpecification;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -48,5 +53,21 @@ public class UserRepositoryImpl implements UserRepository {
             );
         }
         return entityManager.createQuery(criteriaQuery).getResultList();
+    }
+
+    public void addTourToFavorites(User user, Tour tour) {  //todo services
+        List<Tour> tours = user.getTours();
+        if (!tours.contains(tour)) {
+            tours.add(tour);
+        }
+        user.setTours(tours);
+        entityManager.merge(user);
+    }
+
+    public void removeTourFromFavorites(User user, Tour tour) { //todo services
+        List<Tour> tours = user.getTours();
+        tours.remove(tour);
+        user.setTours(tours);
+        entityManager.merge(user);
     }
 }

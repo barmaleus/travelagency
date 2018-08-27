@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Travel Agency :: Sign Up</title>
+    <title>Travel Agency :: Country Creator</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -21,21 +21,15 @@
             <div class="uui-login-panel">
                 <div class="login-panel-body">
                     <div class="login-panel-section">
-                        <h1 class="section-title">Sign Up</h1>
+                        <h1 class="section-title">Create new country</h1>
 
-                        <form role="form" action="/sign-up-post" method="post">
+                        <form role="form" action="/reg-country" method="post">
                             <div>
-                                <label for="login"><h2>Login</h2></label>
-                                <input name="login" type="text" placeholder="login" class="uui-form-element large" required autofocus/>
+                                <label for="name"><h2>Country name</h2></label>
+                                <input name="name" type="text" placeholder="country name" class="uui-form-element large" required autofocus/>
                             </div>
                             <br>
-                            <div>
-                                <label for="password"><h2>Password</h2></label>
-                                <input name="password" type="password" placeholder="password" class="uui-form-element large" required/>
-                            </div>
-                            <br>
-                        <#--<input name="password" type="password" placeholder="confirm password" required/>-->
-                            <button type="submit" class="uui-button large blue">Sign up</button>
+                            <button type="submit" class="uui-button large blue">Register a country</button>
                         </form>
                     </div>
                 </div>

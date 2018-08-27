@@ -1,5 +1,7 @@
 package by.rekuts.travelagency.view.configuration;
 
+import by.rekuts.travelagency.repository.UserSpecification;
+import by.rekuts.travelagency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -18,10 +20,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
+    private final UserService userService;
 
     @Autowired
-    public SecurityConfig(@Qualifier("userService") UserDetailsService userDetailsService) {
+    public SecurityConfig(@Qualifier("userService") UserDetailsService userDetailsService, UserService userService) {
         this.userDetailsService = userDetailsService;
+        this.userService = userService;
     }
 
     @Override
@@ -39,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
-                .antMatchers("/", "/sign-in", "/sign-up", "/tours", "/users").permitAll()
+                .antMatchers("/", "/sign-in", "/sign-up", "/tours", "/sign-up-post").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -47,40 +51,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/j_spring_security_check")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
-                .successHandler((req,res,auth)->{    //Success handler invoked after successful authentication
-                    for (GrantedAuthority authority : auth.getAuthorities()) {
-                        System.out.println(authority.getAuthority());
-                    }
-//                    System.out.println(auth.getName());
-                    req.getSession().setAttribute("sesUser", auth.getPrincipal());
-//                    System.out.println(auth.getPrincipal());
-                    res.sendRedirect("/"); // Redirect user to index/home page
+                .successHandler((req,res,auth)->{
+                    UserSpecification specification = new UserSpecification();
+                    specification.setLogin(auth.getName());
+                    by.rekuts.travelagency.domain.User curUser = userService.getList(specification).get(0);
+                    req.getSession().setAttribute("sesUserId", curUser.getId());
+                    res.sendRedirect("/");
                 })
-//    .defaultSuccessUrl("/")   // URL, where user will go after authenticating successfully.
-                // Skipped if successHandler() is used.
-                .failureHandler((req,res,exp)->{  // Failure handler invoked after authentication failure
-                    String errMsg="";
-                    if(exp.getClass().isAssignableFrom(BadCredentialsException.class)){
-                        errMsg="Invalid username or password.";
-                    }else{
-                        errMsg="Unknown error - "+exp.getMessage();
-                    }
-                    req.getSession().setAttribute("message", errMsg);
-                    res.sendRedirect("/sign-in"); // Redirect user to login page with error message.
+                .failureHandler((req,res,exp)->{
+                    req.setAttribute("message", "Invalid username or password.");
+                    res.sendRedirect("/sign-in");
                 })
-//    .failureUrl("/login?error")   // URL, where user will go after authentication failure.
-                //  Skipped if failureHandler() is used.
-                .permitAll() // Allow access to any URL associate to formLogin()
+                .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/sign-out")   // Specifies the logout URL, default URL is '/logout'
-                .logoutSuccessHandler((req,res,auth)->{   // Logout handler called after successful logout
-                    req.getSession().setAttribute("message", "You are logged out successfully.");
-                    res.sendRedirect("/sign-in"); // Redirect user to login page with message.
+                .logoutUrl("/sign-out")
+                .logoutSuccessHandler((req,res,auth)->{
+                    req.setAttribute("message", "You are logged out successfully.");
+                    res.sendRedirect("/sign-in");
                 })
-//    .logoutSuccessUrl("/login") // URL, where user will be redirect after successful
-                //  logout. Ignored if logoutSuccessHandler() is used.
-                .permitAll() // Allow access to any URL associate to logout()
+                .permitAll()
                 .and()
                 .csrf().disable();
     }

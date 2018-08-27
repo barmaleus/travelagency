@@ -7,16 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <script src="/resources/styles/js/lib/jquery-1.12.0.min.js"></script>
-    <!-- Bootstrap Core -->
     <link rel="stylesheet" href="/resources/styles/bootstrap/css/bootstrap.min.css" />
     <script src="/resources/styles/bootstrap/js/bootstrap.min.js"></script>
-    <!-- EPAM UUI JavaScript Core -->
     <script src="/resources/styles/js/uui-core.min.js" type="text/javascript"></script>
-    <!-- EPAM UUI Styles Core -->
     <link rel="stylesheet" href="/resources/styles/css/uui-all.css" />
-
     <link rel="stylesheet" href="/resources/styles/fonts/font-awesome/css/font-awesome.min.css" />
-
     <link rel="stylesheet" href="/resources/styles/css/lib/components/jasny-bootstrap.min.css" />
     <script src="/resources/styles/js/lib/components/jasny-bootstrap.min.js"></script>
 </head>
@@ -30,7 +25,7 @@
                     <div class="login-panel-section">
                         <h1 class="section-title">Import tours from .csv file</h1>
 
-                        <form method="POST" action="/import" enctype="multipart/form-data">
+                        <form method="POST" action="/import-post" enctype="multipart/form-data">
                             <div class="uui-file-uploader fileinput fileinput-new large" data-provides="fileinput">
                                 <span class="btn btn-file uui-button">
                                     <span class="fileinput-new">Choose...</span>

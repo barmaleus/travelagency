@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.service.impl;
 
+import by.rekuts.travelagency.domain.Tour;
 import by.rekuts.travelagency.repository.Specification;
 import by.rekuts.travelagency.repository.UserRepository;
 import by.rekuts.travelagency.domain.User;
@@ -53,5 +54,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             );
         }
         throw new UsernameNotFoundException("User '" + login + "' not found");
+    }
+
+    @Override
+    public void addTourToFavorites(User user, Tour tour) {
+        userRepository.addTourToFavorites(user, tour);
+    }
+
+    @Override
+    public void removeTourFromFavorites(User user, Tour tour) {
+        userRepository.removeTourFromFavorites(user, tour);
     }
 }

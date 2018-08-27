@@ -45,7 +45,7 @@ public class User implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "user_tour",
 			joinColumns = { @JoinColumn(name = "user_id") },

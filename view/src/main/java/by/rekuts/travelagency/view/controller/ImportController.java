@@ -18,12 +18,7 @@ public class ImportController {
     @Autowired
     private TourService tourService;
 
-    @GetMapping("/import")
-    public String index() {
-        return "import";
-    }
-
-    @PostMapping("/import")
+    @PostMapping("/import-post")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
 
@@ -51,10 +46,4 @@ public class ImportController {
 
         return "redirect:/importStatus";
     }
-
-    @GetMapping("/importStatus")
-    public String uploadStatus() {
-        return "importStatus";
-    }
-
 }

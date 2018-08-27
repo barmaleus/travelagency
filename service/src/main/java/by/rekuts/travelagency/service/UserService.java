@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.service;
 
+import by.rekuts.travelagency.domain.Tour;
 import by.rekuts.travelagency.repository.Specification;
 import by.rekuts.travelagency.repository.UserRepository;
 import by.rekuts.travelagency.domain.User;
@@ -34,4 +35,18 @@ public interface UserService {
      * @return list of all users from database or list with one user by id usind specification
      */
     List<User> getList(Specification specification);
+
+    /**
+     * It adds tour to favorites (List of tours in User class)
+     * @param user - changed user
+     * @param tour - tour, added to favorites
+     */
+    void addTourToFavorites(User user, Tour tour);
+
+    /**
+     * It removes tour from favorites tours list (List of tours in User class)
+     * @param user - changed user
+     * @param tour - tour, removed from favorites
+     */
+    void removeTourFromFavorites(User user, Tour tour);
 }

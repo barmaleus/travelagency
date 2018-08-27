@@ -90,7 +90,7 @@
                             <li><a href="/countries">Countries</a></li>
                         </ul>
                     </li>
-                <li><a href="/loader">Load tours</a></li>
+                <li><a href="/import">Load tours</a></li>
                 </@security.authorize>
             </ul>
             <#--todo end-->
