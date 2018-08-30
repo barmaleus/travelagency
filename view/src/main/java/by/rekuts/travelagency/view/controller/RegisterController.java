@@ -60,7 +60,7 @@ public class RegisterController {
         HttpSession session = attr.getRequest().getSession();
         int sesUserId = (int)session.getAttribute("sesUserId");
         model.addAttribute("sesUserId", sesUserId);
-        model.addAttribute("tourId", tours.get(tours.size()-1));
+        model.addAttribute("tourId", tours.get(tours.size()-1).getId());
         return "create/new-review";
     }
 

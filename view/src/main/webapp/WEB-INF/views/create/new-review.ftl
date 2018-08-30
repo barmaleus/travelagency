@@ -30,7 +30,7 @@
                             <@security.authorize access="hasRole('ROLE_ADMIN')">
                             <div>
                                 <label for="user"><h2>User</h2></label>
-                                <select name="user" class="selectpicker uui-form-element large" data-live-search="true">
+                                <select name="user" id="user" class="selectpicker uui-form-element large" data-live-search="true">
                                         <#list users as user>
                                             <#if sesUserId = user.id>
                                                 <option selected="selected" value="${user.id?c}">${user.login}</option>
@@ -42,7 +42,7 @@
                             </div>
                             <div>
                                 <label for="tour"><h2>Tour</h2></label>
-                                <select name="tour" class="selectpicker uui-form-element large" data-live-search="true">
+                                <select name="tour" id="tour" class="selectpicker uui-form-element large" data-live-search="true">
                                     <#list tours as tour>
                                         <#if tourId = tour.id>
                                                 <option selected="selected" value="${tour.id?c}">${tour.country.name} ${tour.date}</option>
@@ -60,7 +60,7 @@
                             </@security.authorize>
                             <div>
                                 <label for="text"><h2>Text</h2></label>
-                                <textarea class="uui-form-element" rows="3" cols="10" name="text" required></textarea>
+                                <textarea  id="text" class="uui-form-element" rows="3" cols="10" name="text" required></textarea>
                             </div>
                             <br>
                             <button type="submit" class="uui-button large blue">Register a review</button>

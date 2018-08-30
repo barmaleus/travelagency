@@ -53,11 +53,11 @@
                                 <td><a href="/tours/${review.tour.id?c}">${review.tour.country.name} ${review.tour.date}</a></td>
                                 <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                 <td>
-                                    <button class="uui-button orange small">Update</button>
+                                    <button class="uui-button orange small" onclick="alert('This function will be realized later!')" >Update</button>
 
                                     <form action="/del-review" method="post">
                                         <input type="hidden" name="reviewId" value="${review.id?c}">
-                                        <button type="submit" class="uui-button raspberry small">Delete</button>
+                                        <button type="submit" onclick="confirm('Do you relly want to delete this review?')" class="uui-button raspberry small">Delete</button>
                                     </form>
                                 </td>
                                 </@security.authorize>

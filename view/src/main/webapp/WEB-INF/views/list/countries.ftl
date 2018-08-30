@@ -41,8 +41,8 @@
                                 <td><a href="/countries/${country.id?c}">${country.name}</a></td>
                                 <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                 <td>
-                                    <button class="uui-button orange small">Update</button>
-                                    <button class="uui-button raspberry small">Delete</button>
+                                    <button class="uui-button orange small" onclick="alert('This function will be realized later!')">Update</button>
+                                    <button class="uui-button raspberry small" onclick="alert('This function will be realized later!')">Delete</button>
                                 </td>
                                 </@security.authorize>
                             </tr>
