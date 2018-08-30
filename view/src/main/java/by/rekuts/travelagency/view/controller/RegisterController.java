@@ -11,11 +11,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,7 +56,26 @@ public class RegisterController {
         model.addAttribute("users", users);
         List<Tour> tours = tourService.getList(new TourSpecification());
         model.addAttribute("tours", tours);
-        return "new-review";
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession();
+        int sesUserId = (int)session.getAttribute("sesUserId");
+        model.addAttribute("sesUserId", sesUserId);
+        model.addAttribute("tourId", tours.get(tours.size()-1));
+        return "create/new-review";
+    }
+
+    @GetMapping(value = "/tours/{tourId}/add-review")
+    public String newUserReview(@PathVariable int tourId, ModelMap model) {
+        List<User> users = userService.getList(new UserSpecification());
+        model.addAttribute("users", users);
+        List<Tour> tours = tourService.getList(new TourSpecification());
+        model.addAttribute("tours", tours);
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession();
+        int sesUserId = (int)session.getAttribute("sesUserId");
+        model.addAttribute("sesUserId", sesUserId);
+        model.addAttribute("tourId", tourId);
+        return "create/new-review";
     }
 
     @Transactional
@@ -83,7 +102,7 @@ public class RegisterController {
             stringFeatures.add(feature.getValue());
         }
         model.addAttribute("features", stringFeatures);
-        return "new-hotel";
+        return "create/new-hotel";
     }
 
     @PostMapping("/reg-hotel")
@@ -104,7 +123,7 @@ public class RegisterController {
         model.addAttribute("hotels", hotels);
         model.addAttribute("countries", countries);
         model.addAttribute("tourTypes", stringTourTypes);
-        return "new-tour";
+        return "create/new-tour";
     }
 
     @PostMapping(value = "/reg-tour")   //todo there are some bugs

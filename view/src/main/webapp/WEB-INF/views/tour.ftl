@@ -24,7 +24,7 @@
                     Duration: ${tour.duration} days<br>
                     <img src="${tour.photo}"> <br>
                     Hotel:
-                    <a href="/hotels/${tour.hotel.id}">${tour.hotel.name}</a>,
+                    <a href="/hotels/${tour.hotel.id?c}">${tour.hotel.name}</a>,
                     ${tour.hotel.stars} stars <br>
                     Description: <br>
                     ${tour.description} <br>
@@ -33,12 +33,12 @@
 
                 <@security.authorize access="isAuthenticated()">
                 <#if !isFavorite>
-                    <form action="/tours/${tour.id}" method="post">
+                    <form action="/tours/${tour.id?c}" method="post">
                         <input type="hidden" name="addToFavorites" value="true">
                         <button type="submit" class="uui-button lime-green">Add to favorites <i class="fa fa-star-o"></i></button>
                     </form>
                 <#else>
-                    <form action="/tours/${tour.id}" method="post">
+                    <form action="/tours/${tour.id?c}" method="post">
                         <input type="hidden" name="addToFavorites" value="false">
                         <button type="submit" class="uui-button lime-green">Remove from favorites <i class="fa fa-star"></i></button>
                     </form>
@@ -49,9 +49,13 @@
 
                 Reviews:
                 <br>
+                <form action="/tours/${tour.id?c}/add-review" method="get">
+                    <button type="submit" class="uui-button lime-green">Write a review <i class="fa fa-pencil-square-o"></i></button>
+                </form>
+                <br>
             <#list reviews as review>
                 <article>
-                    <a href="/users/${review.user.id}">${review.user.login}</a> ${review.date}
+                    <a href="/users/${review.user.id?c}">${review.user.login}</a> ${review.date}
                     <br>
                     ${review.text}
                 </article>

@@ -1,11 +1,12 @@
 <#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />
+<#assign tags=JspTaglibs["http://www.springframework.org/tags"] />
 <header>
     <div class="uui-header">
         <nav>
             <!--Responsive html-layuot-->
             <div class="uui-responsive-header">
                 <div class="responsive-header">
-                    <#--todo only for admin-->
+                    <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                     <div class="responsive-toggle-box">
                         <span></span>
                         <span></span>
@@ -15,50 +16,47 @@
                         <span></span>
                         <span></span>
                     </div>
-                    <#--todo end-->
+                    </@security.authorize>
                     <a href="/" class="responsive-brand-logo">
                         <span class="arrow fa fa-angle-left"></span>
                         <span class="logo">
                             <img src="/resources/styles/images/Travel-Beach-icon.png" alt="travel agency" />
                         </span>
-                        <span class="title">Travel Agency</span>
+                        <span class="title"><@tags.message code="header.name"/></span>
                     </a>
                 </div>
                 <div class="responsive-menu">
                     <div class="menu-wrapper">
                         <div class="menu-scroll">
                             <ul class="nav navbar-nav">
-
-                            <#--todo only for admin-->
+                            <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                 <li class="sub-menu">
-                                    <a href="#"><span>Manage</span></a>
+                                    <a href="#"><span><@tags.message code="header.manage"/></span></a>
                                     <ul class="sub">
-                                        <li><a href="/tours" onclick="return false;">Tours</a></li>
-                                        <li><a href="/users" onclick="return false;">Users</a></li>
-                                        <li><a href="/hotels" onclick="return false;">Hotels</a></li>
-                                        <li><a href="/reviews" onclick="return false;">Reviews</a></li>
-                                        <li><a href="/countries" onclick="return false;">Countries</a></li>
+                                        <li><a href="/tours" onclick="return false;"><@tags.message code="c.tours"/></a></li>
+                                        <li><a href="/users" onclick="return false;"><@tags.message code="c.users"/></a></li>
+                                        <li><a href="/hotels" onclick="return false;"><@tags.message code="c.hotels"/></a></li>
+                                        <li><a href="/reviews" onclick="return false;"><@tags.message code="c.reviews"/></a></li>
+                                        <li><a href="/countries" onclick="return false;"><@tags.message code="c.countries"/></a></li>
                                     </ul>
                                 <li>
-                                    <a href="import"><span>Load tours</span></a>
+                                    <a href="import"><span><@tags.message code="header.import"/></span></a>
                                 </li>
-                            <#--todo end-->
-
-
+                            </@security.authorize>
                                 <li class="sub-menu profile-menu">
-                                    <a href="#"><span>Profile</span></a>
+                                    <a href="#"><span><@tags.message code="header.profile"/></span></a>
                                     <ul class="sub">
                                          <@security.authorize access="isAuthenticated()">
-                                             <li class="profile"><a href="/profile"><span>Profile</span></a></li>
+                                             <li class="profile"><a href="/profile"><span><@tags.message code="header.profile"/></span></a></li>
                                          </@security.authorize>
                                         <@security.authorize access="! isAuthenticated()">
-                                            <li class="sign-up"><a href="/sign-up"><span>Sign up</span></a></li>
+                                            <li class="sign-up"><a href="/sign-up"><span><@tags.message code="header.signup"/></span></a></li>
                                         </@security.authorize>
                                         <@security.authorize access="isAuthenticated()">
-                                            <li class="logout"><a href="/sign-out"><span>Sign out</span></a></li>
+                                            <li class="logout"><a href="/sign-out"><span><@tags.message code="header.signout"/></span></a></li>
                                         </@security.authorize>
                                         <@security.authorize access="! isAuthenticated()">
-                                            <li class="login"><a href="/sign-in"><span>Sign in</span></a></li>
+                                            <li class="login"><a href="/sign-in"><span><@tags.message code="header.signin"/></span></a></li>
                                         </@security.authorize>
                                     </ul>
                                 </li>
@@ -72,29 +70,39 @@
                 <span class="logo">
                     <img src="/resources/styles/images/Travel-Beach-icon.png" alt="travel agency" />
                 </span>
-                Travel Agency
+                <#--<@tags.message code="header.name"/>-->
+                <@tags.message code="header.name"/>
             </a>
-            <#--todo only for admin-->
             <ul class="uui-navigation nav navbar-nav">
                 <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Manage
+                            <@tags.message code="header.manage"/>
                             <span class="arrow fa fa-angle-down"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/tours">Tours</a></li>
-                            <li><a href="/users">Users</a></li>
-                            <li><a href="/hotels">Hotels</a></li>
-                            <li><a href="/reviews">Reviews</a></li>
-                            <li><a href="/countries">Countries</a></li>
+                            <li><a href="/tours"><@tags.message code="c.tours"/></a></li>
+                            <li><a href="/users"><@tags.message code="c.users"/></a></li>
+                            <li><a href="/hotels"><@tags.message code="c.hotels"/></a></li>
+                            <li><a href="/reviews"><@tags.message code="c.reviews"/></a></li>
+                            <li><a href="/countries"><@tags.message code="c.countries"/></a></li>
                         </ul>
                     </li>
-                <li><a href="/import">Load tours</a></li>
+                <li><a href="/import"><@tags.message code="header.import"/></a></li>
                 </@security.authorize>
             </ul>
-            <#--todo end-->
+            <#--right bar-->
             <ul class="uui-header-tools nav navbar-nav">
+                <li>
+                    <ul class="uui-navigation nav navbar-nav">
+                        <li>
+                            <a href="?lang=en">English</a>
+                        </li>
+                        <li>
+                            <a href="?lang=ru">Русский</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown uui-profile-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <div class="profile-photo">
@@ -105,21 +113,22 @@
                         <span class="menu-arrow"></span>
                         <ul class="profile-links">
                             <@security.authorize access="isAuthenticated()">
-                                <li class="profile"><a href="/profile"><i class="fa fa-male"></i>Profile</a></li>
+                                <li class="profile"><a href="/profile"><i class="fa fa-male"></i><@tags.message code="header.profile"/></a></li>
                             </@security.authorize>
                             <@security.authorize access="! isAuthenticated()">
-                                <li class="sign-up"><a href="/sign-up"><i class="fa fa-registered"></i>Sign up</a></li>
+                                <li class="sign-up"><a href="/sign-up"><i class="fa fa-registered"></i><@tags.message code="header.signup"/></a></li>
                             </@security.authorize>
                             <@security.authorize access="isAuthenticated()">
-                                <li class="logout"><a href="/sign-out"><i class="fa fa-sign-out"></i>Sign out</a></li>
+                                <li class="logout"><a href="/sign-out"><i class="fa fa-sign-out"></i><@tags.message code="header.signout"/></a></li>
                             </@security.authorize>
                             <@security.authorize access="! isAuthenticated()">
-                                <li class="login"><a href="/sign-in"><i class="fa fa-sign-in"></i>Sign in</a></li>
+                                <li class="login"><a href="/sign-in"><i class="fa fa-sign-in"></i><@tags.message code="header.signin"/></a></li>
                             </@security.authorize>
                         </ul>
                     </div>
                 </li>
             </ul>
+        <#--end right bar-->
         </nav>
     </div>
 </header>

@@ -55,7 +55,7 @@ public class UserRepositoryImpl implements UserRepository {
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
-    public void addTourToFavorites(User user, Tour tour) {  //todo services
+    public void addTourToFavorites(User user, Tour tour) {
         List<Tour> tours = user.getTours();
         if (!tours.contains(tour)) {
             tours.add(tour);
@@ -64,7 +64,7 @@ public class UserRepositoryImpl implements UserRepository {
         entityManager.merge(user);
     }
 
-    public void removeTourFromFavorites(User user, Tour tour) { //todo services
+    public void removeTourFromFavorites(User user, Tour tour) {
         List<Tour> tours = user.getTours();
         tours.remove(tour);
         user.setTours(tours);

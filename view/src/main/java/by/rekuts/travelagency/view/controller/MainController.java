@@ -38,35 +38,35 @@ public class MainController {
     public String viewTours(ModelMap model) {
         List<Tour> tours = tourService.getList(new TourSpecification());
         model.addAttribute("tours", tours);
-        return "tours";
+        return "list/tours";
     }
 
     @GetMapping(value = "/users")
     public String viewUsers(ModelMap model) {
         List<User> users = userService.getList(new UserSpecification());
         model.addAttribute("users", users);
-        return "users";
+        return "list/users";
     }
 
     @GetMapping(value = "/countries")
     public String viewCountries(ModelMap model) {
         List<Country> countries = countryService.getList(new CountrySpecification());
         model.addAttribute("countries", countries);
-        return "countries";
+        return "list/countries";
     }
 
     @GetMapping(value = "/hotels")
     public String viewHotels(ModelMap model) {
         List<Hotel> hotels = hotelService.getList(new HotelSpecification());
         model.addAttribute("hotels", hotels);
-        return "hotels";
+        return "list/hotels";
     }
 
     @GetMapping(value = "/reviews")
     public String viewReviews(ModelMap model) {
         List<Review> reviews = reviewService.getList(new ReviewSpecification());
         model.addAttribute("reviews", reviews);
-        return "reviews";
+        return "list/reviews";
     }
 
     @Transactional
@@ -138,7 +138,7 @@ public class MainController {
     public String getProfile(Model model) {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attr.getRequest().getSession();
-        User user = (User) session.getAttribute("sesUser");
+        User user = userService.getList(new UserSpecification((int)session.getAttribute("sesUserId"))).get(0);
         TourSpecification tourSpecification = new TourSpecification();
         tourSpecification.setUserId(user.getId());
         List<Tour> tours = tourService.getList(tourSpecification);
