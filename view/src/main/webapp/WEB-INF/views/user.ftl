@@ -28,14 +28,16 @@
                                 <h2>${user.login}</h2>
                                 <p>member</p>
                             </div>
-                            Tours:
-                            <ul>
-                        <#list tours as tour>
-                            <li>
-                                ${tour.country.name} ${tour.date}
-                            </li>
-                        </#list>
-                            </ul>
+                            <#if tours?has_content>
+                                Tours:
+                                <ul>
+                                    <#list tours as tour>
+                                        <li>
+                                            ${tour.country.name} ${tour.date}
+                                        </li>
+                                    </#list>
+                                </ul>
+                            </#if>
                         </div>
                     </div>
                 </div>

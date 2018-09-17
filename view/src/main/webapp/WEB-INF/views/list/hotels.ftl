@@ -58,7 +58,10 @@
                                 <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                 <td>
                                     <button class="uui-button orange small" onclick="alert('This function will be realized later!')">Update</button>
-                                    <button class="uui-button raspberry small" onclick="alert('This function will be realized later!')">Delete</button>
+                                    <form action="/del-hotel" method="post" style="display: inline">
+                                        <input type="hidden" name="hotelId" value="${hotel.id?c}">
+                                        <button type="submit" onclick="confirm('Do you really want to delete this hotel?')" class="uui-button raspberry small">Delete</button>
+                                    </form>
                                 </td>
                                 </@security.authorize>
                             </tr>

@@ -54,10 +54,9 @@
                                 <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                 <td>
                                     <button class="uui-button orange small" onclick="alert('This function will be realized later!')" >Update</button>
-
-                                    <form action="/del-review" method="post">
+                                    <form action="/del-review" method="post" style="display: inline">
                                         <input type="hidden" name="reviewId" value="${review.id?c}">
-                                        <button type="submit" onclick="confirm('Do you relly want to delete this review?')" class="uui-button raspberry small">Delete</button>
+                                        <button type="submit" onclick="confirm('Do you really want to delete this review?')" class="uui-button raspberry small">Delete</button>
                                     </form>
                                 </td>
                                 </@security.authorize>

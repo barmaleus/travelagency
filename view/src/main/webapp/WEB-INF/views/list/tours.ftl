@@ -64,7 +64,10 @@
                                     <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                     <td>
                                         <button class="uui-button orange small" onclick="alert('This function will be realized later!')">Update</button>
-                                        <button class="uui-button raspberry small" onclick="alert('This function will be realized later!')">Delete</button>
+                                        <form action="/del-tour" method="post" style="display: inline">
+                                            <input type="hidden" name="tourId" value="${tour.id?c}">
+                                            <button type="submit" onclick="confirm('Do you really want to delete this tour?')" class="uui-button raspberry small">Delete</button>
+                                        </form>
                                     </td>
                                     </@security.authorize>
                                 </tr>

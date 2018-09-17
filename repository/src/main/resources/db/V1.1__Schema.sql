@@ -11,7 +11,10 @@ CREATE TYPE features AS ENUM (
     'children room'
 );
 
-ALTER TYPE features OWNER TO postgres;
+CREATE TYPE role AS ENUM (
+    'ROLE_MEMBER',
+    'ROLE_ADMIN'
+);
 
 CREATE TYPE tour_type AS ENUM (
     'safari',
@@ -26,18 +29,15 @@ CREATE TYPE tour_type AS ENUM (
     'cultural'
 );
 
-ALTER TYPE tour_type OWNER TO postgres;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 CREATE TABLE country (
     id integer NOT NULL,
-    name character(40) NOT NULL
+    name character(40) NOT NULL,
+    version integer DEFAULT 0 NOT NULL
 );
-
-ALTER TABLE country OWNER TO postgres;
 
 CREATE SEQUENCE gpa_sequence
     START WITH 1
@@ -53,20 +53,18 @@ CREATE TABLE hotel (
     website text,
     latitude numeric,
     longitude numeric,
-    features features[]
+    features features[],
+    version integer DEFAULT 0 NOT NULL
 );
-
-ALTER TABLE hotel OWNER TO postgres;
 
 CREATE TABLE review (
     id integer NOT NULL,
-    date timestamp,
+    date timestamp(4) with time zone,
     text text,
     user_id integer,
-    tour_id integer
+    tour_id integer,
+    version integer DEFAULT 0 NOT NULL
 );
-
-ALTER TABLE review OWNER TO postgres;
 
 CREATE TABLE tour (
     id integer NOT NULL,
@@ -77,25 +75,22 @@ CREATE TABLE tour (
     cost numeric,
     tour_type tour_type,
     hotel_id integer,
-    country_id integer
+    country_id integer,
+    version integer DEFAULT 0 NOT NULL
 );
-
-ALTER TABLE tour OWNER TO postgres;
 
 CREATE TABLE "user" (
     id integer NOT NULL,
     login text,
-    password text
+    password text,
+    role role DEFAULT 'ROLE_MEMBER'::role NOT NULL,
+    version integer DEFAULT 0 NOT NULL
 );
-
-ALTER TABLE "user" OWNER TO postgres;
 
 CREATE TABLE user_tour (
     user_id integer NOT NULL,
     tour_id integer NOT NULL
 );
-
-ALTER TABLE user_tour OWNER TO postgres;
 
 ALTER TABLE ONLY country
     ADD CONSTRAINT pk_country_id PRIMARY KEY (id);

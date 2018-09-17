@@ -47,13 +47,13 @@
                             </p>
                         </#list>
                         <h2>Location:</h2>
-                        Coordinates: ${hotel.latitude} ${hotel.longitude}
+                        Coordinates: ${hotel.latitude?c} ${hotel.longitude?c}
 
                         <div id="map"></div>
 
                         <script>
                             function initMap() {
-                                var uluru = {lat: ${hotel.latitude}, lng: ${hotel.longitude} };
+                                var uluru = {lat: ${hotel.latitude?c}, lng: ${hotel.longitude?c} };
                                 var map = new google.maps.Map(
                                         document.getElementById('map'), {zoom: 6, center: uluru});
                                 var marker = new google.maps.Marker({position: uluru, map: map});

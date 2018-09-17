@@ -18,9 +18,12 @@
         <#include "templates/header.ftl">
         <div class="uui-main-container">
             <main>
-                <!-- Custom layout goes here -->
-                Print some message
-            <#--todo-->
+                <p><b>Message:</b> ${message!""}</p>
+                <br>
+                <b>Stack Trace:</b>
+                <#list stackTrace as line>
+                    ${line}
+                </#list>
             </main>
         </div>
         <#include "templates/footer.ftl">

@@ -1,5 +1,6 @@
 <#assign security=JspTaglibs["http://www.springframework.org/security/tags"] />
 <#assign tags=JspTaglibs["http://www.springframework.org/tags"] />
+<#import "/spring.ftl" as spring/>   <#--todo delete later-->
 <header>
     <div class="uui-header">
         <nav>
@@ -70,7 +71,6 @@
                 <span class="logo">
                     <img src="/resources/styles/images/Travel-Beach-icon.png" alt="travel agency" />
                 </span>
-                <#--<@tags.message code="header.name"/>-->
                 <@tags.message code="header.name"/>
             </a>
             <ul class="uui-navigation nav navbar-nav">
@@ -86,6 +86,7 @@
                             <li><a href="/hotels"><@tags.message code="c.hotels"/></a></li>
                             <li><a href="/reviews"><@tags.message code="c.reviews"/></a></li>
                             <li><a href="/countries"><@tags.message code="c.countries"/></a></li>
+                            <li><a href="/countries"><@spring.message "c.countries"/></a></li>  <#--todo-->
                         </ul>
                     </li>
                 <li><a href="/import"><@tags.message code="header.import"/></a></li>

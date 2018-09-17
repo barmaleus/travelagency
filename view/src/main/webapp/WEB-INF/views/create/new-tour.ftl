@@ -28,7 +28,7 @@
                     <div class="login-panel-section">
                         <h1 class="section-title">Create new review</h1>
 
-                        <form role="form" action="/reg-hotel" method="post">
+                        <form role="form" action="/reg-tour" method="post">
                             <div>
                                 <label for="photo"><h2>Tour photo</h2></label>
                                 <input name="photo" type="text" placeholder="tour photo" class="uui-form-element large" required autofocus/>
@@ -93,7 +93,7 @@
                                 </select>
                             </div>
                             <br>
-                            <button type="submit" class="uui-button large blue">Register a hotel</button>
+                            <button type="submit" class="uui-button large blue">Register a tour</button>
                         </form>
 
                         <script>
