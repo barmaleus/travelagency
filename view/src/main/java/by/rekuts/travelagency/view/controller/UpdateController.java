@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,7 +63,17 @@ public class UpdateController {
     }
 
     @PostMapping("/update-review")
-    public String updateReview(@ModelAttribute Review review) {
+    public String updateReview(
+            @RequestParam(value = "id") int reviewId,
+            @RequestParam(value = "user") int userId,
+            @RequestParam(value = "tour") int tourId,
+            @RequestParam(value = "text") String text
+    ) {
+        Review review = new Review();
+        review.setId(reviewId);
+        review.setUser(userService.getList(new UserSpecification(userId)).get(0));
+        review.setTour(tourService.getList(new TourSpecification(tourId)).get(0));
+        review.setText(text);
         reviewService.update(review);
         return "redirect:/reviews";
     }
@@ -82,7 +93,7 @@ public class UpdateController {
     public String updateTour(
             @RequestParam(value = "id") int id,
             @RequestParam(value = "photo") String photo,
-            @RequestParam(value = "date") LocalDate date,
+            @RequestParam(value = "date") String date,
             @RequestParam(value = "duration") Integer duration,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "cost") Double cost,
@@ -93,7 +104,8 @@ public class UpdateController {
         Tour tour = new Tour();
         tour.setId(id);
         tour.setPhoto(photo);
-        tour.setDate(date);
+        LocalDate localDate = LocalDate.parse(date);
+        tour.setDate(localDate);
         tour.setDuration(duration);
         tour.setDescription(description);
         tour.setCost(BigDecimal.valueOf(cost));

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Travel Agency :: Tour Creator</title>
+    <title>Travel Agency :: Tour Update</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -26,21 +26,22 @@
             <div class="row">
                 <div class="col-md-3 col-md-offset-2 text-right">
                     <br>
-                    <h1 class="section-title">Create new tour</h1>
-                    <form role="form" action="/reg-tour" method="post">
+                    <h1 class="section-title">Tour Update</h1>
+                    <form role="form" action="/update-tour" method="post">
+                        <input type="hidden" name="id" value="${tour.id?c}"/>
                         <div>
                             <label for="photo"><h2>Tour photo</h2></label>
-                            <input name="photo" type="text" placeholder="tour photo" class="uui-form-element large" required autofocus/>
+                            <input name="photo" type="text" value="${tour.photo}" class="uui-form-element large" required autofocus/>
                         </div>
                         <div>
                             <label for="date"><h2>Date</h2></label>
-                            <input name="date" type="date" class="uui-form-element large" required/>
+                            <input name="date" type="date" value="${tour.date}" class="uui-form-element large" required/>
                         </div>
                         <div class="uui-slider min-range"></div>
                         <div class="slider-info">
                             Days:
-                            <span>9 day(s)</span>
-                            <input type="hidden" name="duration" value="9"/>
+                            <span>${tour.duration} day(s)</span>
+                            <input type="hidden" name="duration" value="${tour.duration}"/>
                         </div>
 
                         <script>
@@ -48,7 +49,7 @@
                                 function(){
                                     $(this).slider({
                                         range: 'min',
-                                        value: 9,
+                                        value: ${tour.duration},
                                         min: 1,
                                         max: 60,
                                         slide: function (event, ui) {
@@ -62,18 +63,22 @@
 
                         <div>
                             <label for="text"><h2>Description</h2></label>
-                            <textarea class="uui-form-element" rows="2" cols="10" name="description" required></textarea>
+                            <textarea class="uui-form-element" rows="2" cols="10" name="description" required>${tour.description}</textarea>
                         </div>
                         <div>
                             <label for="cost"><h2>Cost</h2></label>
-                            <input name="cost" type="text" placeholder="cost" class="uui-form-element large" required/>
+                            <input name="cost" type="text" value="${tour.cost}" class="uui-form-element large" required/>
                         </div>
                         <div>
                             <label for="tourType"><h2>Type of vacation</h2></label>
                             <select name="tourType" class="selectpicker uui-form-element">
-                            <#list tourTypes as tourType>
-                                <option value="${tourType}">${tourType}</option>
-                            </#list>
+                                <#list tourTypes as tourType>
+                                    <#if tourType == tour.tourType>
+                                        <option value="${tourType}" selected>${tourType}</option>
+                                    <#else>
+                                        <option value="${tourType}">${tourType}</option>
+                                    </#if>
+                                </#list>
                             </select>
                         </div>
 
@@ -81,7 +86,11 @@
                             <label for="hotel"><h2>Hotel</h2></label>
                             <select name="hotel" class="selectpicker uui-form-element large" data-live-search="true" title="Choose one of the following hotels">
                                 <#list hotels as hotel>
-                                    <option value="${hotel.id?c}">${hotel.name}</option>
+                                    <#if hotel.id == tour.hotel.id>
+                                        <option value="${hotel.id?c}" selected>${hotel.name}</option>
+                                    <#else>
+                                        <option value="${hotel.id?c}">${hotel.name}</option>
+                                    </#if>
                                 </#list>
                             </select>
                         </div>
@@ -89,12 +98,16 @@
                             <label for="country"><h2>Country</h2></label>
                             <select name="country" class="selectpicker uui-form-element large" data-live-search="true" title="Choose one of the following countries">
                                 <#list countries as country>
-                                    <option value="${country.id?c}">${country.name}</option>
+                                    <#if country.id == tour.country.id>
+                                       <option value="${country.id?c}" selected>${country.name}</option>
+                                    <#else>
+                                        <option value="${country.id?c}">${country.name}</option>
+                                    </#if>
                                 </#list>
                             </select>
                         </div>
                         <br>
-                        <button type="submit" class="uui-button large blue">Register a tour</button>
+                        <button type="submit" class="uui-button large blue">Update the tour</button>
                     </form>
 
                     <script>

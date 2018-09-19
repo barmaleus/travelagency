@@ -126,10 +126,10 @@ public class CreateController {
         return "create/new-tour";
     }
 
-    @PostMapping(value = "/reg-tour")   //todo there are some bugs
+    @PostMapping(value = "/reg-tour")
     public String regTour(
             @RequestParam(value = "photo") String photo,
-            @RequestParam(value = "date") LocalDate date,
+            @RequestParam(value = "date") String date,
             @RequestParam(value = "duration") Integer duration,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "cost") Double cost,
@@ -139,7 +139,8 @@ public class CreateController {
             ) {
         Tour tour = new Tour();
         tour.setPhoto(photo);
-        tour.setDate(date);
+        LocalDate localDate = LocalDate.parse(date);
+        tour.setDate(localDate);
         tour.setDuration(duration);
         tour.setDescription(description);
         tour.setCost(BigDecimal.valueOf(cost));

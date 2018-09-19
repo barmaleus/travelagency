@@ -26,7 +26,8 @@
                     <div class="login-panel-section">
                         <h1 class="section-title">Review Update</h1>
 
-                        <form role="form" action="/reg-review" method="post">
+                        <form role="form" action="/update-review" method="post">
+                            <input type="hidden" name="id" value="${review.id?c}"/>
                             <@security.authorize access="hasRole('ROLE_ADMIN')">
                             <div>
                                 <label for="user"><h2>User</h2></label>
