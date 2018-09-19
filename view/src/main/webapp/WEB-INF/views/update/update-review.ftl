@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Travel Agency :: Review Creator</title>
+    <title>Travel Agency :: Review Update</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -24,30 +24,30 @@
             <div class="uui-login-panel">
                 <div class="login-panel-body">
                     <div class="login-panel-section">
-                        <h1 class="section-title">Create new review</h1>
+                        <h1 class="section-title">Review Update</h1>
 
                         <form role="form" action="/reg-review" method="post">
                             <@security.authorize access="hasRole('ROLE_ADMIN')">
                             <div>
                                 <label for="user"><h2>User</h2></label>
                                 <select name="user" id="user" class="selectpicker uui-form-element large" data-live-search="true">
-                                        <#list users as user>
-                                            <#if sesUserId = user.id>
-                                                <option selected value="${user.id?c}">${user.login}</option>
-                                            <#else>
-                                                <option value="${user.id?c}">${user.login}</option>
-                                            </#if>
-                                        </#list>
+                                    <#list users as user>
+                                        <#if review.user.id?c = user.id?c>
+                                            <option selected value="${user.id?c}">${user.login}</option>
+                                        <#else>
+                                            <option value="${user.id?c}">${user.login}</option>
+                                        </#if>
+                                    </#list>
                                 </select>
                             </div>
                             <div>
                                 <label for="tour"><h2>Tour</h2></label>
                                 <select name="tour" id="tour" class="selectpicker uui-form-element large" data-live-search="true">
                                     <#list tours as tour>
-                                        <#if tourId = tour.id>
-                                                <option selected="selected" value="${tour.id?c}">${tour.country.name} ${tour.date}</option>
+                                        <#if review.tour.id?c = tour.id?c>
+                                            <option selected="selected" value="${tour.id?c}">${tour.country.name} ${tour.date}</option>
                                         <#else>
-                                                <option value="${tour.id?c}">${tour.country.name} ${tour.date}</option>
+                                            <option value="${tour.id?c}">${tour.country.name} ${tour.date}</option>
                                         </#if>
                                     </#list>
                                 </select>
@@ -55,15 +55,15 @@
                             </@security.authorize>
                             <@security.authorize access="!hasRole('ROLE_ADMIN')">
                                 <p>not granted</p>
-                                <input type="hidden" name="user" value="${sesUserId}">
-                                <input type="hidden" name="tour" value="${tourId}">
+                                <input type="hidden" name="user" value="${review.user.id}">
+                                <input type="hidden" name="tour" value="${review.tour.id}">
                             </@security.authorize>
                             <div>
                                 <label for="text"><h2>Text</h2></label>
-                                <textarea  id="text" class="uui-form-element" rows="3" cols="10" name="text" required></textarea>
+                                <textarea  id="text" class="uui-form-element" rows="3" cols="10" name="text" required>${review.text}</textarea>
                             </div>
                             <br>
-                            <button type="submit" class="uui-button large blue">Register a review</button>
+                            <button type="submit" class="uui-button large blue">Update the review</button>
                         </form>
 
                         <script>

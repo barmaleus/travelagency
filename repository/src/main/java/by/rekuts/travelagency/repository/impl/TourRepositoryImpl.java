@@ -25,11 +25,25 @@ public class TourRepositoryImpl implements TourRepository {
     }
 
     @Override
+    public void update(Tour tour) {
+        Tour dbTour = entityManager.find(Tour.class, tour.getId());
+        dbTour.setPhoto(tour.getPhoto());
+        dbTour.setDate(tour.getDate());
+        dbTour.setDuration(tour.getDuration());
+        dbTour.setDescription(tour.getDescription());
+        dbTour.setCost(tour.getCost());
+        dbTour.setTourType(tour.getTourType());
+        dbTour.setHotel(tour.getHotel());
+        dbTour.setCountry(tour.getCountry());
+        dbTour.setUsers(tour.getUsers());
+        entityManager.merge(dbTour);
+    }
+
+    @Override
     public void delete(int id) {
         entityManager.remove(entityManager.find(Tour.class, id));
     }
 
-//    @LogReturn todo
     @Override
     public List<Tour> getList(Specification specification) {
         final TourSpecification tourSpecification = (TourSpecification) specification;

@@ -23,6 +23,13 @@ public interface UserService {
     void insert(User user);
 
     /**
+     * This method calls {@link UserRepository#update(User)}
+     * It updates object in database
+     * @param user - object of the user
+     */
+    void update(User user);
+
+    /**
      * This method calls {@link UserRepository#delete(int)}
      * It deletes user with id <b>id</b> from database
      * @param id - id of the user

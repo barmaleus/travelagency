@@ -20,6 +20,12 @@ public interface UserRepository {
 	void insert(User user);
 
 	/**
+	 * This method updates object in database
+	 * @param user - object of the user
+	 */
+	void update(User user);
+
+	/**
 	 * This method deletes user with id <b>id</b> from database
 	 * @param id - id of the user
 	 * @see User#id

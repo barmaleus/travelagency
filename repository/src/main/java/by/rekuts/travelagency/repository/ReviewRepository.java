@@ -18,6 +18,12 @@ public interface ReviewRepository {
 	void insert(Review review);
 
 	/**
+	 * This method updates object in database
+	 * @param review - object of the review
+	 */
+	void update(Review review);
+
+	/**
 	 * This method deletes review with id <b>id</b> from database
 	 * @param id - id of the review
 	 * @see Review#id

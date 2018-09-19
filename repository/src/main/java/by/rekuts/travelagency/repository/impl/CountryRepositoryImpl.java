@@ -25,11 +25,17 @@ public class CountryRepositoryImpl implements CountryRepository {
 	}
 
 	@Override
+	public void update(Country country) {
+		Country dbCountry = entityManager.find(Country.class, country.getId());
+		dbCountry.setName(country.getName());
+		entityManager.merge(dbCountry);
+	}
+
+	@Override
 	public void delete(int id) {
 	    entityManager.remove(entityManager.find(Country.class, id));
 	}
 
-//    @LogReturn	todo
     @Override
 	public List<Country> getList(Specification specification) {
 		final CountrySpecification countrySpecification = (CountrySpecification) specification;

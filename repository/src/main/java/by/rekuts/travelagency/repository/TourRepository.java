@@ -18,6 +18,12 @@ public interface TourRepository {
 	void insert(Tour tour);
 
 	/**
+	 * This method updates object in database
+	 * @param tour - object of the tour
+	 */
+	void update(Tour tour);
+
+	/**
 	 * This method deletes tour with id <b>id</b> from database
 	 * @param id - id of the tour
 	 * @see Tour#id

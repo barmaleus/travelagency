@@ -23,6 +23,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Transactional
     @Override
+    public void update(Review review) {
+        reviewRepository.update(review);
+    }
+
+    @Transactional
+    @Override
     public void delete(int id) {
         reviewRepository.delete(id);
     }

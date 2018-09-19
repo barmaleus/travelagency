@@ -25,7 +25,7 @@ import java.util.List;
 
 @Controller
 @ComponentScan(resourcePattern = "/styles", basePackages = "by.rekuts.**")
-public class RegisterController {
+public class CreateController {
 
     @Autowired
     private UserService userService;

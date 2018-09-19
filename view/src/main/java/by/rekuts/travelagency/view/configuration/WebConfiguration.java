@@ -36,8 +36,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         registry.addViewController("/importStatus").setViewName("importStatus");
         registry.addViewController("/new-user").setViewName("create/new-user");
         registry.addViewController("/new-country").setViewName("create/new-country");
-        registry.addViewController("/new-tour").setViewName("create/new-tour");
-        registry.addViewController("/new-hotel").setViewName("create/new-hotel");
     }
 
     @Bean

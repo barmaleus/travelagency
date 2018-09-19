@@ -22,6 +22,13 @@ public interface CountryService {
 	void insert(Country country);
 
 	/**
+	 * This method calls {@link CountryRepository#update(Country)}
+	 * It updates country in database
+	 * @param country - id of the country
+	 */
+	void update(Country country);
+
+	/**
 	 * This method calls {@link CountryRepository#delete(int)}
 	 * It deletes country with id <b>id</b> from database
 	 * @param id - id of the country

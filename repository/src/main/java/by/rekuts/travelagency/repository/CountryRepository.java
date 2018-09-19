@@ -18,6 +18,12 @@ public interface CountryRepository {
 	void insert(Country country);
 
 	/**
+	 * This method updates object of country in database
+	 * @param country - object of the country
+	 */
+	void update(Country country);
+
+	/**
 	 * This method deletes country with id <b>id</b> from database
 	 * @param id - id of the country
 	 * @see Country#id

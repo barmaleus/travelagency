@@ -38,6 +38,19 @@
                                     </#list>
                                 </ul>
                             </#if>
+                            <#if reviews?has_content>
+                                Reviews:
+                                <ul>
+                                    <#list reviews as review>
+                                        <li>
+                                            ${review.tour.country.name} ${review.tour.tourType} ${review.date}
+                                            <br>
+                                            ${review.text}
+                                            <br>
+                                        </li>
+                                    </#list>
+                                </ul>
+                            </#if>
                         </div>
                     </div>
                 </div>

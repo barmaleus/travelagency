@@ -18,6 +18,7 @@
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/java/by/rekuts/travelagency/view/configuration/WebConfiguration.java</file>
           <file>file://$MODULE_DIR$/src/main/java/by/rekuts/travelagency/view/configuration/SecurityConfig.java</file>
+          <file>file://$MODULE_DIR$/../repository/src/main/java/by/rekuts/travelagency/repository/config/TestRepositoryConfig.java</file>
         </fileset>
       </configuration>
     </facet>

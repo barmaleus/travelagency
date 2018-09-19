@@ -28,6 +28,18 @@ public class HotelRepositoryImpl implements HotelRepository {
     }
 
     @Override
+    public void update(Hotel hotel) {
+        Hotel dbHotel = entityManager.find(Hotel.class, hotel.getId());
+        dbHotel.setName(hotel.getName());
+        dbHotel.setStars(hotel.getStars());
+        dbHotel.setWebsite(hotel.getWebsite());
+        dbHotel.setLatitude(hotel.getLatitude());
+        dbHotel.setLongitude(hotel.getLongitude());
+        dbHotel.setFeatures(hotel.getFeatures());
+        entityManager.merge(dbHotel);
+    }
+
+    @Override
     public void delete(int id) {
         TypedQuery<Integer> query = entityManager.createQuery(
                 "SELECT t.id FROM Tour AS t WHERE hotel_id = ?1", Integer.class);
@@ -41,7 +53,6 @@ public class HotelRepositoryImpl implements HotelRepository {
         }
     }
 
-//    @LogReturn    todo
     @Override
     public List<Hotel> getList(Specification specification) {
         final HotelSpecification hotelSpecification = (HotelSpecification) specification;

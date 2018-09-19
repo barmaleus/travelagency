@@ -30,6 +30,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional
     @Override
+    public void update(User user) {
+        userRepository.update(user);
+    }
+
+    @Transactional
+    @Override
     public void delete(int id) {
         userRepository.delete(id);
     }

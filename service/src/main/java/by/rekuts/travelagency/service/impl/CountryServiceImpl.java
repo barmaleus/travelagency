@@ -23,6 +23,12 @@ public class CountryServiceImpl implements CountryService {
 
 	@Transactional
 	@Override
+	public void update(Country country) {
+		countryRepository.update(country);
+	}
+
+	@Transactional
+	@Override
 	public void delete(int id) {
 		countryRepository.delete(id);
 	}

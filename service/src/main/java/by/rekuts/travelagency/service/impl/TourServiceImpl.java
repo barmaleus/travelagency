@@ -26,6 +26,12 @@ public class TourServiceImpl implements TourService {
 
     @Transactional
     @Override
+    public void update(Tour tour) {
+        tourRepository.update(tour);
+    }
+
+    @Transactional
+    @Override
     public void delete(int id) {
         tourRepository.delete(id);
     }

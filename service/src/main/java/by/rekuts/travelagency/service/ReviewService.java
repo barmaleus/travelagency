@@ -22,6 +22,13 @@ public interface ReviewService {
     void insert(Review review);
 
     /**
+     * This method calls {@link ReviewRepository#update(Review)}
+     * It updates object in database
+     * @param review - object of the review
+     */
+    void update(Review review);
+
+    /**
      * This method calls {@link ReviewRepository#delete(int)}
      * It deletes review with id <b>id</b> from database
      * @param id - id of the review

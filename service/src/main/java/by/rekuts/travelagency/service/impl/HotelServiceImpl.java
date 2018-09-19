@@ -23,6 +23,12 @@ public class HotelServiceImpl implements HotelService {
 
     @Transactional
     @Override
+    public void update(Hotel hotel) {
+        hotelRepository.update(hotel);
+    }
+
+    @Transactional
+    @Override
     public void delete(int id) {
         hotelRepository.delete(id);
     }

@@ -103,8 +103,12 @@ public class MainController {
         TourSpecification specification = new TourSpecification();
         specification.setUserId(userId);
         List<Tour> tours = tourService.getList(specification);
+        ReviewSpecification reviewSpecification = new ReviewSpecification();
+        reviewSpecification.setUserId(userId);
+        List<Review> reviews = reviewService.getList(reviewSpecification);
         model.addAttribute("user", user);
         model.addAttribute("tours", tours);
+        model.addAttribute("reviews", reviews);
         return "user";
     }
 

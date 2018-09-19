@@ -22,6 +22,13 @@ public interface HotelService {
     void insert(Hotel hotel);
 
     /**
+     * This method calls {@link HotelRepository#update(Hotel)}
+     * It updates object in database
+     * @param hotel - object of the hotel
+     */
+    void update(Hotel hotel);
+
+    /**
      * This method calls {@link HotelRepository#delete(int)}
      * It deletes hotel with id <b>id</b> from database
      * @param id - id of the hotel

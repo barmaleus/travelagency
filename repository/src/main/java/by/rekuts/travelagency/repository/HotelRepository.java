@@ -18,6 +18,12 @@ public interface HotelRepository {
 	void insert(Hotel hotel);
 
 	/**
+	 * This method updates object in database
+	 * @param hotel - object of the hotel
+	 */
+	void update(Hotel hotel);
+
+	/**
 	 * This method deletes hotel with id <b>id</b> from database
 	 * @param id - id of the hotel
 	 * @see Hotel#id

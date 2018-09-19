@@ -25,11 +25,19 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
+    public void update(Review review) {
+        Review dbReview = entityManager.find(Review.class, review.getId());
+        dbReview.setText(review.getText());
+        dbReview.setUser(review.getUser());
+        dbReview.setTour(review.getTour());
+        entityManager.merge(dbReview);
+    }
+
+    @Override
     public void delete(int id) {
         entityManager.remove(entityManager.find(Review.class, id));
     }
 
-//    @LogReturn    todo
     @Override
     public List<Review> getList(Specification specification) {
         final ReviewSpecification reviewSpecification = (ReviewSpecification) specification;
