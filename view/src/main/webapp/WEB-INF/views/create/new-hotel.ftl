@@ -28,11 +28,11 @@
                     <form role="form" action="/reg-hotel" method="post">
                         <div>
                             <label for="name"><h2>Hotel name</h2></label>
-                            <input name="name" type="text" placeholder="hotel name" class="uui-form-element large" required autofocus/>
+                            <input name="name" type="text" placeholder="hotel name" minlength="3" maxlength="40" class="uui-form-element large" required autofocus/>
                         </div>
                         <div>
                             <label for="stars"><h2>Stars</h2></label>
-                            <select name="stars" class="selectpicker uui-form-element large" title="Choose amount of stars">
+                            <select name="stars" class="selectpicker uui-form-element large" title="Choose amount of stars" required>
                                     <#list 1..5 as stars>
                                         <option value="${stars}">${stars} stars</option>
                                     </#list>
@@ -40,15 +40,16 @@
                         </div>
                         <div>
                             <label for="website"><h2>Website</h2></label>
-                            <input name="website" type="text" placeholder="website address" class="uui-form-element large" required/>
+                            <input name="website" type="url" minlength="11" placeholder="website address" onblur="checkURL(this)" class="uui-form-element large" required/>
                         </div>
                         <div>
                             <label for="latitude"><h2>Latitude</h2></label>
-                            <input name="latitude" type="text" placeholder="latitude" class="uui-form-element large" required/>
+                            <input name="latitude" type="number" max="90" min="-90" step="0.0000001" placeholder="latitude" class="uui-form-element large" required/>
+                            <p id="latitude-error"></p>
                         </div>
                         <div>
                             <label for="longitude"><h2>Longitude</h2></label>
-                            <input name="longitude" type="text" placeholder="longitude" class="uui-form-element large" required/>
+                            <input name="longitude" type="number" max="180" min="-180" step="0.0000001" placeholder="longitude" class="uui-form-element large" required/>
                         </div>
                         <div>
                             <label for="features"><h2>Features</h2></label>
@@ -59,14 +60,22 @@
                             </select>
                         </div>
                         <br>
-                        <button type="submit" class="uui-button large blue">Register a hotel</button>
+                        <button type="submit" class="uui-button large blue" onclick="registerHotel()">Register a hotel</button>
                     </form>
+                    <script>
+                        function checkURL (abc) {
+                            var string = abc.value;
+                            if (!~string.indexOf("http")) {
+                                string = "http://" + string;
+                            }
+                            abc.value = string;
+                            return abc
+                        }
+
+                        $('.selectpicker').uui_dropdown();
+                    </script>
                 </div>
             </div>
-            <script>
-
-                $('.selectpicker').uui_dropdown();
-            </script>
         </main>
     </div>
     <#include "../templates/footer.ftl">

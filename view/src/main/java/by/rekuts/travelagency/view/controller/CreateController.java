@@ -47,7 +47,7 @@ public class CreateController {
     @PostMapping("/reg-country")
     public String regCountry(@ModelAttribute Country country) {
         countryService.insert(country);
-        return "redirect:/tours";
+        return "redirect:/countries";
     }
 
     @GetMapping(value = "/new-review")
@@ -108,7 +108,7 @@ public class CreateController {
     @PostMapping("/reg-hotel")
     public String regHotel(@ModelAttribute Hotel hotel) {
         hotelService.insert(hotel);
-        return "redirect:/tours";
+        return "redirect:/hotels";
     }
 
     @GetMapping(value = "/new-tour")

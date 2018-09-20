@@ -37,7 +37,7 @@ public class HotelEnumArrayType implements UserType {
             Object[] features = list.toArray();
             array = connection.createArrayOf("features", features);
         } else {
-            array = null;
+            array = connection.createArrayOf("features", new Object[0]);
         }
         statement.setArray(i, array);
     }

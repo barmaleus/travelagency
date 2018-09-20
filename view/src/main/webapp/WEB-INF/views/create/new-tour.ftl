@@ -30,11 +30,11 @@
                     <form role="form" action="/reg-tour" method="post">
                         <div>
                             <label for="photo"><h2>Tour photo</h2></label>
-                            <input name="photo" type="text" placeholder="tour photo" class="uui-form-element large" required autofocus/>
+                            <input name="photo" type="url" onblur="checkURL(this)" placeholder="tour photo" class="uui-form-element large" required autofocus/>
                         </div>
                         <div>
                             <label for="date"><h2>Date</h2></label>
-                            <input name="date" type="date" class="uui-form-element large" required/>
+                            <input id="date" name="date" type="date" class="uui-form-element large" min="2018-01-01" maxlength="2050-01-01" required/>
                         </div>
                         <div class="uui-slider min-range"></div>
                         <div class="slider-info">
@@ -43,8 +43,62 @@
                             <input type="hidden" name="duration" value="9"/>
                         </div>
 
-                        <script>
-                            $('.uui-slider.min-range').each(
+                        <div>
+                            <label for="text"><h2>Description</h2></label>
+                            <textarea class="uui-form-element" minlength="20" rows="2" cols="10" name="description" required></textarea>
+                        </div>
+                        <div>
+                            <label for="cost"><h2>Cost</h2></label>
+                            <input name="cost" type="number" min="10" max="100000000" step="0.01" placeholder="cost" class="uui-form-element large" required/>
+                        </div>
+                        <div>
+                            <label for="tourType"><h2>Type of vacation</h2></label>
+                            <select name="tourType" class="selectpicker uui-form-element" required>
+                            <#list tourTypes as tourType>
+                                <option value="${tourType}">${tourType}</option>
+                            </#list>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="hotel"><h2>Hotel</h2></label>
+                            <select name="hotel" class="selectpicker uui-form-element large" data-live-search="true" title="Choose one of the following hotels" required>
+                                <#list hotels as hotel>
+                                    <option value="${hotel.id?c}">${hotel.name}</option>
+                                </#list>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="country"><h2>Country</h2></label>
+                            <select name="country" class="selectpicker uui-form-element large" data-live-search="true" title="Choose one of the following countries" required>
+                                <#list countries as country>
+                                    <option value="${country.id?c}">${country.name}</option>
+                                </#list>
+                            </select>
+                        </div>
+                        <br>
+                        <button type="submit" class="uui-button large blue">Register a tour</button>
+                    </form>
+
+                    <script>
+                        var today = new Date();
+                        var maxDay = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth()+1;
+                        var yyyyMin = today.getFullYear();
+                        var yyyyMax = today.getFullYear() + 10;
+                        if(dd<10){
+                            dd='0'+dd
+                        }
+                        if(mm<10){
+                            mm='0'+mm
+                        }
+                        today = yyyyMin+'-'+mm+'-'+dd;
+                        maxDay = yyyyMax+'-'+mm+'-'+dd;
+                        document.getElementById("date").setAttribute("min", today);
+                        document.getElementById("date").setAttribute("max", maxDay);
+
+                        $('.uui-slider.min-range').each(
                                 function(){
                                     $(this).slider({
                                         range: 'min',
@@ -57,47 +111,17 @@
                                         }
                                     });
                                 }
-                            );
-                        </script>
+                        );
 
-                        <div>
-                            <label for="text"><h2>Description</h2></label>
-                            <textarea class="uui-form-element" rows="2" cols="10" name="description" required></textarea>
-                        </div>
-                        <div>
-                            <label for="cost"><h2>Cost</h2></label>
-                            <input name="cost" type="text" placeholder="cost" class="uui-form-element large" required/>
-                        </div>
-                        <div>
-                            <label for="tourType"><h2>Type of vacation</h2></label>
-                            <select name="tourType" class="selectpicker uui-form-element">
-                            <#list tourTypes as tourType>
-                                <option value="${tourType}">${tourType}</option>
-                            </#list>
-                            </select>
-                        </div>
+                        function checkURL (abc) {
+                            var string = abc.value;
+                            if (!~string.indexOf("http")) {
+                                string = "http://" + string;
+                            }
+                            abc.value = string;
+                            return abc
+                        }
 
-                        <div>
-                            <label for="hotel"><h2>Hotel</h2></label>
-                            <select name="hotel" class="selectpicker uui-form-element large" data-live-search="true" title="Choose one of the following hotels">
-                                <#list hotels as hotel>
-                                    <option value="${hotel.id?c}">${hotel.name}</option>
-                                </#list>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="country"><h2>Country</h2></label>
-                            <select name="country" class="selectpicker uui-form-element large" data-live-search="true" title="Choose one of the following countries">
-                                <#list countries as country>
-                                    <option value="${country.id?c}">${country.name}</option>
-                                </#list>
-                            </select>
-                        </div>
-                        <br>
-                        <button type="submit" class="uui-button large blue">Register a tour</button>
-                    </form>
-
-                    <script>
                         $('.selectpicker').uui_dropdown();
                     </script>
                 </div>

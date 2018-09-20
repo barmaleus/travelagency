@@ -29,11 +29,11 @@
                         <input type="hidden" name="id" value="${hotel.id?c}"/>
                         <div>
                             <label for="name"><h2>Hotel name</h2></label>
-                            <input name="name" type="text" value="${hotel.name}" class="uui-form-element large" required autofocus/>
+                            <input name="name" type="text" value="${hotel.name}" minlength="3" maxlength="40" class="uui-form-element large" required autofocus/>
                         </div>
                         <div>
                             <label for="stars"><h2>Stars</h2></label>
-                            <select name="stars" class="selectpicker uui-form-element large">
+                            <select name="stars" class="selectpicker uui-form-element large" required>
                                 <#list 1..5 as stars>
                                     <#if stars == hotel.stars>
                                         <option value="${stars}" selected>${stars} stars</option>
@@ -45,15 +45,15 @@
                         </div>
                         <div>
                             <label for="website"><h2>Website</h2></label>
-                            <input name="website" type="text" value="${hotel.website}" class="uui-form-element large" required/>
+                            <input name="website" type="url" value="${hotel.website}" minlength="11" onblur="checkURL(this)" class="uui-form-element large" required/>
                         </div>
                         <div>
                             <label for="latitude"><h2>Latitude</h2></label>
-                            <input name="latitude" type="text" value="${hotel.latitude?c}" class="uui-form-element large" required/>
+                            <input name="latitude" type="number" max="90" min="-90" step="0.0000001" value="${hotel.latitude?c}" class="uui-form-element large" required/>
                         </div>
                         <div>
                             <label for="longitude"><h2>Longitude</h2></label>
-                            <input name="longitude" type="text" value="${hotel.longitude?c}" class="uui-form-element large" required/>
+                            <input name="longitude" type="number" max="180" min="-180" step="0.0000001" value="${hotel.longitude?c}" class="uui-form-element large" required/>
                         </div>
                         <div>
                             <label for="features"><h2>Features</h2></label>
@@ -70,12 +70,20 @@
                         <br>
                         <button type="submit" class="uui-button large blue">Update the hotel</button>
                     </form>
+                    <script>
+                        function checkURL (abc) {
+                            var string = abc.value;
+                            if (!~string.indexOf("http")) {
+                                string = "http://" + string;
+                            }
+                            abc.value = string;
+                            return abc
+                        }
+
+                        $('.selectpicker').uui_dropdown();
+                    </script>
                 </div>
             </div>
-            <script>
-
-                $('.selectpicker').uui_dropdown();
-            </script>
         </main>
     </div>
     <#include "../templates/footer.ftl">

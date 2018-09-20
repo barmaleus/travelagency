@@ -60,7 +60,7 @@
                             </@security.authorize>
                             <div>
                                 <label for="text"><h2>Text</h2></label>
-                                <textarea  id="text" class="uui-form-element" rows="3" cols="10" name="text" required></textarea>
+                                <textarea  id="text" class="uui-form-element" minlength="20" rows="3" cols="10" name="text" required></textarea>
                             </div>
                             <br>
                             <button type="submit" class="uui-button large blue">Register a review</button>

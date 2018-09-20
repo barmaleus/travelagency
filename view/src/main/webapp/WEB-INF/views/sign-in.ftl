@@ -27,12 +27,12 @@
                             <div>
                                 <label for="login" class="text"><p class="uui-big-text text-uppercase">Login</p></label>
                                 <br>
-                                <input type="text" name="j_username" id="login" class="uui-form-element large" required autofocus/>
+                                <input type="text" minlength="3" maxlength="20" name="j_username" id="login" class="uui-form-element large" required autofocus/>
                             </div>
                             <br>
                             <div>
                                 <label for="password" class="text"><p class="uui-big-text text-uppercase">Password</p></label>
-                                <input type="password" name="j_password" id="password" class="uui-form-element large" required/>
+                                <input type="password" minlength="3" maxlength="40" name="j_password" id="password" class="uui-form-element large" required/>
                             </div>
                             <br>
                             <div>

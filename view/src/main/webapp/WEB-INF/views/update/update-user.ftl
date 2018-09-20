@@ -27,12 +27,12 @@
                             <input type="hidden" name="id" value="${user.id?c}"/>
                             <div>
                                 <label for="login"><h2>Login</h2></label>
-                                <input name="login" type="text" value="${user.login}" class="uui-form-element large" required autofocus/>
+                                <input name="login" type="text" minlength="3" maxlength="20" value="${user.login}" class="uui-form-element large" required autofocus/>
                             </div>
                             <br>
                             <div>
                                 <label for="password"><h2>Password</h2></label>
-                                <input name="password" type="password" value="${user.password}" class="uui-form-element large" required/>
+                                <input name="password" type="password" minlength="3" maxlength="40" value="${user.password}" class="uui-form-element large" required/>
                             </div>
                             <br>
                             <div>

@@ -23,18 +23,17 @@
                     <div class="login-panel-section">
                         <h1 class="section-title">Sign Up</h1>
 
-                        <form role="form" action="/sign-up-post" method="post">
+                        <form role="form" action="/reg-user" method="post">
                             <div>
                                 <label for="login"><h2>Login</h2></label>
-                                <input name="login" type="text" placeholder="login" class="uui-form-element large" required autofocus/>
+                                <input name="login" type="text" minlength="3" maxlength="20" placeholder="login" class="uui-form-element large" required autofocus/>
                             </div>
                             <br>
                             <div>
                                 <label for="password"><h2>Password</h2></label>
-                                <input name="password" type="password" placeholder="password" class="uui-form-element large" required/>
+                                <input name="password" type="password" minlength="3" maxlength="40" placeholder="password" class="uui-form-element large" minlength="4" maxlength="20" required/>
                             </div>
                             <br>
-                        <#--<input name="password" type="password" placeholder="confirm password" required/>-->
                             <button type="submit" class="uui-button large blue">Sign up</button>
                         </form>
                     </div>

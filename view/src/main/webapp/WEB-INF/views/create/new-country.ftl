@@ -26,7 +26,7 @@
                         <form role="form" action="/reg-country" method="post">
                             <div>
                                 <label for="name"><h2>Country name</h2></label>
-                                <input name="name" type="text" placeholder="country name" class="uui-form-element large" required autofocus/>
+                                <input name="name" type="text" placeholder="country name" minlength="3" maxlength="40" class="uui-form-element large" required autofocus/>
                             </div>
                             <br>
                             <button type="submit" class="uui-button large blue">Register a country</button>

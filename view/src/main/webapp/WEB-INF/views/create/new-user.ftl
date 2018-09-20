@@ -26,12 +26,12 @@
                         <form role="form" action="/reg-user" method="post">
                             <div>
                                 <label for="login"><h2>Login</h2></label>
-                                <input name="login" type="text" placeholder="login" class="uui-form-element large" required autofocus/>
+                                <input name="login" type="text" minlength="3" maxlength="20" placeholder="login" class="uui-form-element large" required autofocus/>
                             </div>
                             <br>
                             <div>
                                 <label for="password"><h2>Password</h2></label>
-                                <input name="password" type="password" placeholder="password" class="uui-form-element large" required/>
+                                <input name="password" type="password" placeholder="password" minlength="3" maxlength="40" class="uui-form-element large" required/>
                             </div>
                             <br>
                             <div class="uui-input-group vertical">
