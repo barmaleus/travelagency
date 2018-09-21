@@ -8,6 +8,7 @@ import by.rekuts.travelagency.repository.UserSpecification;
 import by.rekuts.travelagency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -22,6 +23,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @ComponentScan(resourcePattern = "/styles", basePackages = "by.rekuts.**")
@@ -44,12 +47,14 @@ public class CreateController {
         return "redirect:/tours";
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/reg-country")
     public String regCountry(@ModelAttribute Country country) {
         countryService.insert(country);
         return "redirect:/countries";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/new-review")
     public String newReview(ModelMap model) {
         List<User> users = userService.getList(new UserSpecification());
@@ -64,6 +69,7 @@ public class CreateController {
         return "create/new-review";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/tours/{tourId}/add-review")
     public String newUserReview(@PathVariable int tourId, ModelMap model) {
         List<User> users = userService.getList(new UserSpecification());
@@ -78,6 +84,7 @@ public class CreateController {
         return "create/new-review";
     }
 
+    @Secured("ROLE_ADMIN")
     @Transactional
     @PostMapping(value = "/reg-review")
     public String regReview(
@@ -94,6 +101,7 @@ public class CreateController {
         return "redirect:/tours";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/new-hotel")
     public String newHotel(ModelMap model) {
         Hotel.Features[] features = Hotel.Features.values();
@@ -105,12 +113,14 @@ public class CreateController {
         return "create/new-hotel";
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/reg-hotel")
     public String regHotel(@ModelAttribute Hotel hotel) {
         hotelService.insert(hotel);
         return "redirect:/hotels";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/new-tour")
     public String newTour(ModelMap model) {
         List<Hotel> hotels = hotelService.getList(new HotelSpecification());
@@ -126,6 +136,7 @@ public class CreateController {
         return "create/new-tour";
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping(value = "/reg-tour")
     public String regTour(
             @RequestParam(value = "photo") String photo,

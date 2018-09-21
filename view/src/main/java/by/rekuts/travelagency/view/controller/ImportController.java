@@ -3,6 +3,7 @@ package by.rekuts.travelagency.view.controller;
 
 import by.rekuts.travelagency.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ public class ImportController {
     @Autowired
     private TourService tourService;
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/import-post")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {

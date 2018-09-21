@@ -5,6 +5,7 @@ import by.rekuts.travelagency.repository.*;
 import by.rekuts.travelagency.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -41,6 +42,7 @@ public class MainController {
         return "list/tours";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @GetMapping(value = "/users")
     public String viewUsers(ModelMap model) {
         List<User> users = userService.getList(new UserSpecification());
@@ -48,6 +50,7 @@ public class MainController {
         return "list/users";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @GetMapping(value = "/countries")
     public String viewCountries(ModelMap model) {
         List<Country> countries = countryService.getList(new CountrySpecification());
@@ -55,6 +58,7 @@ public class MainController {
         return "list/countries";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @GetMapping(value = "/hotels")
     public String viewHotels(ModelMap model) {
         List<Hotel> hotels = hotelService.getList(new HotelSpecification());
@@ -62,6 +66,7 @@ public class MainController {
         return "list/hotels";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @GetMapping(value = "/reviews")
     public String viewReviews(ModelMap model) {
         List<Review> reviews = reviewService.getList(new ReviewSpecification());
@@ -69,6 +74,7 @@ public class MainController {
         return "list/reviews";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @Transactional
     @GetMapping(value = "/tours/{tourId}")
     public String getTour(@PathVariable("tourId") int tourId, Model model) {
@@ -96,6 +102,7 @@ public class MainController {
         return "tour";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @Transactional
     @GetMapping(value = "/users/{userId}")
     public String getUser(@PathVariable("userId") int userId, Model model) {
@@ -112,6 +119,7 @@ public class MainController {
         return "user";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @Transactional
     @PostMapping(value = "/tours/{tourId}")
     public String getFavoriteTour(@PathVariable("tourId") int tourId, boolean addToFavorites, Model model) {
@@ -137,6 +145,7 @@ public class MainController {
         return "redirect:/tours/{tourId}";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @Transactional
     @GetMapping(value = "/profile")
     public String getProfile(Model model) {
@@ -151,6 +160,7 @@ public class MainController {
         return "user";
     }
 
+    @PreAuthorize("authentication.authenticated")
     @Transactional
     @GetMapping("/hotels/{hotelId}")
     public String getHotel(@PathVariable("hotelId") int hotelId, Model model) {

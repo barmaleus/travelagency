@@ -18,12 +18,21 @@
         <#include "templates/header.ftl">
         <div class="uui-main-container">
             <main>
+                <p><b>Message:</b> ${name!""}</p>
+                <br>
+                <p><b>Url:</b> ${url}</p>
+                <br>
                 <p><b>Message:</b> ${message!""}</p>
                 <br>
                 <b>Stack Trace:</b>
                 <#list stackTrace as line>
                     ${line}
                 </#list>
+                <br>
+                <a href="/" class="uui-button blue">
+                    Return to main
+                </a>
+                <br>
             </main>
         </div>
         <#include "templates/footer.ftl">
