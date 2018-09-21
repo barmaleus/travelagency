@@ -17,6 +17,7 @@
     <script src="../../../resources/styles/js/uui-dropdown.min.js"></script>
     <link rel="stylesheet" href="../../../resources/styles/jquery-ui/jquery-ui.min.css" />
     <script src="../../../resources/styles/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../../resources/styles/custom/script-protection.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -30,7 +31,7 @@
                     <form role="form" action="/reg-tour" method="post">
                         <div>
                             <label for="photo"><h2>Tour photo</h2></label>
-                            <input name="photo" type="url" onblur="checkURL(this)" placeholder="tour photo" class="uui-form-element large" required autofocus/>
+                            <input name="photo" type="url" onkeyup="scriptProtectionUrl(this)" onblur="checkURL(this)" placeholder="tour photo" class="uui-form-element large" pattern=".{11,256}" required title="11 to 256 characters" autofocus/>
                         </div>
                         <div>
                             <label for="date"><h2>Date</h2></label>
@@ -44,8 +45,8 @@
                         </div>
 
                         <div>
-                            <label for="text"><h2>Description</h2></label>
-                            <textarea class="uui-form-element" minlength="20" rows="2" cols="10" name="description" required></textarea>
+                            <label for="description"><h2>Description</h2></label>
+                            <textarea class="uui-form-element" rows="2" cols="10" name="description" pattern=".{20,}" required title="minimum 20 characters"></textarea>
                         </div>
                         <div>
                             <label for="cost"><h2>Cost</h2></label>
@@ -53,7 +54,7 @@
                         </div>
                         <div>
                             <label for="tourType"><h2>Type of vacation</h2></label>
-                            <select name="tourType" class="selectpicker uui-form-element" required>
+                            <select id="tourType" name="tourType" class="selectpicker uui-form-element" required>
                             <#list tourTypes as tourType>
                                 <option value="${tourType}">${tourType}</option>
                             </#list>
@@ -112,15 +113,6 @@
                                     });
                                 }
                         );
-
-                        function checkURL (abc) {
-                            var string = abc.value;
-                            if (!~string.indexOf("http")) {
-                                string = "http://" + string;
-                            }
-                            abc.value = string;
-                            return abc
-                        }
 
                         $('.selectpicker').uui_dropdown();
                     </script>

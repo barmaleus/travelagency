@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../../../resources/styles/css/lib/components/bootstrap-select.min.css" />
     <script src="../../../resources/styles/js/lib/components/bootstrap-select.min.js"></script>
     <script src="../../../resources/styles/js/uui-dropdown.min.js"></script>
+    <script src="../../../resources/styles/custom/script-protection.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -60,7 +61,7 @@
                             </@security.authorize>
                             <div>
                                 <label for="text"><h2>Text</h2></label>
-                                <textarea  id="text" class="uui-form-element" minlength="20" rows="3" cols="10" name="text" required></textarea>
+                                <textarea id="text" onkeyup="scriptProtectionText(this)" class="uui-form-element" rows="3" cols="10" name="text" pattern=".{20,}" required title="20 characters minimum"></textarea>
                             </div>
                             <br>
                             <button type="submit" class="uui-button large blue">Register a review</button>

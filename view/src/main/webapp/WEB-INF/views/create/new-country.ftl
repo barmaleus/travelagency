@@ -12,6 +12,7 @@
     <script src="../../../resources/styles/js/uui-core.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../../../resources/styles/css/uui-all.css" />
     <link rel="stylesheet" href="../../../resources/styles/fonts/font-awesome/css/font-awesome.min.css" />
+    <script src="../../../resources/styles/custom/script-protection.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -26,7 +27,7 @@
                         <form role="form" action="/reg-country" method="post">
                             <div>
                                 <label for="name"><h2>Country name</h2></label>
-                                <input name="name" type="text" placeholder="country name" minlength="3" maxlength="40" class="uui-form-element large" required autofocus/>
+                                <input name="name" type="text" onkeyup="scriptProtectionName(this)" placeholder="country name" class="uui-form-element large" pattern=".{3,40}" required title="3 to 40 characters" autofocus/>
                             </div>
                             <br>
                             <button type="submit" class="uui-button large blue">Register a country</button>

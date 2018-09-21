@@ -27,7 +27,7 @@
                             <input type="hidden" name="id" value="${country.id?c}"/>
                             <div>
                                 <label for="name"><h2>Country name</h2></label>
-                                <input name="name" type="text"  value="${country.name}" minlength="3" maxlength="40" class="uui-form-element large" required autofocus/>
+                                <input name="name" type="text" onkeyup="scriptProtectionName(this)" value="${country.name}" class="uui-form-element large" pattern=".{3,40}" required title="3 to 40 characters" autofocus/>
                             </div>
                             <br>
                             <button type="submit" class="uui-button large blue">Update the country</button>

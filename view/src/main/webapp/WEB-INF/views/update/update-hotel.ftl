@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../../../resources/styles/css/lib/components/bootstrap-select.min.css" />
     <script src="../../../resources/styles/js/lib/components/bootstrap-select.min.js"></script>
     <script src="../../../resources/styles/js/uui-dropdown.min.js"></script>
+    <script src="../../../resources/styles/custom/script-protection.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -29,7 +30,7 @@
                         <input type="hidden" name="id" value="${hotel.id?c}"/>
                         <div>
                             <label for="name"><h2>Hotel name</h2></label>
-                            <input name="name" type="text" value="${hotel.name}" minlength="3" maxlength="40" class="uui-form-element large" required autofocus/>
+                            <input name="name" type="text" onkeyup="scriptProtectionName(this)" value="${hotel.name}" class="uui-form-element large" pattern=".{3,40}" required title="3 to 40 characters" autofocus/>
                         </div>
                         <div>
                             <label for="stars"><h2>Stars</h2></label>
@@ -45,7 +46,7 @@
                         </div>
                         <div>
                             <label for="website"><h2>Website</h2></label>
-                            <input name="website" type="url" value="${hotel.website}" minlength="11" onblur="checkURL(this)" class="uui-form-element large" required/>
+                            <input name="website" type="url" onkeyup="scriptProtectionUrl(this)" value="${hotel.website}" onblur="checkURL(this)" class="uui-form-element large" pattern=".{11,256}" required title="11 to 256 characters"/>
                         </div>
                         <div>
                             <label for="latitude"><h2>Latitude</h2></label>
@@ -71,15 +72,6 @@
                         <button type="submit" class="uui-button large blue">Update the hotel</button>
                     </form>
                     <script>
-                        function checkURL (abc) {
-                            var string = abc.value;
-                            if (!~string.indexOf("http")) {
-                                string = "http://" + string;
-                            }
-                            abc.value = string;
-                            return abc
-                        }
-
                         $('.selectpicker').uui_dropdown();
                     </script>
                 </div>

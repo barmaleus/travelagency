@@ -13,6 +13,7 @@
     <script src="/resources/styles/js/uui-core.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="/resources/styles/css/uui-all.css" />
     <link rel="stylesheet" href="/resources/styles/fonts/font-awesome/css/font-awesome.min.css" />
+    <script src="/resources/styles/custom/script-protection.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -27,12 +28,12 @@
                             <div>
                                 <label for="login" class="text"><p class="uui-big-text text-uppercase">Login</p></label>
                                 <br>
-                                <input type="text" minlength="3" maxlength="20" name="j_username" id="login" class="uui-form-element large" required autofocus/>
+                                <input type="text" onkeyup="scriptProtectionLogin(this)" name="j_username" id="login" class="uui-form-element large" pattern=".{3,20}" required title="3 to 20 characters" autofocus/>
                             </div>
                             <br>
                             <div>
                                 <label for="password" class="text"><p class="uui-big-text text-uppercase">Password</p></label>
-                                <input type="password" minlength="3" maxlength="40" name="j_password" id="password" class="uui-form-element large" required/>
+                                <input type="password" onkeyup="scriptProtectionText(this)" name="j_password" id="password" class="uui-form-element large" pattern=".{3,40}" required title="3 to 40 characters" />
                             </div>
                             <br>
                             <div>

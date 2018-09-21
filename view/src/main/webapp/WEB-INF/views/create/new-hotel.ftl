@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../../../resources/styles/css/lib/components/bootstrap-select.min.css" />
     <script src="../../../resources/styles/js/lib/components/bootstrap-select.min.js"></script>
     <script src="../../../resources/styles/js/uui-dropdown.min.js"></script>
+    <script src="../../../resources/styles/custom/script-protection.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -28,19 +29,19 @@
                     <form role="form" action="/reg-hotel" method="post">
                         <div>
                             <label for="name"><h2>Hotel name</h2></label>
-                            <input name="name" type="text" placeholder="hotel name" minlength="3" maxlength="40" class="uui-form-element large" required autofocus/>
+                            <input name="name" type="text" onkeyup="scriptProtectionName(this)" placeholder="hotel name" class="uui-form-element large" pattern=".{3,40}" required title="3 to 40 characters" autofocus/>
                         </div>
                         <div>
                             <label for="stars"><h2>Stars</h2></label>
                             <select name="stars" class="selectpicker uui-form-element large" title="Choose amount of stars" required>
-                                    <#list 1..5 as stars>
-                                        <option value="${stars}">${stars} stars</option>
-                                    </#list>
+                                <#list 1..5 as stars>
+                                    <option value="${stars}">${stars} stars</option>
+                                </#list>
                             </select>
                         </div>
                         <div>
                             <label for="website"><h2>Website</h2></label>
-                            <input name="website" type="url" minlength="11" placeholder="website address" onblur="checkURL(this)" class="uui-form-element large" required/>
+                            <input name="website" type="url" onkeyup="scriptProtectionUrl(this)" placeholder="website address" onblur="checkURL(this)" class="uui-form-element large" pattern=".{11,256}" required title="11 to 256 characters"/>
                         </div>
                         <div>
                             <label for="latitude"><h2>Latitude</h2></label>
@@ -60,18 +61,9 @@
                             </select>
                         </div>
                         <br>
-                        <button type="submit" class="uui-button large blue" onclick="registerHotel()">Register a hotel</button>
+                        <button type="submit" class="uui-button large blue">Register a hotel</button>
                     </form>
                     <script>
-                        function checkURL (abc) {
-                            var string = abc.value;
-                            if (!~string.indexOf("http")) {
-                                string = "http://" + string;
-                            }
-                            abc.value = string;
-                            return abc
-                        }
-
                         $('.selectpicker').uui_dropdown();
                     </script>
                 </div>

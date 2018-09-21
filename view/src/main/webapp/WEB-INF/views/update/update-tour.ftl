@@ -17,6 +17,7 @@
     <script src="../../../resources/styles/js/uui-dropdown.min.js"></script>
     <link rel="stylesheet" href="../../../resources/styles/jquery-ui/jquery-ui.min.css" />
     <script src="../../../resources/styles/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../../resources/styles/custom/script-protection.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -31,11 +32,11 @@
                         <input type="hidden" name="id" value="${tour.id?c}"/>
                         <div>
                             <label for="photo"><h2>Tour photo</h2></label>
-                            <input name="photo" type="url" onblur="checkURL(this)" value="${tour.photo}" class="uui-form-element large" required autofocus/>
+                            <input name="photo" type="url" onkeyup="scriptProtectionUrl(this)" onblur="checkURL(this)" value="${tour.photo}" class="uui-form-element large" pattern=".{11,256}" required title="11 to 256 characters" autofocus/>
                         </div>
                         <div>
                             <label for="date"><h2>Date</h2></label>
-                            <input name="date" type="date" value="${tour.date}" class="uui-form-element large" min="2018-01-01" maxlength="2050-01-01" required/>
+                            <input id="date" name="date" type="date" value="${tour.date}" class="uui-form-element large" min="2018-01-01" maxlength="2050-01-01" required/>
                         </div>
                         <div class="uui-slider min-range"></div>
                         <div class="slider-info">
@@ -46,15 +47,15 @@
 
                         <div>
                             <label for="text"><h2>Description</h2></label>
-                            <textarea class="uui-form-element" minlength="20" rows="2" cols="10" name="description" required>${tour.description}</textarea>
+                            <textarea id="text" class="uui-form-element" minlength="20" rows="2" cols="10" name="description" pattern=".{20,}" required title="minimum 20 characters">${tour.description}</textarea>
                         </div>
                         <div>
                             <label for="cost"><h2>Cost</h2></label>
-                            <input name="cost" type="number" min="10" max="100000000" step="0.01" value="${tour.cost}" class="uui-form-element large" required/>
+                            <input id="cost" name="cost" type="number" min="10" max="100000000" step="0.01" value="${tour.cost}" class="uui-form-element large" required/>
                         </div>
                         <div>
                             <label for="tourType"><h2>Type of vacation</h2></label>
-                            <select name="tourType" class="selectpicker uui-form-element" required>
+                            <select id="tourType" name="tourType" class="selectpicker uui-form-element" required>
                                 <#list tourTypes as tourType>
                                     <#if tourType == tour.tourType>
                                         <option value="${tourType}" selected>${tourType}</option>

@@ -12,6 +12,7 @@
     <script src="../../../resources/styles/js/uui-core.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../../../resources/styles/css/uui-all.css" />
     <link rel="stylesheet" href="../../../resources/styles/fonts/font-awesome/css/font-awesome.min.css" />
+    <script src="../../../resources/styles/custom/script-protection.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -27,12 +28,13 @@
                             <input type="hidden" name="id" value="${user.id?c}"/>
                             <div>
                                 <label for="login"><h2>Login</h2></label>
-                                <input name="login" type="text" minlength="3" maxlength="20" value="${user.login}" class="uui-form-element large" required autofocus/>
+                                <input name="login" type="text" onkeyup="scriptProtectionLogin(this)" value="${user.login}" class="uui-form-element large" pattern=".{3,20}" required title="3 to 20 characters" autofocus/>
                             </div>
                             <br>
                             <div>
                                 <label for="password"><h2>Password</h2></label>
-                                <input name="password" type="password" minlength="3" maxlength="40" value="${user.password}" class="uui-form-element large" required/>
+                                <input name="password" type="password" onkeyup="scriptProtectionText(this)" value="${user.password}" class="uui-form-element large" pattern=".{3,40}" required title="3 to 40 characters" />
+                                <p>Permitted symbols for password: latin or cyrillic words, numbers, symbols: #,/&?:;%=_@-'.</p>
                             </div>
                             <br>
                             <div>
