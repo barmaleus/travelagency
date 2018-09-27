@@ -1,12 +1,15 @@
 package by.rekuts.travelagency.view;
 
 import by.rekuts.travelagency.service.*;
-import by.rekuts.travelagency.view.controller.MainController;
+import by.rekuts.travelagency.view.controller.CreateController;
+import by.rekuts.travelagency.view.controller.GetController;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
+@EnableWebMvc
 public class ViewTestConfig {
     @Bean
     public TourService tourService() {
@@ -34,7 +37,12 @@ public class ViewTestConfig {
     }
 
     @Bean
-    public MainController mainController() {
-        return new MainController();
+    public GetController mainController() {
+        return new GetController();
+    }
+
+    @Bean
+    public CreateController createController() {
+        return new CreateController();
     }
 }

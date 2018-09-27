@@ -21,7 +21,7 @@ import java.util.List;
 
 @Controller
 @ComponentScan(resourcePattern = "/styles", basePackages = "by.rekuts.**")
-public class MainController {
+public class GetController {
 
     @Autowired
     private TourService tourService;
@@ -80,7 +80,8 @@ public class MainController {
     public String getTour(@PathVariable("tourId") int tourId, Model model) {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attr.getRequest().getSession();
-        User sesUser = userService.getList(new UserSpecification((int)session.getAttribute("sesUserId"))).get(0);
+        List<User> users = userService.getList(new UserSpecification((int)session.getAttribute("sesUserId")));
+        User sesUser = users.get(0);
         TourSpecification tourSpecification = new TourSpecification();
         tourSpecification.setUserId(sesUser.getId());
         List<Tour> sesUserTours = tourService.getList(tourSpecification);

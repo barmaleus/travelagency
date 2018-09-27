@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 class GlobalDefaultExceptionHandler {
-    public static final String DEFAULT_ERROR_VIEW = "error";
-
     @ExceptionHandler(value = Exception.class)
     public ModelAndView
     defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
@@ -23,7 +21,7 @@ class GlobalDefaultExceptionHandler {
         mav.addObject("message", e.getLocalizedMessage());
         mav.addObject("stackTrace", e.getStackTrace());
         mav.addObject("url", req.getRequestURL());
-        mav.setViewName(DEFAULT_ERROR_VIEW);
+        mav.setViewName("error");
         return mav;
     }
 }
