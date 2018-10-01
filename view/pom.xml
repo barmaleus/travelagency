@@ -28,9 +28,7 @@
         <travelagency.version>1.0-SNAPSHOT</travelagency.version>
         <log4j2.version>2.11.0</log4j2.version>
         <jacoco.version>0.8.2</jacoco.version>
-        <junit4.version>4.12</junit4.version>
-        <mockito.version>1.9.5</mockito.version>
-        <maven.project.info.reports.version>2.9</maven.project.info.reports.version>
+
         <sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
     </properties>
     
@@ -71,18 +69,7 @@
             <version>${spring.security.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit4.version}</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -165,7 +152,6 @@
                 </executions>
             </plugin>
 
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -188,11 +174,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${maven.project.info.reports.version}</version>
             </plugin>
         </plugins>
     </build>

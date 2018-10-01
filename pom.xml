@@ -19,11 +19,32 @@
     •	Template Engine: Apache FreeMarker.
   </description>
 
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.site.version>3.7.1</maven.site.version>
+    <maven.project.info.reports.version>2.9</maven.project.info.reports.version>
+    <junit4.version>4.12</junit4.version>
+    <mockito.version>1.9.5</mockito.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-site-plugin</artifactId>
-      <version>3.7.1</version>
+      <version>${maven.site.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit4.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -32,7 +53,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.9</version>
+        <version>${maven.project.info.reports.version}</version>
       </plugin>
     </plugins>
   </build>

@@ -16,6 +16,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
+@Profile("travelAgencyPU")
 public class JpaConf {
 
     @Bean

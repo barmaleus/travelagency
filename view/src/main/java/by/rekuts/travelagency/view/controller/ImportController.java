@@ -43,6 +43,7 @@ public class ImportController {
 
         } catch (IOException e) {
             e.printStackTrace();
+
         }
 
         return "redirect:/importStatus";

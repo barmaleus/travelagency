@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String login) {
         UserSpecification specification = new UserSpecification();
         specification.setLogin(login);
         User user = userRepository.getList(specification).get(0);
