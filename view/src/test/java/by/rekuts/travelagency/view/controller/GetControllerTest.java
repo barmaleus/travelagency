@@ -1,4 +1,4 @@
-package by.rekuts.travelagency.view;
+package by.rekuts.travelagency.view.controller;
 
 import by.rekuts.travelagency.domain.Hotel;
 import by.rekuts.travelagency.domain.Tour;
@@ -9,6 +9,8 @@ import by.rekuts.travelagency.repository.UserSpecification;
 import by.rekuts.travelagency.service.HotelService;
 import by.rekuts.travelagency.service.TourService;
 import by.rekuts.travelagency.service.UserService;
+import by.rekuts.travelagency.view.confuguration.TestSecurityConfiguration;
+import by.rekuts.travelagency.view.confuguration.ViewTestConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

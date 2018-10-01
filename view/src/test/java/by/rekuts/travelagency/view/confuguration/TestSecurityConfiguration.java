@@ -1,4 +1,4 @@
-package by.rekuts.travelagency.view;
+package by.rekuts.travelagency.view.confuguration;
 
 import by.rekuts.travelagency.domain.User;
 import by.rekuts.travelagency.repository.UserSpecification;

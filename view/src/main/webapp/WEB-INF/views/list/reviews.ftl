@@ -53,7 +53,7 @@
                                 <td><a href="/tours/${review.tour.id?c}">${review.tour.country.name} ${review.tour.date}</a></td>
                                 <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                 <td>
-                                    <form action="/reviews/${review.id?c}/update-review" method="get" style="display: inline">
+                                    <form action="/reviews/${review.id?c}/update" method="get" style="display: inline">
                                         <button type="submit" class="uui-button orange small">Update</button>
                                     </form>
                                     <form action="/del-review" method="post" style="display: inline">

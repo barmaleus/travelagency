@@ -6,11 +6,8 @@ import by.rekuts.travelagency.service.*;
 import by.rekuts.travelagency.view.exception.DeleteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,13 +28,14 @@ public class DeleteController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/del-review")
     public String delReview(@RequestParam(value = "reviewId") int reviewId) {
         reviewService.delete(reviewId);
-        return "redirect:/reviews";
+        return "redirect:/tours";
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/del-country")
     public String delCountry(@RequestParam(value = "countryId") int countryId) {
         List<Tour> tours = tourService.getList(new TourSpecification());
@@ -53,7 +51,7 @@ public class DeleteController {
         return "redirect:/countries";
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/del-hotel")
     public String delHotel(@RequestParam(value = "hotelId") int hotelId) {
         List<Tour> tours = tourService.getList(new TourSpecification());
@@ -69,14 +67,14 @@ public class DeleteController {
         return "redirect:/hotels";
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/del-tour")
     public String delTour(@RequestParam(value = "tourId") int tourId) {
         tourService.delete(tourId);
         return "redirect:/tours";
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/del-user")
     public String delUser(@RequestParam(value = "userId") int userId) {
         userService.delete(userId);

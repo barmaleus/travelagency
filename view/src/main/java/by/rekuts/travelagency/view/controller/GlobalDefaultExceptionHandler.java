@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 class GlobalDefaultExceptionHandler {
     @ExceptionHandler(value = Exception.class)
-    public ModelAndView
-    defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
         if (AnnotationUtils.findAnnotation
                 (e.getClass(), ResponseStatus.class) != null)
             throw e;

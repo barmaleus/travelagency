@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -89,5 +90,15 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        ObjectFormatter formatter = new ObjectFormatter();
+        registry.addFormatter(formatter.userFormatter());
+        registry.addFormatter(formatter.tourFormatter());
+        registry.addFormatter(formatter.countryFormatter());
+        registry.addFormatter(formatter.hotelFormatter());
+        registry.addFormatter(formatter.localDateFormatter());
     }
 }

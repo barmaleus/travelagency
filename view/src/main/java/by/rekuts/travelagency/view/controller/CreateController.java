@@ -12,13 +12,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,7 +69,7 @@ public class CreateController {
         return "create/new-review";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/tours/{tourId}/add-review")
     public String newUserReview(@PathVariable int tourId, ModelMap model) {
         List<User> users = userService.getList(new UserSpecification());
@@ -83,19 +84,11 @@ public class CreateController {
         return "create/new-review";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @PostMapping(value = "/reg-review")
-    public String regReview(
-            @RequestParam(value = "user") Integer userId,
-            @RequestParam(value = "tour") Integer tourId,
-            @RequestParam(value = "text") String text
-    ) {
-        Review review = new Review();
+    public String regReview(@ModelAttribute Review review) {
         review.setDate(LocalDateTime.now());
-        review.setUser(userService.getList(new UserSpecification(userId)).get(0));
-        review.setTour(tourService.getList(new TourSpecification(tourId)).get(0));
-        review.setText(text);
         reviewService.insert(review);
         return "redirect:/tours";
     }
@@ -137,26 +130,7 @@ public class CreateController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/reg-tour")
-    public String regTour(
-            @RequestParam(value = "photo") String photo,
-            @RequestParam(value = "date") String date,
-            @RequestParam(value = "duration") Integer duration,
-            @RequestParam(value = "description") String description,
-            @RequestParam(value = "cost") Double cost,
-            @RequestParam(value = "tourType") String tourType,
-            @RequestParam(value = "hotel") Integer hotelId,
-            @RequestParam(value = "country") Integer countryId
-            ) {
-        Tour tour = new Tour();
-        tour.setPhoto(photo);
-        LocalDate localDate = LocalDate.parse(date);
-        tour.setDate(localDate);
-        tour.setDuration(duration);
-        tour.setDescription(description);
-        tour.setCost(BigDecimal.valueOf(cost));
-        tour.setTourType(Tour.TourType.valueOf(tourType));
-        tour.setHotel(hotelService.getList(new HotelSpecification(hotelId)).get(0));
-        tour.setCountry(countryService.getList(new CountrySpecification(countryId)).get(0));
+    public String regTour(@ModelAttribute Tour tour) {
         tourService.insert(tour);
         return "redirect:/tours";
     }

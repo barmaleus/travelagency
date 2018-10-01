@@ -63,7 +63,7 @@
                                     <td>$${tour.cost}</td>
                                     <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                     <td>
-                                        <form action="/tours/${tour.id?c}/update-tour" method="get" style="display: inline">
+                                        <form action="/tours/${tour.id?c}/update" method="get" style="display: inline">
                                             <button type="submit" class="uui-button orange small">Update</button>
                                         </form>
                                         <form action="/del-tour" method="post" style="display: inline">

@@ -43,7 +43,7 @@
                                 <td>${user.role}</td>
                                 <@security.authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
                                 <td>
-                                    <form action="/users/${user.id?c}/update-user" method="get" style="display: inline">
+                                    <form action="/users/${user.id?c}/update" method="get" style="display: inline">
                                         <button type="submit" class="uui-button orange small">Update</button>
                                     </form>
                                     <form action="/del-user" method="post" style="display: inline">
