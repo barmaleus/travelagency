@@ -27,10 +27,10 @@
         <tomcat.version>2.2</tomcat.version>
         <travelagency.version>1.0-SNAPSHOT</travelagency.version>
         <log4j2.version>2.11.0</log4j2.version>
-        <jacoco.version>0.8.1</jacoco.version>
+        <jacoco.version>0.8.2</jacoco.version>
         <junit4.version>4.12</junit4.version>
         <mockito.version>1.9.5</mockito.version>
-        <maven.project.info.reports.version>3.0.0</maven.project.info.reports.version>
+        <maven.project.info.reports.version>2.9</maven.project.info.reports.version>
         <sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
     </properties>
     

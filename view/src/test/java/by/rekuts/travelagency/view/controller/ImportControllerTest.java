@@ -1,6 +1,5 @@
 package by.rekuts.travelagency.view.controller;
 
-import by.rekuts.travelagency.service.*;
 import by.rekuts.travelagency.view.confuguration.TestSecurityConfiguration;
 import by.rekuts.travelagency.view.confuguration.ViewTestConfig;
 import org.junit.Before;
@@ -29,8 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ImportControllerTest {
     @Autowired
     private WebApplicationContext context;
-    @Autowired
-    private TourService tourService;
 
     private MockMvc mvc;
 
