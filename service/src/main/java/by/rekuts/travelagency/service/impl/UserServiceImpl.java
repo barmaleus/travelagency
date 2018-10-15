@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 
-@Service(value = "userDetailService")
+@Service
 public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     UserRepository userRepository;

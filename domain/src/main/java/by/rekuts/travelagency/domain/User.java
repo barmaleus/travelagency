@@ -30,22 +30,19 @@ public class User implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-	@Column(name="\"id\"", nullable = false)
 	private int id;
 
 	@NotNull
-	@Column(name="login", nullable = false, unique = true)
+	@Column(nullable = false, unique = true)
 	private String login;
 
-	@Column(name="password")
 	private String password;
 
-	@Column(name = "role")
 	@Type(type="role_enum")
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(
 			name = "user_tour",
 			joinColumns = { @JoinColumn(name = "user_id") },

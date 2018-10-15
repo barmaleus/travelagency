@@ -24,7 +24,7 @@ import java.util.List;
 @Data @NoArgsConstructor
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 @Entity
-@Table(name = "tour")
+@Table
 @TypeDef(
         name = "tour_enum",
         typeClass = TourEnumType.class
@@ -33,23 +33,17 @@ public class Tour implements Serializable {
     @Id
     @SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-    @Column(name="id", nullable = false)
 	private int id;
 
-    @Column(name = "photo")
 	private String photo;
 
-    @Column(name = "date")
 	private LocalDate date;
 
-    @Column(name = "duration")
 	private int duration;
 
-    @Column(name = "description")
 	private String description;
 
     @PositiveOrZero
-    @Column(name = "cost")
 	private BigDecimal cost;
 
     @Column(name = "tour_type")
@@ -58,12 +52,12 @@ public class Tour implements Serializable {
     private TourType tourType;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "hotel_id", nullable = false)
 	private Hotel hotel;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 

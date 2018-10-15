@@ -22,7 +22,7 @@ import java.util.List;
 @Data @NoArgsConstructor
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 @Entity
-@Table(name = "hotel")
+@Table
 @TypeDef(
         name = "features",
         typeClass = HotelEnumArrayType.class
@@ -31,29 +31,23 @@ public class Hotel implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-	@Column(name="id", nullable = false)
 	private int id;
 
 	@NotNull
-	@Column(name = "name", nullable = false)
+	@Column(nullable = false)
 	private String name;
 
 	@Min(1) @Max(5)
-	@Column(name = "stars")
 	private int stars;
 
-	@Column(name = "website")
 	private String website;
 
 	@Min(-90) @Max(90)
-	@Column(name = "latitude")
 	private BigDecimal latitude;
 
 	@Min(-180) @Max(180)
-	@Column(name = "longitude")
 	private BigDecimal longitude;
 
-	@Column(name = "features")
     @Type(type="features")
 	private List<String> features;
 

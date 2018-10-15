@@ -22,20 +22,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 @Entity
-@Table(name = "review")
+@Table
 public class Review implements Serializable {
 	@Id
 	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-	@Column(name="id", nullable = false)
 	private int id;
 
 	@NotNull
-	@Column(name="date", nullable = false)
+	@Column(nullable = false)
 	private LocalDateTime date;
 
 	@NotNull
-	@Column(name="text", nullable = false)
+	@Column(nullable = false)
 	private String text;
 
 	@NotNull

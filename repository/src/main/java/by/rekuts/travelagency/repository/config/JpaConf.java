@@ -16,7 +16,6 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
-@Profile("travelAgencyPU")
 public class JpaConf {
 
     @Bean
@@ -32,6 +31,7 @@ public class JpaConf {
     }
 
     @Bean
+    @Profile("travelAgencyPU")
     public DataSource getDataSource() {
         HikariConfig config = new HikariConfig();
         config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");

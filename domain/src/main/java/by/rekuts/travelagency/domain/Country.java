@@ -19,7 +19,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 @Entity
-@Table(name = "country")
+@Table
 @NamedQueries(value = {
 		@NamedQuery(name="Country.findAll", query="SELECT c FROM Country c")
 })
@@ -27,11 +27,10 @@ public class Country implements Serializable {
 	@Id
     @SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-	@Column(name="id", nullable = false)
 	private int id;
 
 	@NotNull
-	@Column(name = "name", nullable = false)
+	@Column(nullable = false)
 	private String name;
 
 	@Version
