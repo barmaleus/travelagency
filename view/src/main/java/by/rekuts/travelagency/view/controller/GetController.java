@@ -13,10 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -78,12 +75,9 @@ public class GetController {
     @Transactional
     @GetMapping(value = "/tours/{tourId}")
     public String getTour(@PathVariable("tourId") int tourId, Model model) {
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession();
-        List<User> users = userService.getList(new UserSpecification((int)session.getAttribute("sesUserId")));
-        User sesUser = users.get(0);
+        int sessionUserId = new ControllerHelper().getSessionUserId();
         TourSpecification tourSpecification = new TourSpecification();
-        tourSpecification.setUserId(sesUser.getId());
+        tourSpecification.setUserId(sessionUserId);
         List<Tour> sesUserTours = tourService.getList(tourSpecification);
         boolean isTourFavorite = false;
         for (Tour tour : sesUserTours) {
@@ -94,12 +88,7 @@ public class GetController {
         }
         model.addAttribute("isFavorite", isTourFavorite);
 
-        Tour tour = tourService.getList(new TourSpecification(tourId)).get(0);
-        ReviewSpecification specification = new ReviewSpecification();
-        specification.setTourId(tourId);
-        List<Review> reviews = reviewService.getList(specification);
-        model.addAttribute("tour", tour);
-        model.addAttribute("reviews", reviews);
+        addTourAndReviewsToModel(tourId, model);
         return "tour";
     }
 
@@ -124,39 +113,43 @@ public class GetController {
     @Transactional
     @PostMapping(value = "/tours/{tourId}")
     public String getFavoriteTour(@PathVariable("tourId") int tourId, boolean addToFavorites, Model model) {
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession();
-        User sesUser = userService.getList(new UserSpecification((int)session.getAttribute("sesUserId"))).get(0);
+        int sessionUserId = new ControllerHelper().getSessionUserId();
         TourSpecification tourSpecification = new TourSpecification();
-        tourSpecification.setUserId(sesUser.getId());
+        tourSpecification.setUserId(sessionUserId);
+
+        User sessionUser = userService.getList(new UserSpecification(sessionUserId)).get(0);
 
         if (addToFavorites) {
             Tour addedTour = tourService.getList(new TourSpecification(tourId)).get(0);
-            userService.addTourToFavorites(sesUser, addedTour);
+            userService.addTourToFavorites(sessionUser, addedTour);
         } else {
             Tour addedTour = tourService.getList(new TourSpecification(tourId)).get(0);
-            userService.removeTourFromFavorites(sesUser, addedTour);
+            userService.removeTourFromFavorites(sessionUser, addedTour);
         }
+
+        addTourAndReviewsToModel(tourId, model);
+        return "redirect:/tours/{tourId}";
+    }
+
+    private void addTourAndReviewsToModel(int tourId, Model model) {
         Tour tour = tourService.getList(new TourSpecification(tourId)).get(0);
+        model.addAttribute("tour", tour);
         ReviewSpecification specification = new ReviewSpecification();
         specification.setTourId(tourId);
         List<Review> reviews = reviewService.getList(specification);
-        model.addAttribute("tour", tour);
         model.addAttribute("reviews", reviews);
-        return "redirect:/tours/{tourId}";
     }
 
     @PreAuthorize("authentication.authenticated")
     @Transactional
     @GetMapping(value = "/profile")
     public String getProfile(Model model) {
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession();
-        User user = userService.getList(new UserSpecification((int)session.getAttribute("sesUserId"))).get(0);
+        int sessionUserId = new ControllerHelper().getSessionUserId();
         TourSpecification tourSpecification = new TourSpecification();
-        tourSpecification.setUserId(user.getId());
+        tourSpecification.setUserId(sessionUserId);
         List<Tour> tours = tourService.getList(tourSpecification);
-        model.addAttribute("user", user);
+        User sessionUser = userService.getList(new UserSpecification(sessionUserId)).get(0);
+        model.addAttribute("user", sessionUser);
         model.addAttribute("tours", tours);
         return "user";
     }

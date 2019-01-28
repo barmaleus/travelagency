@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,31 +54,27 @@ public class CreateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/new-review")
     public String newReview(ModelMap model) {
-        List<User> users = userService.getList(new UserSpecification());
-        model.addAttribute("users", users);
-        List<Tour> tours = tourService.getList(new TourSpecification());
-        model.addAttribute("tours", tours);
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession();
-        int sesUserId = (int)session.getAttribute("sesUserId");
-        model.addAttribute("sesUserId", sesUserId);
-        model.addAttribute("tourId", tours.get(tours.size()-1).getId());
+        List<Tour> tours = addUsersToursSesUserToModel(model);
+        model.addAttribute("tourId", tours.get(tours.size()-1).getId()); //todo check it
         return "create/new-review";
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/tours/{tourId}/add-review")
     public String newUserReview(@PathVariable int tourId, ModelMap model) {
+        addUsersToursSesUserToModel(model);
+        model.addAttribute("tourId", tourId);
+        return "create/new-review";
+    }
+
+    private List<Tour> addUsersToursSesUserToModel(ModelMap model) {
         List<User> users = userService.getList(new UserSpecification());
         model.addAttribute("users", users);
         List<Tour> tours = tourService.getList(new TourSpecification());
         model.addAttribute("tours", tours);
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession();
-        int sesUserId = (int)session.getAttribute("sesUserId");
+        int sesUserId = new ControllerHelper().getSessionUserId();
         model.addAttribute("sesUserId", sesUserId);
-        model.addAttribute("tourId", tourId);
-        return "create/new-review";
+        return tours;
     }
 
     @PreAuthorize("isAuthenticated()")
