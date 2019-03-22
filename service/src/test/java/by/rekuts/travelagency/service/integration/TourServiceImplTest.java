@@ -1,10 +1,10 @@
 package by.rekuts.travelagency.service.integration;
 
-import by.rekuts.travelagency.repository.config.TestRepositoryConfig;
+import by.rekuts.travelagency.domain.Tour;
 import by.rekuts.travelagency.repository.CountrySpecification;
 import by.rekuts.travelagency.repository.HotelSpecification;
 import by.rekuts.travelagency.repository.TourSpecification;
-import by.rekuts.travelagency.domain.Tour;
+import by.rekuts.travelagency.repository.config.TestRepositoryConfig;
 import by.rekuts.travelagency.service.CountryService;
 import by.rekuts.travelagency.service.HotelService;
 import by.rekuts.travelagency.service.TourService;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.PersistenceException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -53,9 +52,9 @@ public class TourServiceImplTest {
 
     @Test
     public void insertTest(){
-        int countToursFirst = tourService.getList(new TourSpecification()).size();
+        var countToursFirst = tourService.getList(new TourSpecification()).size();
         tourService.insert(tour);
-        int countToursLast = tourService.getList(new TourSpecification()).size();
+        var countToursLast = tourService.getList(new TourSpecification()).size();
         assertEquals(1, countToursLast - countToursFirst);
     }
 
@@ -66,15 +65,15 @@ public class TourServiceImplTest {
 
     @Test
     public void deleteTest() {
-        int countToursFirst = tourService.getList(new TourSpecification()).size();
+        var countToursFirst = tourService.getList(new TourSpecification()).size();
         tourService.delete(1);
-        int countToursLast = tourService.getList(new TourSpecification()).size();
+        var countToursLast = tourService.getList(new TourSpecification()).size();
         assertEquals(1, countToursFirst - countToursLast);
     }
 
     @Test
     public void getTourByIdTestTrue() {
-        Tour tour = tourService.getList(new TourSpecification(4)).get(0);
+        var tour = tourService.getList(new TourSpecification(4)).get(0);
         assertEquals("Nam dui.", tour.getDescription());
     }
 
@@ -85,29 +84,29 @@ public class TourServiceImplTest {
 
     @Test
     public void getTourByIdTestFalse2() {
-        List<Tour> tours = tourService.getList(new TourSpecification(1001));
+        var tours = tourService.getList(new TourSpecification(1001));
         assertTrue(tours.isEmpty());
     }
 
     @Test
     public void getAllToursTest() {
-        List<Tour> tourList = tourService.getList(new TourSpecification());
+        var tourList = tourService.getList(new TourSpecification());
         assertEquals(1002, tourList.size());
     }
 
     @Test
     public void getToursByCriteria() {
-        TourSpecification specification = new TourSpecification();
+        var specification = new TourSpecification();
         specification.setTourType(Tour.TourType.safari);
-        List<Tour> result = tourService.getList(specification);
+        var result = tourService.getList(specification);
         assertEquals(58, result.size());
     }
 
     @Test
     public void getToursByUserId() {
-        TourSpecification specification = new TourSpecification();
+        var specification = new TourSpecification();
         specification.setUserId(101);
-        List<Tour> result = tourService.getList(specification);
+        var result = tourService.getList(specification);
         assertEquals(2, result.size());
     }
 }

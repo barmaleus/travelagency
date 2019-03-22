@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
@@ -81,9 +80,9 @@ public class CreateControllerTest {
 
     @Test
     public void newReviewTest() throws Exception {
-        Tour tour = new Tour();
+        var tour = new Tour();
         tour.setId(6);
-        List<Tour> tours = Collections.singletonList(tour);
+        var tours = List.of(tour);
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(get("/new-review").sessionAttr("sesUserId", 4).with(user("user").roles("ADMIN")))
                 .andExpect(view().name("create/new-review"));
@@ -91,9 +90,9 @@ public class CreateControllerTest {
 
     @Test
     public void newReviewTestFalse1() throws Exception {
-        Tour tour = new Tour();
+        var tour = new Tour();
         tour.setId(6);
-        List<Tour> tours = Collections.singletonList(tour);
+        var tours = List.of(tour);
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(get("/new-review").with(anonymous()))
                 .andExpect(status().isFound())
@@ -102,9 +101,9 @@ public class CreateControllerTest {
 
     @Test
     public void newReviewTestFalse2() throws Exception {
-        Tour tour = new Tour();
+        var tour = new Tour();
         tour.setId(6);
-        List<Tour> tours = Collections.singletonList(tour);
+        var tours = List.of(tour);
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(get("/new-review").sessionAttr("sesUserId", 4).with(user("user").roles("MEMBER")))
                 .andExpect(status().isForbidden())

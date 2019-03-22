@@ -42,7 +42,7 @@ public class ImportControllerTest {
 
     @Test
     public void singleFileUploadTest_post() throws Exception {
-        MockMultipartFile file = new MockMultipartFile("file", "filename.csv", null, "bar".getBytes());
+        var file = new MockMultipartFile("file", "filename.csv", null, "bar".getBytes());
         mvc.perform(fileUpload("/import-post")
                 .file(file)
                 .with(user("user").roles("ADMIN")))
@@ -53,7 +53,7 @@ public class ImportControllerTest {
 
     @Test
     public void singleFileUploadTestFalse_post_emptyFile() throws Exception {
-        MockMultipartFile file = new MockMultipartFile("file", "filename.csv", null, "".getBytes());
+        var file = new MockMultipartFile("file", "filename.csv", null, "".getBytes());
         mvc.perform(fileUpload("/import-post")
                 .file(file)
                 .with(user("user").roles("ADMIN")))
@@ -64,7 +64,7 @@ public class ImportControllerTest {
 
     @Test
     public void singleFileUploadTestFalse_post_wrongFileType() throws Exception {
-        MockMultipartFile file = new MockMultipartFile("file", "filename.json", null, "bar".getBytes());
+        var file = new MockMultipartFile("file", "filename.json", null, "bar".getBytes());
         mvc.perform(fileUpload("/import-post")
                 .file(file)
                 .with(user("user").roles("ADMIN")))
@@ -75,7 +75,7 @@ public class ImportControllerTest {
 
     @Test
     public void singleFileUploadTestFalse_post_noRights() throws Exception {
-        MockMultipartFile file = new MockMultipartFile("file", "filename.csv", null, "bar".getBytes());
+        var file = new MockMultipartFile("file", "filename.csv", null, "bar".getBytes());
         mvc.perform(fileUpload("/import-post")
                 .file(file)
                 .with(user("user")))

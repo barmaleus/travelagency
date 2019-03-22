@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
@@ -90,11 +89,11 @@ public class DeleteControllerTest {
 
     @Test
     public void delCountryTestFalse1() throws Exception {
-        Country country = new Country();
+        var country = new Country();
         country.setId(123);
-        Tour tour = new Tour();
+        var tour = new Tour();
         tour.setCountry(country);
-        List<Tour> tours = Collections.singletonList(tour);
+        var tours = List.of(tour);
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(post("/del-country")
                 .param("countryId", "123")
@@ -130,11 +129,11 @@ public class DeleteControllerTest {
 
     @Test
     public void delHotelsTestFalse1() throws Exception {
-        Hotel hotel = new Hotel();
+        var hotel = new Hotel();
         hotel.setId(123);
-        Tour tour = new Tour();
+        var tour = new Tour();
         tour.setHotel(hotel);
-        List<Tour> tours = Collections.singletonList(tour);
+        var tours = List.of(tour);
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(post("/del-hotel")
                 .param("hotelId", "123")

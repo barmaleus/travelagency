@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -22,7 +20,7 @@ public class HotelServiceImplTest {
 
     @Before
     public void initializeHotelsList() {
-        Hotel hotel1 = new Hotel();
+        var hotel1 = new Hotel();
         hotel1.setId(1);
         hotel1.setName("Tourist");
         hotel1.setStars(3);
@@ -30,7 +28,7 @@ public class HotelServiceImplTest {
         hotel1.setLatitude(BigDecimal.valueOf(85.15465212));
         hotel1.setLongitude(BigDecimal.valueOf(-48.85465516));
         hotel1.setFeatures(new ArrayList<>());
-        Hotel hotel2 = new Hotel();
+        var hotel2 = new Hotel();
         hotel2.setId(2);
         hotel2.setName("Red Dragon");
         hotel2.setStars(3);
@@ -38,7 +36,7 @@ public class HotelServiceImplTest {
         hotel2.setLatitude(BigDecimal.valueOf(85.15465212));
         hotel2.setLongitude(BigDecimal.valueOf(-48.85465516));
         hotel2.setFeatures(new ArrayList<>());
-        Hotel hotel3 = new Hotel();
+        var hotel3 = new Hotel();
         hotel3.setId(3);
         hotel3.setName("Little Italia");
         hotel3.setStars(3);
@@ -46,12 +44,12 @@ public class HotelServiceImplTest {
         hotel3.setLatitude(BigDecimal.valueOf(85.15465212));
         hotel3.setLongitude(BigDecimal.valueOf(-48.85465516));
         hotel3.setFeatures(new ArrayList<>());
-        hotels = Arrays.asList(hotel1, hotel2, hotel3);
+        hotels = List.of(hotel1, hotel2, hotel3);
     }
 
     @Test
     public void insertTest(){
-        HotelServiceImpl hotelService = mock(HotelServiceImpl.class);
+        var hotelService = mock(HotelServiceImpl.class);
         doNothing().when(hotelService).insert(any(Hotel.class));
         hotelService.insert(any(Hotel.class));
         hotelService.insert(any(Hotel.class));
@@ -60,7 +58,7 @@ public class HotelServiceImplTest {
 
     @Test
     public void deleteTest() {
-        HotelServiceImpl hotelService = mock(HotelServiceImpl.class);
+        var hotelService = mock(HotelServiceImpl.class);
         doNothing().when(hotelService).insert(any(Hotel.class));
         hotelService.delete(6);
         hotelService.delete(8);
@@ -69,39 +67,39 @@ public class HotelServiceImplTest {
 
     @Test
     public void getHotelByIdTestTrue() {
-        HotelServiceImpl hotelService = mock(HotelServiceImpl.class);
-        HotelSpecification specification = new HotelSpecification(2);
-        List<Hotel> singletonList = Collections.singletonList(hotels.get(1));
+        var hotelService = mock(HotelServiceImpl.class);
+        var specification = new HotelSpecification(2);
+        var singletonList = List.of(hotels.get(1));
         when(hotelService.getList(specification)).thenReturn(singletonList);
-        Hotel hotel = hotelService.getList(specification).get(0);
+        var hotel = hotelService.getList(specification).get(0);
         assertEquals("Red Dragon", hotel.getName());
     }
 
     @Test
     public void getHotelByIdTestFalse() {
-        HotelServiceImpl hotelService = mock(HotelServiceImpl.class);
-        HotelSpecification specification = new HotelSpecification(2);
-        List<Hotel> singletonList = Collections.singletonList(hotels.get(1));
+        var hotelService = mock(HotelServiceImpl.class);
+        var specification = new HotelSpecification(2);
+        var singletonList = List.of(hotels.get(1));
         when(hotelService.getList(specification)).thenReturn(singletonList);
-        Hotel hotel = hotelService.getList(specification).get(0);
+        var hotel = hotelService.getList(specification).get(0);
         assertNotEquals("Tourist", hotel.getName());
     }
 
     @Test
     public void getAllHotelsTestTrue() {
-        HotelServiceImpl hotelServiceMock = mock(HotelServiceImpl.class);
-        HotelSpecification specification = new HotelSpecification();
+        var hotelServiceMock = mock(HotelServiceImpl.class);
+        var specification = new HotelSpecification();
         when(hotelServiceMock.getList(specification)).thenReturn(hotels);
-        List<Hotel> hotelList = hotelServiceMock.getList(specification);
+        var hotelList = hotelServiceMock.getList(specification);
         assertEquals(3, hotelList.size());
     }
 
     @Test
     public void getAllHotelsTestFalse() {
-        HotelServiceImpl hotelServiceMock = mock(HotelServiceImpl.class);
-        HotelSpecification specification = new HotelSpecification();
+        var hotelServiceMock = mock(HotelServiceImpl.class);
+        var specification = new HotelSpecification();
         when(hotelServiceMock.getList(specification)).thenReturn(hotels);
-        List<Hotel> hotelList = hotelServiceMock.getList(specification);
+        var hotelList = hotelServiceMock.getList(specification);
         assertNotEquals(0, hotelList.size());
     }
 }

@@ -28,57 +28,57 @@ public class CountryServiceImplTest {
 
     @Test
     public void insertCountryTest(){
-        Country country = new Country();
+        var country = new Country();
         country.setName("Any Country");
-        int countCountriesFirst = countryService.getList(new CountrySpecification()).size();
+        var countCountriesFirst = countryService.getList(new CountrySpecification()).size();
         countryService.insert(country);
-        int countCountriesLast = countryService.getList(new CountrySpecification()).size();
+        var countCountriesLast = countryService.getList(new CountrySpecification()).size();
         assertEquals(1, countCountriesLast - countCountriesFirst);
     }
 
     @Test (expected = PersistenceException.class)
     public void insertNullCountryTest(){
-        Country country = new Country();
+        var country = new Country();
         countryService.insert(country);
     }
 
     @Test
     public void deleteTest() {
-        int countCountriesFirst = countryService.getList(new CountrySpecification()).size();
+        var countCountriesFirst = countryService.getList(new CountrySpecification()).size();
         countryService.delete(55);
-        int countCountriesLast = countryService.getList(new CountrySpecification()).size();
+        var countCountriesLast = countryService.getList(new CountrySpecification()).size();
         assertEquals(1, countCountriesFirst - countCountriesLast);
     }
 
     @Test (expected = PersistenceException.class)
     public void deleteTestFalse() {
-        int countCountriesFirst = countryService.getList(new CountrySpecification()).size();
+        var countCountriesFirst = countryService.getList(new CountrySpecification()).size();
         countryService.delete(1);
-        int countCountriesLast = countryService.getList(new CountrySpecification()).size();
+        var countCountriesLast = countryService.getList(new CountrySpecification()).size();
         assertEquals(1, countCountriesFirst - countCountriesLast);
     }
 
     @Test
     public void getCountryByIdTestTrue(){
-        Country country = countryService.getList(new CountrySpecification(2)).get(0);
+        var country = countryService.getList(new CountrySpecification(2)).get(0);
         assertEquals("Albania", country.getName().trim());
     }
 
     @Test
     public void getCountryByIdTestFalse(){
-        Country country = countryService.getList(new CountrySpecification(2)).get(0);
+        var country = countryService.getList(new CountrySpecification(2)).get(0);
         assertNotEquals("Albania ", country.getName());
     }
 
     @Test
     public void getAllCountriesTestTrue(){
-        List<Country> countryList = countryService.getList(new CountrySpecification());
+        var countryList = countryService.getList(new CountrySpecification());
         assertEquals(199, countryList.size());
     }
 
     @Test
     public void getAllCountriesTestFalse() {
-        List<Country> countryList = countryService.getList(new CountrySpecification());
+        var countryList = countryService.getList(new CountrySpecification());
         assertNotEquals(0, countryList.size());
     }
 }

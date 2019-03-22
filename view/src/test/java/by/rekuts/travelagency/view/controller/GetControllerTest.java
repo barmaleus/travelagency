@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -142,7 +141,7 @@ public class GetControllerTest {
     @Test
     public void getTourTest() throws Exception {
         when(userService.getList(any(UserSpecification.class))).thenReturn(users);
-        List<Tour> tours = Collections.singletonList(new Tour());
+        var tours = List.of(new Tour());
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(get("/tours/{tourId}", "178").sessionAttr("sesUserId", 4).with(user("user")))
                 .andExpect(status().isOk())
@@ -153,7 +152,7 @@ public class GetControllerTest {
     @Test
     public void getTourTestFalse1() throws Exception {
         when(userService.getList(any(UserSpecification.class))).thenReturn(users);
-        List<Tour> tours = Collections.singletonList(new Tour());
+        var tours = List.of(new Tour());
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(get("/tours/{tourId}", "178").sessionAttr("sesUserId", 4).with(anonymous()))
                 .andExpect(status().isFound())
@@ -163,7 +162,7 @@ public class GetControllerTest {
     @Test
     public void getTourTestFalse2() throws Exception {
         when(userService.getList(any(UserSpecification.class))).thenReturn(users);
-        List<Tour> tours = Collections.singletonList(new Tour());
+        var tours = List.of(new Tour());
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(get("/tours/{tourId}", "tour").sessionAttr("sesUserId", 4).with(user("user")))
                 .andExpect(status().isBadRequest());
@@ -189,7 +188,7 @@ public class GetControllerTest {
     @Test
     public void getFavoriteTourTest() throws Exception {
         when(userService.getList(any(UserSpecification.class))).thenReturn(users);
-        List<Tour> tours = Collections.singletonList(new Tour());
+        var tours = List.of(new Tour());
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(post("/tours/{tourId}", "178").sessionAttr("sesUserId", 4).with(user("user")))
                 .andExpect(status().is3xxRedirection())
@@ -200,7 +199,7 @@ public class GetControllerTest {
     @Test
     public void getFavoriteTourTestFalse() throws Exception {
         when(userService.getList(any(UserSpecification.class))).thenReturn(users);
-        List<Tour> tours = Collections.singletonList(new Tour());
+        var tours = List.of(new Tour());
         when(tourService.getList(any(TourSpecification.class))).thenReturn(tours);
         mvc.perform(post("/tours/{tourId}", "178").sessionAttr("sesUserId", 4).with(anonymous()))
                 .andExpect(status().isFound())
@@ -226,7 +225,7 @@ public class GetControllerTest {
 
     @Test
     public void getHotelTest() throws Exception {
-        List<Hotel> hotels = Collections.singletonList(new Hotel());
+        var hotels = List.of(new Hotel());
         when(hotelService.getList(any(HotelSpecification.class))).thenReturn(hotels);
         mvc.perform(get("/hotels/{hotelId}", 8).with(user("user")))
                 .andExpect(view().name("hotel"))
@@ -235,7 +234,7 @@ public class GetControllerTest {
 
     @Test
     public void getHotelTestFalse() throws Exception {
-        List<Hotel> hotels = Collections.singletonList(new Hotel());
+        var hotels = List.of(new Hotel());
         when(hotelService.getList(any(HotelSpecification.class))).thenReturn(hotels);
         mvc.perform(get("/hotels/{hotelId}", 8).with(anonymous()))
                 .andExpect(status().isFound())

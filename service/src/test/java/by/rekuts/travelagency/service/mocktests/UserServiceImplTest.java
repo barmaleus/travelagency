@@ -6,8 +6,6 @@ import by.rekuts.travelagency.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +19,7 @@ public class UserServiceImplTest {
 
     @Before
     public void initializeUsersList() {
-        users = Arrays.asList(
+        users = List.of(
                 new User(1, "superlogin1", "thisispassword"),
                 new User(2, "superlogin2", "thisispassword"),
                 new User(3, "superlogin3", "thisispassword"));
@@ -29,7 +27,7 @@ public class UserServiceImplTest {
 
     @Test
     public void insertTest(){
-        UserServiceImpl userService = mock(UserServiceImpl.class);
+        var userService = mock(UserServiceImpl.class);
         doNothing().when(userService).insert(any(User.class));
         userService.insert(new User());
         userService.insert(new User());
@@ -38,7 +36,7 @@ public class UserServiceImplTest {
 
     @Test
     public void deleteTest() {
-        UserServiceImpl userService = mock(UserServiceImpl.class);
+        var userService = mock(UserServiceImpl.class);
         doNothing().when(userService).insert(any(User.class));
         userService.delete(6);
         userService.delete(8);
@@ -47,39 +45,39 @@ public class UserServiceImplTest {
 
     @Test
     public void getUserByIdTestTrue() {
-        UserServiceImpl userService = mock(UserServiceImpl.class);
-        UserSpecification specification = new UserSpecification(2);
-        List<User> singletonList = Collections.singletonList(users.get(1));
+        var userService = mock(UserServiceImpl.class);
+        var specification = new UserSpecification(2);
+        var singletonList = List.of(users.get(1));
         when(userService.getList(specification)).thenReturn(singletonList);
-        User user = userService.getList(specification).get(0);
+        var user = userService.getList(specification).get(0);
         assertEquals("superlogin2", user.getLogin());
     }
 
     @Test
     public void getUserByIdTestFalse() {
-        UserServiceImpl userService = mock(UserServiceImpl.class);
-        UserSpecification specification = new UserSpecification(2);
-        List<User> singletonList = Collections.singletonList(users.get(1));
+        var userService = mock(UserServiceImpl.class);
+        var specification = new UserSpecification(2);
+        var singletonList = List.of(users.get(1));
         when(userService.getList(specification)).thenReturn(singletonList);
-        User user = userService.getList(specification).get(0);
+        var user = userService.getList(specification).get(0);
         assertNotEquals("superlogin1", user.getLogin());
     }
 
     @Test
     public void getAllUsersTestTrue() {
-        UserServiceImpl userService = mock(UserServiceImpl.class);
-        UserSpecification specification = new UserSpecification();
+        var userService = mock(UserServiceImpl.class);
+        var specification = new UserSpecification();
         when(userService.getList(specification)).thenReturn(users);
-        List<User> tourList = userService.getList(specification);
+        var tourList = userService.getList(specification);
         assertEquals(3, tourList.size());
     }
 
     @Test
     public void getAllUsersTestFalse() {
-        UserServiceImpl userService = mock(UserServiceImpl.class);
-        UserSpecification specification = new UserSpecification();
+        var userService = mock(UserServiceImpl.class);
+        var specification = new UserSpecification();
         when(userService.getList(specification)).thenReturn(users);
-        List<User> tourList = userService.getList(specification);
+        var tourList = userService.getList(specification);
         assertNotEquals(0, tourList.size());
     }
 }

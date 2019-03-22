@@ -29,9 +29,9 @@ public class TestSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
                 .successHandler((req,res,auth)->{
-                    UserSpecification specification = new UserSpecification();
+                    var specification = new UserSpecification();
                     specification.setLogin(auth.getName());
-                    User curUser = new User();
+                    var curUser = new User();
                     curUser.setId(69);
                     req.getSession().setAttribute("sesUserId", curUser.getId());
                     res.sendRedirect("/");

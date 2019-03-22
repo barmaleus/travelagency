@@ -6,8 +6,6 @@ import by.rekuts.travelagency.service.impl.CountryServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -27,18 +25,17 @@ public class CountryServiceImplTest {
         country.setId(3525);
         country.setName("Any Country");
 
-        Country country1 = new Country();
+        var country1 = new Country();
         country1.setId(1);
         country1.setName("Russia");
-        Country country2 = new Country();
+        var country2 = new Country();
         country2.setId(2);
         country2.setName("India");
-        Country country3 = new Country();
+        var country3 = new Country();
         country3.setId(3);
         country3.setName("China");
 
-        countries = Arrays.asList(
-               country1, country2, country3);
+        countries = List.of(country1, country2, country3);
     }
 
     @Test
@@ -59,35 +56,35 @@ public class CountryServiceImplTest {
 
     @Test
     public void getCountryByIdTestTrue(){
-        CountrySpecification specification = new CountrySpecification(2);
-        List<Country> singletonList = Collections.singletonList(countries.get(1));
+        var specification = new CountrySpecification(2);
+        var singletonList = List.of(countries.get(1));
         when(countryServiceMock.getList(specification)).thenReturn(singletonList);
-        Country country = countryServiceMock.getList(specification).get(0);
+        var country = countryServiceMock.getList(specification).get(0);
         assertEquals("India", country.getName());
     }
 
     @Test
     public void getCountryByIdTestFalse(){
-        CountrySpecification specification = new CountrySpecification(2);
-        List<Country> singletonList = Collections.singletonList(countries.get(1));
+        var specification = new CountrySpecification(2);
+        var singletonList = List.of(countries.get(1));
         when(countryServiceMock.getList(specification)).thenReturn(singletonList);
-        Country country = countryServiceMock.getList(specification).get(0);
+        var country = countryServiceMock.getList(specification).get(0);
         assertNotEquals("Russia", country.getName());
     }
 
     @Test
     public void getAllCountriesTestTrue(){
-        CountrySpecification specification = new CountrySpecification();
+        var specification = new CountrySpecification();
         when(countryServiceMock.getList(specification)).thenReturn(countries);
-        List<Country> countryList = countryServiceMock.getList(specification);
+        var countryList = countryServiceMock.getList(specification);
         assertEquals(3, countryList.size());
     }
 
     @Test
     public void getAllCountriesTestFalse() {
-        CountrySpecification specification = new CountrySpecification();
+        var specification = new CountrySpecification();
         when(countryServiceMock.getList(specification)).thenReturn(countries);
-        List<Country> countryList = countryServiceMock.getList(specification);
+        var countryList = countryServiceMock.getList(specification);
         assertNotEquals(0, countryList.size());
     }
 }

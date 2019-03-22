@@ -44,9 +44,9 @@ public class HotelSerivceImplTest {
 
     @Test
     public void insertHotelTest(){
-        int countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
+        var countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
         hotelService.insert(hotel);
-        int countHotelsLast = hotelService.getList(new HotelSpecification()).size();
+        var countHotelsLast = hotelService.getList(new HotelSpecification()).size();
         assertEquals(1, countHotelsLast - countHotelsFirst);
     }
 
@@ -58,23 +58,23 @@ public class HotelSerivceImplTest {
 
     @Test
     public void deleteHotelTestTrue(){
-        int countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
+        var countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
         hotelService.delete(101);
-        int countHotelsLast = hotelService.getList(new HotelSpecification()).size();
+        var countHotelsLast = hotelService.getList(new HotelSpecification()).size();
         assertEquals(1, countHotelsFirst - countHotelsLast);
     }
 
     @Test
     public void deleteHotelTestFalseForeignKeys(){
-        int countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
+        var countHotelsFirst = hotelService.getList(new HotelSpecification()).size();
         hotelService.delete(1);
-        int countHotelsLast = hotelService.getList(new HotelSpecification()).size();
+        var countHotelsLast = hotelService.getList(new HotelSpecification()).size();
         assertEquals(0, countHotelsFirst - countHotelsLast);
     }
 
     @Test
     public void getHotelByIdTrue(){
-        Hotel gettedHotel = hotelService.getList(new HotelSpecification(101)).get(0);
+        var gettedHotel = hotelService.getList(new HotelSpecification(101)).get(0);
 
         assertEquals("Tourist", gettedHotel.getName());
     }
@@ -86,13 +86,13 @@ public class HotelSerivceImplTest {
 
     @Test
     public void getHotelByIdFalse2(){
-        List<Hotel> hotels = hotelService.getList(new HotelSpecification(102));
+        var hotels = hotelService.getList(new HotelSpecification(102));
         assertTrue(hotels.isEmpty());
     }
 
     @Test
     public void getAllHotelsTestTrue() {
-        List<Hotel> hotels = hotelService.getList(new HotelSpecification());
+        var hotels = hotelService.getList(new HotelSpecification());
         Assert.assertEquals(101, hotels.size());
     }
 }

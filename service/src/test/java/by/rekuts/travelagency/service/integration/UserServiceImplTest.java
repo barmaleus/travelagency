@@ -1,8 +1,8 @@
 package by.rekuts.travelagency.service.integration;
 
-import by.rekuts.travelagency.repository.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.User;
 import by.rekuts.travelagency.repository.UserSpecification;
+import by.rekuts.travelagency.repository.config.TestRepositoryConfig;
 import by.rekuts.travelagency.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceException;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -37,9 +36,9 @@ public class UserServiceImplTest {
 
     @Test
     public void insertUserTest(){
-        int countUsersFirst = userService.getList(new UserSpecification()).size();
+        var countUsersFirst = userService.getList(new UserSpecification()).size();
         userService.insert(user);
-        int countUsersLast = userService.getList(new UserSpecification()).size();
+        var countUsersLast = userService.getList(new UserSpecification()).size();
         assertEquals(1, countUsersLast - countUsersFirst);
     }
 
@@ -50,15 +49,15 @@ public class UserServiceImplTest {
 
     @Test
     public void deleteTest() {
-        int countUsersFirst = userService.getList(new UserSpecification()).size();
+        var countUsersFirst = userService.getList(new UserSpecification()).size();
         userService.delete(1);
-        int countUsersLast = userService.getList(new UserSpecification()).size();
+        var countUsersLast = userService.getList(new UserSpecification()).size();
         assertEquals(1, countUsersFirst - countUsersLast);
     }
 
     @Test
     public void getUserByIdTestTrue() {
-        User user = userService.getList(new UserSpecification(1)).get(0);
+        var user = userService.getList(new UserSpecification(1)).get(0);
         assertEquals("bluegoose681", user.getLogin());
     }
 
@@ -69,13 +68,13 @@ public class UserServiceImplTest {
 
     @Test
     public void getUserByIdTestFalse2() {
-        List<User> users = userService.getList(new UserSpecification(102));
+        var users = userService.getList(new UserSpecification(102));
         assertTrue(users.isEmpty());
     }
 
     @Test
     public void getAllUsersTestTrue() {
-        List<User> tourList = userService.getList(new UserSpecification());
+        var tourList = userService.getList(new UserSpecification());
         assertEquals(103, tourList.size());
     }
 }
