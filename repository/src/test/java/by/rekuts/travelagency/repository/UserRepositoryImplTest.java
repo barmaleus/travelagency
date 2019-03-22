@@ -11,8 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
 @ActiveProfiles("testScope")
@@ -27,20 +25,20 @@ public class UserRepositoryImplTest {
 
     @Test
     public void insertTestTrue() {
-        User user = new User();
+        var user = new User();
         user.setLogin("Userok");
         user.setPassword("veryDifficultPassword");
-        int countFirst = userRepository.getList(new UserSpecification()).size();
+        var countFirst = userRepository.getList(new UserSpecification()).size();
         userRepository.insert(user);
-        int countLast = userRepository.getList(new UserSpecification()).size();
+        var countLast = userRepository.getList(new UserSpecification()).size();
         Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
     public void deleteUserTestTrue() {
-        int countFirst = userRepository.getList(new UserSpecification()).size();
+        var countFirst = userRepository.getList(new UserSpecification()).size();
         userRepository.delete(1);
-        int countLast = userRepository.getList(new UserSpecification()).size();
+        var countLast = userRepository.getList(new UserSpecification()).size();
         Assert.assertEquals(1, countFirst - countLast);
     }
 
@@ -51,13 +49,13 @@ public class UserRepositoryImplTest {
 
     @Test
     public void getUserByIdWithToursTest() {
-        User user = userRepository.getList(new UserSpecification(101)).get(0);
+        var user = userRepository.getList(new UserSpecification(101)).get(0);
         Assert.assertEquals(2, user.getTours().size());
     }
 
     @Test
     public void getAllUsersTest() {
-        List<User> users = userRepository.getList(new UserSpecification());
-       Assert.assertEquals(103, users.size());
+        var users = userRepository.getList(new UserSpecification());
+        Assert.assertEquals(103, users.size());
     }
 }

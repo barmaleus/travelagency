@@ -10,10 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -31,7 +28,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void update(User user) {
-        User dbUser = entityManager.find(User.class, user.getId());
+        var dbUser = entityManager.find(User.class, user.getId());
         dbUser.setLogin(user.getLogin());
         dbUser.setPassword(user.getPassword());
         dbUser.setRole(user.getRole());
@@ -46,10 +43,10 @@ public class UserRepositoryImpl implements UserRepository {
     @LogReturn
     @Override
     public List<User> getList(Specification specification) {
-        UserSpecification userSpecification = (UserSpecification) specification;
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-        Root<User> root = criteriaQuery.from(User.class);
+        var userSpecification = (UserSpecification) specification;
+        var builder = entityManager.getCriteriaBuilder();
+        var criteriaQuery = builder.createQuery(User.class);
+        var root = criteriaQuery.from(User.class);
         List<Predicate> predicates;
         predicates = userSpecification.getPredicates(root, builder);
 
@@ -62,7 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void addTourToFavorites(User user, Tour tour) {
-        List<Tour> tours = user.getTours();
+        var tours = user.getTours();
         if (!tours.contains(tour)) {
             tours.add(tour);
         }
@@ -71,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void removeTourFromFavorites(User user, Tour tour) {
-        List<Tour> tours = user.getTours();
+        var tours = user.getTours();
         tours.remove(tour);
         user.setTours(tours);
         entityManager.merge(user);

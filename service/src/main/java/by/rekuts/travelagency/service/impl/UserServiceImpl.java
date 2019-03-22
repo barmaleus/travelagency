@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String login) {
-        UserSpecification specification = new UserSpecification();
+        var specification = new UserSpecification();
         specification.setLogin(login);
-        User user = userRepository.getList(specification).get(0);
+        var user = userRepository.getList(specification).get(0);
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(
                     user.getLogin(),

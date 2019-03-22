@@ -15,7 +15,7 @@ class GlobalDefaultExceptionHandler {
         if (AnnotationUtils.findAnnotation
                 (e.getClass(), ResponseStatus.class) != null)
             throw e;
-        ModelAndView mav = new ModelAndView();
+        var mav = new ModelAndView();
         mav.addObject("name", e.getClass().getName());
         mav.addObject("message", e.getLocalizedMessage());
         mav.addObject("stackTrace", e.getStackTrace());

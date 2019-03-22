@@ -1,17 +1,14 @@
 package by.rekuts.travelagency.repository.impl;
 
+import by.rekuts.travelagency.domain.Review;
 import by.rekuts.travelagency.repository.ReviewRepository;
 import by.rekuts.travelagency.repository.ReviewSpecification;
 import by.rekuts.travelagency.repository.Specification;
-import by.rekuts.travelagency.domain.Review;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -26,7 +23,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     @Override
     public void update(Review review) {
-        Review dbReview = entityManager.find(Review.class, review.getId());
+        var dbReview = entityManager.find(Review.class, review.getId());
         dbReview.setText(review.getText());
         dbReview.setUser(review.getUser());
         dbReview.setTour(review.getTour());
@@ -40,10 +37,10 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     @Override
     public List<Review> getList(Specification specification) {
-        final ReviewSpecification reviewSpecification = (ReviewSpecification) specification;
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Review> criteriaQuery = builder.createQuery(Review.class);
-        Root<Review> root = criteriaQuery.from(Review.class);
+        final var reviewSpecification = (ReviewSpecification) specification;
+        var builder = entityManager.getCriteriaBuilder();
+        var criteriaQuery = builder.createQuery(Review.class);
+        var root = criteriaQuery.from(Review.class);
         List<Predicate> predicates;
         predicates = reviewSpecification.getPredicates(root, builder);
 

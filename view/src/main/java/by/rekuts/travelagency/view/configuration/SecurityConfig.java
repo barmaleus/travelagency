@@ -3,7 +3,6 @@ package by.rekuts.travelagency.view.configuration;
 import by.rekuts.travelagency.repository.UserSpecification;
 import by.rekuts.travelagency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -54,9 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
                 .successHandler((req,res,auth)->{
-                    UserSpecification specification = new UserSpecification();
+                    var specification = new UserSpecification();
                     specification.setLogin(auth.getName());
-                    by.rekuts.travelagency.domain.User curUser = userService.getList(specification).get(0);
+                    var curUser = userService.getList(specification).get(0);
                     req.getSession().setAttribute("sesUserId", curUser.getId());
                     res.sendRedirect("/");
                 })

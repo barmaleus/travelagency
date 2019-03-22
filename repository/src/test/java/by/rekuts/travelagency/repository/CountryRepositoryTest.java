@@ -12,8 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
@@ -26,22 +24,22 @@ public class CountryRepositoryTest {
 
     @Test
     public void insertCountryTestTrue() {
-        Country country = new Country();
+        var country = new Country();
         country.setName("Užupis");
-        CountrySpecification specification = new CountrySpecification();
-        int countFirst = countryRepository.getList(specification).size();
+        var specification = new CountrySpecification();
+        var countFirst = countryRepository.getList(specification).size();
         countryRepository.insert(country);
-        int countLast = countryRepository.getList(specification).size();
+        var countLast = countryRepository.getList(specification).size();
         Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
     public void deleteCountryTest() {
-        CountrySpecification specification = new CountrySpecification();
+        var specification = new CountrySpecification();
         specification.setId(230);
-        int countFirst = countryRepository.getList(specification).size();
+        var countFirst = countryRepository.getList(specification).size();
         countryRepository.delete(230);
-        int countLast = countryRepository.getList(specification).size();
+        var countLast = countryRepository.getList(specification).size();
         Assert.assertEquals(1, countFirst - countLast);
     }
 
@@ -52,8 +50,8 @@ public class CountryRepositoryTest {
 
     @Test
     public void getAllCountriesTest() {
-        CountrySpecification specification = new CountrySpecification();
-        List<Country> countries = countryRepository.getList(specification);
+        var specification = new CountrySpecification();
+        var countries = countryRepository.getList(specification);
         Assert.assertEquals(199, countries.size());
     }
 }

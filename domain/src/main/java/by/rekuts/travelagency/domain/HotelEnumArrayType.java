@@ -15,11 +15,11 @@ public class HotelEnumArrayType implements UserType {
 
     @Override
     public Object nullSafeGet(ResultSet rs, String[] strings, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws SQLException {
-        Array dbArray = rs.getArray(strings[0]);
-        Object[] array = (Object[]) dbArray.getArray();
-        List<String> features = new ArrayList<>();
+        var dbArray = rs.getArray(strings[0]);
+        var array = (Object[]) dbArray.getArray();
+        var features = new ArrayList<>();
         for(Object ob : array) {
-            for(Hotel.Features f : Hotel.Features.values()) {
+            for(var f : Hotel.Features.values()) {
                 if (f.getValue().equals(ob.toString())) {
                     features.add(ob.toString());
                 }
@@ -30,11 +30,11 @@ public class HotelEnumArrayType implements UserType {
 
     @Override
     public void nullSafeSet(PreparedStatement statement, Object object, int i, SharedSessionContractImplementor sharedSessionContractImplementor) throws SQLException {
-        Connection connection = statement.getConnection();
+        var connection = statement.getConnection();
         Array array;
         if (object != null) {
-            List<String> list = (List<String>) object;
-            Object[] features = list.toArray();
+            var list = (List<String>) object;
+            var features = list.toArray();
             array = connection.createArrayOf("features", features);
         } else {
             array = connection.createArrayOf("features", new Object[0]);

@@ -38,8 +38,8 @@ public class DeleteController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/del-country")
     public String delCountry(@RequestParam(value = "countryId") int countryId) {
-        List<Tour> tours = tourService.getList(new TourSpecification());
-        for (Tour tour : tours) {
+        var tours = tourService.getList(new TourSpecification());
+        for (var tour : tours) {
             if (tour.getCountry().getId() == countryId) {
                 throw new DeleteException(
                         "Country " + tour.getCountry().getName() + " with id " + countryId + " cannot be " +
@@ -54,8 +54,8 @@ public class DeleteController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/del-hotel")
     public String delHotel(@RequestParam(value = "hotelId") int hotelId) {
-        List<Tour> tours = tourService.getList(new TourSpecification());
-        for (Tour tour : tours) {
+        var tours = tourService.getList(new TourSpecification());
+        for (var tour : tours) {
             if (tour.getHotel().getId() == hotelId) {
                 throw new DeleteException(
                         "Hotel " + tour.getHotel().getName() + " with id " + hotelId + " cannot be " +

@@ -11,7 +11,7 @@ import javax.servlet.ServletRegistration;
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected WebApplicationContext createRootApplicationContext() {
-        WebApplicationContext context = super.createRootApplicationContext();
+        var context = super.createRootApplicationContext();
         ((ConfigurableEnvironment)context.getEnvironment()).setActiveProfiles("travelAgencyPU");
         return context;
     }

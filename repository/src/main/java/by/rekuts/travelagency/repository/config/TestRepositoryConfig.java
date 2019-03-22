@@ -24,10 +24,10 @@ public class TestRepositoryConfig {
     @Bean
     @Profile("testScope")
     public DataSource getDataSource() {
-        final FlywayPreparer preparer = FlywayPreparer.forClasspathLocation("db");
+        final var preparer = FlywayPreparer.forClasspathLocation("db");
         DataSource postgresDatabase = null;
         try {
-            EmbeddedPostgres embeddedPostgres = EmbeddedPostgres.start();
+            var embeddedPostgres = EmbeddedPostgres.start();
             postgresDatabase = embeddedPostgres.getPostgresDatabase();
             preparer.prepare(postgresDatabase);
         } catch (IOException | SQLException e) {}

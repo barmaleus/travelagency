@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @ComponentScan(resourcePattern = "/styles", basePackages = "by.rekuts.**")
@@ -41,7 +40,7 @@ public class UpdateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/countries/{countryId}/update")
     public String updateCountry(@PathVariable("countryId") int countryId, Model model) {
-        Country country = countryService.getList(new CountrySpecification(countryId)).get(0);
+        var country = countryService.getList(new CountrySpecification(countryId)).get(0);
         model.addAttribute("country", country);
         return "update/update-country";
     }
@@ -56,12 +55,12 @@ public class UpdateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/hotels/{hotelId}/update")
     public String updateHotel(@PathVariable("hotelId") int hotelId, Model model) {
-        Hotel.Features[] features = Hotel.Features.values();
-        List<String> stringFeatures = new ArrayList<>();
-        for (Hotel.Features feature : features) {
+        var features = Hotel.Features.values();
+        var stringFeatures = new ArrayList<>();
+        for (var feature : features) {
             stringFeatures.add(feature.getValue());
         }
-        Hotel hotel = hotelService.getList(new HotelSpecification(hotelId)).get(0);
+        var hotel = hotelService.getList(new HotelSpecification(hotelId)).get(0);
         model.addAttribute("features", stringFeatures);
         model.addAttribute("hotel", hotel);
         return "update/update-hotel";
@@ -77,11 +76,11 @@ public class UpdateController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/reviews/{reviewId}/update")
     public String updateReview(@PathVariable("reviewId") int reviewId, Model model) {
-        List<User> users = userService.getList(new UserSpecification());
+        var users = userService.getList(new UserSpecification());
         model.addAttribute("users", users);
-        List<Tour> tours = tourService.getList(new TourSpecification());
+        var tours = tourService.getList(new TourSpecification());
         model.addAttribute("tours", tours);
-        Review review = reviewService.getList(new ReviewSpecification(reviewId)).get(0);
+        var review = reviewService.getList(new ReviewSpecification(reviewId)).get(0);
         model.addAttribute("review", review);
         return "update/update-review";
     }
@@ -96,17 +95,17 @@ public class UpdateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/tours/{tourId}/update")
     public String updateTour(@PathVariable("tourId") int tourId, Model model) {
-        List<Hotel> hotels = hotelService.getList(new HotelSpecification());
-        List<Country> countries = countryService.getList(new CountrySpecification());
-        Tour.TourType[] tourTypes = Tour.TourType.values();
-        List<String> stringTourTypes = new ArrayList<>();
-        for (Tour.TourType tourType : tourTypes) {
+        var hotels = hotelService.getList(new HotelSpecification());
+        var countries = countryService.getList(new CountrySpecification());
+        var tourTypes = Tour.TourType.values();
+        var stringTourTypes = new ArrayList<>();
+        for (var tourType : tourTypes) {
             stringTourTypes.add(tourType.name());
         }
         model.addAttribute("hotels", hotels);
         model.addAttribute("countries", countries);
         model.addAttribute("tourTypes", stringTourTypes);
-        Tour tour = tourService.getList(new TourSpecification(tourId)).get(0);
+        var tour = tourService.getList(new TourSpecification(tourId)).get(0);
         model.addAttribute("tour", tour);
         return "update/update-tour";
     }
@@ -121,15 +120,15 @@ public class UpdateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/users/{userId}/update")
     public String updateUser(@PathVariable("userId") int userId, Model model) {
-        User.UserRole[] userRoles = User.UserRole.values();
-        List<String> stringUserRoles = new ArrayList<>();
-        for (User.UserRole userRole : userRoles) {
+        var userRoles = User.UserRole.values();
+        var stringUserRoles = new ArrayList<>();
+        for (var userRole : userRoles) {
             stringUserRoles.add(userRole.name());
         }
         model.addAttribute("userRoles", stringUserRoles);
-        List<Tour> tours = tourService.getList(new TourSpecification());
+        var tours = tourService.getList(new TourSpecification());
         model.addAttribute("tours", tours);
-        User user = userService.getList(new UserSpecification(userId)).get(0);
+        var user = userService.getList(new UserSpecification(userId)).get(0);
         model.addAttribute("user", user);
         return "update/update-user";
     }

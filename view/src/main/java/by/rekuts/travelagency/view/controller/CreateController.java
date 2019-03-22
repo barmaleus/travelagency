@@ -54,7 +54,7 @@ public class CreateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/new-review")
     public String newReview(ModelMap model) {
-        List<Tour> tours = addUsersToursSesUserToModel(model);
+        var tours = addUsersToursSesUserToModel(model);
         model.addAttribute("tourId", tours.get(tours.size()-1).getId()); //todo check it
         return "create/new-review";
     }
@@ -68,11 +68,11 @@ public class CreateController {
     }
 
     private List<Tour> addUsersToursSesUserToModel(ModelMap model) {
-        List<User> users = userService.getList(new UserSpecification());
+        var users = userService.getList(new UserSpecification());
         model.addAttribute("users", users);
-        List<Tour> tours = tourService.getList(new TourSpecification());
+        var tours = tourService.getList(new TourSpecification());
         model.addAttribute("tours", tours);
-        int sesUserId = new ControllerHelper().getSessionUserId();
+        var sesUserId = new ControllerHelper().getSessionUserId();
         model.addAttribute("sesUserId", sesUserId);
         return tours;
     }
@@ -89,9 +89,9 @@ public class CreateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/new-hotel")
     public String newHotel(ModelMap model) {
-        Hotel.Features[] features = Hotel.Features.values();
-        List<String> stringFeatures = new ArrayList<>();
-        for (Hotel.Features feature : features) {
+        var features = Hotel.Features.values();
+        var stringFeatures = new ArrayList<>();
+        for (var feature : features) {
             stringFeatures.add(feature.getValue());
         }
         model.addAttribute("features", stringFeatures);
@@ -108,11 +108,11 @@ public class CreateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/new-tour")
     public String newTour(ModelMap model) {
-        List<Hotel> hotels = hotelService.getList(new HotelSpecification());
-        List<Country> countries = countryService.getList(new CountrySpecification());
-        List<Tour.TourType> tourTypes = Arrays.asList(Tour.TourType.values());
-        List<String> stringTourTypes = new ArrayList<>();
-        for (Tour.TourType tourType : tourTypes) {
+        var hotels = hotelService.getList(new HotelSpecification());
+        var countries = countryService.getList(new CountrySpecification());
+        var tourTypes = Arrays.asList(Tour.TourType.values());
+        var stringTourTypes = new ArrayList<>();
+        for (var tourType : tourTypes) {
             stringTourTypes.add(tourType.name());
         }
         model.addAttribute("hotels", hotels);

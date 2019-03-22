@@ -1,19 +1,15 @@
 package by.rekuts.travelagency.repository.impl;
 
+import by.rekuts.travelagency.domain.Hotel;
+import by.rekuts.travelagency.repository.HotelRepository;
 import by.rekuts.travelagency.repository.HotelSpecification;
 import by.rekuts.travelagency.repository.Specification;
-import by.rekuts.travelagency.repository.HotelRepository;
-import by.rekuts.travelagency.domain.Hotel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Slf4j
@@ -29,7 +25,7 @@ public class HotelRepositoryImpl implements HotelRepository {
 
     @Override
     public void update(Hotel hotel) {
-        Hotel dbHotel = entityManager.find(Hotel.class, hotel.getId());
+        var dbHotel = entityManager.find(Hotel.class, hotel.getId());
         dbHotel.setName(hotel.getName());
         dbHotel.setStars(hotel.getStars());
         dbHotel.setWebsite(hotel.getWebsite());
@@ -41,10 +37,10 @@ public class HotelRepositoryImpl implements HotelRepository {
 
     @Override
     public void delete(int id) {
-        TypedQuery<Integer> query = entityManager.createQuery(
+        var query = entityManager.createQuery(
                 "SELECT t.id FROM Tour AS t WHERE hotel_id = ?1", Integer.class);
         query.setParameter(1, id);
-        List<Integer> results = query.getResultList();
+        var results = query.getResultList();
         if (results == null || results.isEmpty()) {
             entityManager.remove(entityManager.find(Hotel.class, id));
             log.info("Hotel deleted");
@@ -55,10 +51,10 @@ public class HotelRepositoryImpl implements HotelRepository {
 
     @Override
     public List<Hotel> getList(Specification specification) {
-        final HotelSpecification hotelSpecification = (HotelSpecification) specification;
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Hotel> criteriaQuery = builder.createQuery(Hotel.class);
-        Root<Hotel> hotelRoot = criteriaQuery.from(Hotel.class);
+        final var hotelSpecification = (HotelSpecification) specification;
+        var builder = entityManager.getCriteriaBuilder();
+        var criteriaQuery = builder.createQuery(Hotel.class);
+        var hotelRoot = criteriaQuery.from(Hotel.class);
         List<Predicate> predicates;
         predicates = hotelSpecification.getPredicates(hotelRoot, builder);
 

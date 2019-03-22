@@ -8,10 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -26,7 +23,7 @@ public class TourRepositoryImpl implements TourRepository {
 
     @Override
     public void update(Tour tour) {
-        Tour dbTour = entityManager.find(Tour.class, tour.getId());
+        var dbTour = entityManager.find(Tour.class, tour.getId());
         dbTour.setPhoto(tour.getPhoto());
         dbTour.setDate(tour.getDate());
         dbTour.setDuration(tour.getDuration());
@@ -46,10 +43,10 @@ public class TourRepositoryImpl implements TourRepository {
 
     @Override
     public List<Tour> getList(Specification specification) {
-        final TourSpecification tourSpecification = (TourSpecification) specification;
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Tour> criteriaQuery = builder.createQuery(Tour.class);
-        Root<Tour> root = criteriaQuery.from(Tour.class);
+        final var tourSpecification = (TourSpecification) specification;
+        var builder = entityManager.getCriteriaBuilder();
+        var criteriaQuery = builder.createQuery(Tour.class);
+        var root = criteriaQuery.from(Tour.class);
         List<Predicate> predicates;
         predicates = tourSpecification.getPredicates(root, builder);
         if (!predicates.isEmpty()) {

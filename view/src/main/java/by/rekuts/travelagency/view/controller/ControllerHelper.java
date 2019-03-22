@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 class ControllerHelper {
     int getSessionUserId() {
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        var attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attr.getRequest().getSession();
         return (int) session.getAttribute("sesUserId");
     }

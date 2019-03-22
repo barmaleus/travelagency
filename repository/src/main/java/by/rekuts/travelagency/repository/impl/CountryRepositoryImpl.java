@@ -1,17 +1,14 @@
 package by.rekuts.travelagency.repository.impl;
 
-import by.rekuts.travelagency.repository.Specification;
-import by.rekuts.travelagency.repository.CountrySpecification;
 import by.rekuts.travelagency.domain.Country;
 import by.rekuts.travelagency.repository.CountryRepository;
+import by.rekuts.travelagency.repository.CountrySpecification;
+import by.rekuts.travelagency.repository.Specification;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -26,7 +23,7 @@ public class CountryRepositoryImpl implements CountryRepository {
 
 	@Override
 	public void update(Country country) {
-		Country dbCountry = entityManager.find(Country.class, country.getId());
+		var dbCountry = entityManager.find(Country.class, country.getId());
 		dbCountry.setName(country.getName());
 		entityManager.merge(dbCountry);
 	}
@@ -38,13 +35,12 @@ public class CountryRepositoryImpl implements CountryRepository {
 
     @Override
 	public List<Country> getList(Specification specification) {
-		final CountrySpecification countrySpecification = (CountrySpecification) specification;
+		final var countrySpecification = (CountrySpecification) specification;
 
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Country> criteriaQuery = builder.createQuery(Country.class);
-		Root<Country> countryRoot = criteriaQuery.from(Country.class);
-        List<Predicate> predicates;
-        predicates = countrySpecification.getPredicates(countryRoot, builder);
+		var builder = entityManager.getCriteriaBuilder();
+		var criteriaQuery = builder.createQuery(Country.class);
+		var countryRoot = criteriaQuery.from(Country.class);
+        var predicates = countrySpecification.getPredicates(countryRoot, builder);
 
         if (!predicates.isEmpty()) {
             criteriaQuery.where(

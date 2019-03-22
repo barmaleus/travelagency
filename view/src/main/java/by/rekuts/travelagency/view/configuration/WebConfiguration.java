@@ -42,7 +42,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public FreeMarkerConfigurer freemarkerConfig() {
 
-        FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+        var freeMarkerConfigurer = new FreeMarkerConfigurer();
 
         freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/views/");
         freeMarkerConfigurer.setDefaultEncoding("UTF-8");
@@ -53,7 +53,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public FreeMarkerViewResolver viewResolver() {
 
-        FreeMarkerViewResolver viewResolver = new FreeMarkerViewResolver();
+        var viewResolver = new FreeMarkerViewResolver();
         viewResolver.setSuffix(".ftl");
         viewResolver.setCache(true);
         viewResolver.setContentType("text/html;charset=UTF-8");
@@ -69,7 +69,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean("messageSource")
     public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
+        var messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:locale/messages");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setUseCodeAsDefaultMessage(true);
@@ -83,18 +83,18 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        ThemeChangeInterceptor themeChangeInterceptor = new ThemeChangeInterceptor();
+        var themeChangeInterceptor = new ThemeChangeInterceptor();
         themeChangeInterceptor.setParamName("theme");
         registry.addInterceptor(themeChangeInterceptor);
 
-        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        var localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
     }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        ObjectFormatter formatter = new ObjectFormatter();
+        var formatter = new ObjectFormatter();
         registry.addFormatter(formatter.userFormatter());
         registry.addFormatter(formatter.tourFormatter());
         registry.addFormatter(formatter.countryFormatter());

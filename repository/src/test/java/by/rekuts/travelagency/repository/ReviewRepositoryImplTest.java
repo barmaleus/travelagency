@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,22 +30,22 @@ public class ReviewRepositoryImplTest {
 
     @Test
     public void insertReviewTestTrue() {
-        Review review = new Review();
+        var review = new Review();
         review.setText("Review text");
         review.setDate(LocalDateTime.now());
         review.setTour(tourRepository.getList(new TourSpecification(1)).get(0));
         review.setUser(userRepository.getList(new UserSpecification(1)).get(0));
-        int countFirst = reviewRepository.getList(new ReviewSpecification()).size();
+        var countFirst = reviewRepository.getList(new ReviewSpecification()).size();
         reviewRepository.insert(review);
-        int countLast = reviewRepository.getList(new ReviewSpecification()).size();
+        var countLast = reviewRepository.getList(new ReviewSpecification()).size();
         Assert.assertEquals(1, countLast - countFirst);
     }
 
     @Test
     public void deleteReviewTestTrue() {
-        int countFirst = reviewRepository.getList(new ReviewSpecification()).size();
+        var countFirst = reviewRepository.getList(new ReviewSpecification()).size();
         reviewRepository.delete(1);
-        int countLast = reviewRepository.getList(new ReviewSpecification()).size();
+        var countLast = reviewRepository.getList(new ReviewSpecification()).size();
         Assert.assertEquals(1, countFirst - countLast);
     }
 
@@ -57,25 +56,25 @@ public class ReviewRepositoryImplTest {
 
     @Test
     public void getAllReviewTest() {
-        List<Review> reviews = reviewRepository.getList(new ReviewSpecification());
+        var reviews = reviewRepository.getList(new ReviewSpecification());
         Assert.assertEquals(1001, reviews.size());
     }
 
     @Test
     public void getReviewsForSpecificUser() {
-        int userId = 1;
-        ReviewSpecification specification = new ReviewSpecification();
+        var userId = 1;
+        var specification = new ReviewSpecification();
         specification.setUserId(userId);
-        List<Review> reviews = reviewRepository.getList(specification);
+        var reviews = reviewRepository.getList(specification);
         Assert.assertEquals(9, reviews.size());
     }
 
     @Test
     public void getReviewsForSpecificTour() {
-        int tourId = 1;
-        ReviewSpecification specification = new ReviewSpecification();
+        var tourId = 1;
+        var specification = new ReviewSpecification();
         specification.setTourId(tourId);
-        List<Review> reviews = reviewRepository.getList(specification);
+        var reviews = reviewRepository.getList(specification);
         Assert.assertEquals(2, reviews.size());
     }
 }
