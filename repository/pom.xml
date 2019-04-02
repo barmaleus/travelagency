@@ -12,15 +12,8 @@
     <artifactId>repository</artifactId>
 
     <properties>
-        <maven.compiler.source>10</maven.compiler.source>
-        <maven.compiler.target>10</maven.compiler.target>
-        <travelagency.version>1.0-SNAPSHOT</travelagency.version>
-        <lombok.version>1.18.0</lombok.version>
-        <spring.version>4.3.18.RELEASE</spring.version>
-        <junit4.version>4.12</junit4.version>
         <flyway.version>5.1.4</flyway.version>
         <log4j2.version>2.11.0</log4j2.version>
-        <opencsv.version>4.2</opencsv.version>
     </properties>
 
     <dependencies>
@@ -28,12 +21,6 @@
             <groupId>by.rekuts.travelagency</groupId>
             <artifactId>domain</artifactId>
             <version>${travelagency.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -61,12 +48,6 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>${log4j2.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>${opencsv.version}</version>
         </dependency>
     </dependencies>
 

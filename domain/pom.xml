@@ -12,17 +12,12 @@
     <artifactId>domain</artifactId>
 
     <properties>
-        <maven.compiler.source>10</maven.compiler.source>
-        <maven.compiler.target>10</maven.compiler.target>
-        <lombok.version>1.18.0</lombok.version>
-        <opentable.pg.version>0.12.0</opentable.pg.version>
-        <aspectj.weaver.version>1.9.1</aspectj.weaver.version>
-        <postgresql.version>42.2.4</postgresql.version>
-        <spring.version>4.3.18.RELEASE</spring.version>
-        <spring.security.version>4.2.7.RELEASE</spring.security.version>
-        <hibernate.version>5.3.3.Final</hibernate.version>
-        <hibernate.validator.version>6.0.11.Final</hibernate.validator.version>
-        <opencsv.version>4.2</opencsv.version>
+        <opentable.pg.version>0.13.1</opentable.pg.version>
+        <aspectj.weaver.version>1.9.3</aspectj.weaver.version>
+        <postgresql.version>42.2.5</postgresql.version>
+        <hibernate.version>5.4.2.Final</hibernate.version>
+        <hibernate.validator.version>6.0.16.Final</hibernate.validator.version>
+        <opencsv.version>4.5</opencsv.version>
     </properties>
 
     <dependencies>
@@ -32,12 +27,6 @@
             <version>${opencsv.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-hikaricp</artifactId>

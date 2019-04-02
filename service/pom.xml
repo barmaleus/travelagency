@@ -11,17 +11,7 @@
 
     <artifactId>service</artifactId>
 
-    <properties>
-        <travelagency.version>1.0-SNAPSHOT</travelagency.version>
-        <spring.version>4.3.18.RELEASE</spring.version>
-    </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>by.rekuts.travelagency</groupId>
-            <artifactId>domain</artifactId>
-            <version>${travelagency.version}</version>
-        </dependency>
         <dependency>
             <groupId>by.rekuts.travelagency</groupId>
             <artifactId>repository</artifactId>

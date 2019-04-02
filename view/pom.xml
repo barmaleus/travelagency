@@ -15,18 +15,12 @@
     <name>view</name>
 
     <properties>
-        <maven.compiler.source>10</maven.compiler.source>
-        <maven.compiler.target>10</maven.compiler.target>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <maven.war.plugin>3.2.2</maven.war.plugin>
         <maven.dependency.plugin>3.1.1</maven.dependency.plugin>
-        <spring.version>4.3.19.RELEASE</spring.version>
-        <spring.security.version>4.2.8.RELEASE</spring.security.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <freemarker.version>2.3.23</freemarker.version>
         <tomcat.version>2.2</tomcat.version>
-        <travelagency.version>1.0-SNAPSHOT</travelagency.version>
-        <log4j2.version>2.11.0</log4j2.version>
         <jacoco.version>0.8.2</jacoco.version>
         <sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
     </properties>
@@ -81,11 +75,6 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>${spring.security.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring.security.version}</version>
         </dependency>
@@ -104,18 +93,6 @@
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>${freemarker.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j2.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>4.2.7.RELEASE</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
