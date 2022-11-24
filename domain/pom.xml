@@ -20,7 +20,7 @@
         <postgresql.version>42.2.4</postgresql.version>
         <spring.version>4.3.18.RELEASE</spring.version>
         <spring.security.version>4.2.7.RELEASE</spring.security.version>
-        <hibernate.version>5.3.3.Final</hibernate.version>
+        <hibernate.version>5.3.20.Final</hibernate.version>
         <hibernate.validator.version>6.0.11.Final</hibernate.validator.version>
         <opencsv.version>4.2</opencsv.version>
     </properties>
