@@ -20,7 +20,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <maven.war.plugin>3.2.2</maven.war.plugin>
         <maven.dependency.plugin>3.1.1</maven.dependency.plugin>
-        <spring.version>4.3.19.RELEASE</spring.version>
+        <spring.version>5.2.20.RELEASE</spring.version>
         <spring.security.version>4.2.8.RELEASE</spring.security.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <freemarker.version>2.3.23</freemarker.version>
