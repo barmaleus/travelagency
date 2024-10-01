@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
-@ActiveProfiles("testScope")
+@ActiveProfiles("test")
 @Transactional
 public class ReviewServiceImplTest {
     @Autowired
@@ -108,7 +108,7 @@ public class ReviewServiceImplTest {
     }
 
     @Test
-    public void getReviewsByTourIdTestFasle() {
+    public void getReviewsByTourIdTestFalse() {
         ReviewSpecification specification = new ReviewSpecification();
         specification.setTourId(85);
         List<Review> reviews = reviewService.getList(specification);

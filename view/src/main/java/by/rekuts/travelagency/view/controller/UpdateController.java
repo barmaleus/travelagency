@@ -56,9 +56,9 @@ public class UpdateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/hotels/{hotelId}/update")
     public String updateHotel(@PathVariable("hotelId") int hotelId, Model model) {
-        Hotel.Features[] features = Hotel.Features.values();
+        HotelFeature[] features = HotelFeature.values();
         List<String> stringFeatures = new ArrayList<>();
-        for (Hotel.Features feature : features) {
+        for (HotelFeature feature : features) {
             stringFeatures.add(feature.getValue());
         }
         Hotel hotel = hotelService.getList(new HotelSpecification(hotelId)).get(0);

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
-@ActiveProfiles("testScope")
+@ActiveProfiles("test")
 @Transactional
 public class CountryServiceImplTest {
     @Autowired

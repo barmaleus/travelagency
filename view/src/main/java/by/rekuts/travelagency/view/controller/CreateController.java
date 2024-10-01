@@ -89,9 +89,9 @@ public class CreateController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/new-hotel")
     public String newHotel(ModelMap model) {
-        Hotel.Features[] features = Hotel.Features.values();
+        HotelFeature[] features = HotelFeature.values();
         List<String> stringFeatures = new ArrayList<>();
-        for (Hotel.Features feature : features) {
+        for (HotelFeature feature : features) {
             stringFeatures.add(feature.getValue());
         }
         model.addAttribute("features", stringFeatures);

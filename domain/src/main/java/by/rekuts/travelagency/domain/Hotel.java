@@ -53,30 +53,4 @@ public class Hotel implements Serializable {
 
 	@Version
 	private Integer version;
-
-	/**
-	 * Inner to class Hotel enum Features. It stores the names of features of hotels in the values.
-	 */
-	public enum Features{
-		A("swimming pool"),
-		B("all inclusive"),
-		C("fresh towel"),
-		D("carpets on the walls"),
-		E("free wifi"),
-		F("close to sea"),
-		G("free animators"),
-		H("free beer"),
-		I("air conditioning"),
-		J("children room");
-
-		private final String feature;
-
-		Features(String feature) {
-			this.feature = feature;
-		}
-
-		public String getValue() {
-			return feature;
-		}
-	}
 }

@@ -18,8 +18,8 @@ public class HotelEnumArrayType implements UserType {
         Array dbArray = rs.getArray(strings[0]);
         Object[] array = (Object[]) dbArray.getArray();
         List<String> features = new ArrayList<>();
-        for(Object ob : array) {
-            for(Hotel.Features f : Hotel.Features.values()) {
+        for (Object ob : array) {
+            for (HotelFeature f : HotelFeature.values()) {
                 if (f.getValue().equals(ob.toString())) {
                     features.add(ob.toString());
                 }
@@ -49,7 +49,7 @@ public class HotelEnumArrayType implements UserType {
 
     @Override
     public Object deepCopy(final Object o) {
-        return o == null ? null : ((ArrayList<Hotel.Features>)o).clone();
+        return o == null ? null : ((ArrayList<HotelFeature>) o).clone();
     }
 
     @Override
@@ -78,8 +78,8 @@ public class HotelEnumArrayType implements UserType {
     }
 
     @Override
-    public Class<List<Hotel.Features>> returnedClass() {
-        return (Class<List<Hotel.Features>>) Collections.<Hotel.Features>emptyList().getClass();
+    public Class<List<HotelFeature>> returnedClass() {
+        return (Class<List<HotelFeature>>) Collections.<HotelFeature>emptyList().getClass();
     }
 
     @Override

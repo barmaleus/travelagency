@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
-@ActiveProfiles("testScope")
+@ActiveProfiles("test")
 @Transactional
 @Slf4j
 public class CsvLoaderTest {

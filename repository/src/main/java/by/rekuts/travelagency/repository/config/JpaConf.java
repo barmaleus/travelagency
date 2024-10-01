@@ -2,6 +2,7 @@ package by.rekuts.travelagency.repository.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+@Slf4j
 @Configuration
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
@@ -24,28 +26,30 @@ public class JpaConf {
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         factoryBean.setJpaVendorAdapter(vendorAdapter);
         factoryBean.setDataSource(getDataSource());
-        factoryBean.setPersistenceUnitName("travelAgencyPU");
+        factoryBean.setPersistenceUnitName("dev");
         factoryBean.setPackagesToScan("by.rekuts.travelagency");
         factoryBean.setJpaProperties(jpaProperties());
         return factoryBean;
     }
 
     @Bean
-    @Profile("travelAgencyPU")
+    @Profile("dev")
     public DataSource getDataSource() {
         HikariConfig config = new HikariConfig();
         config.setDataSourceClassName("org.postgresql.ds.PGSimpleDataSource");
         config.setUsername("postgres");
-        config.setPassword("topsecret");
+        config.setPassword("<add password here>");
         config.addDataSourceProperty("databaseName", "travelagency");
-        config.addDataSourceProperty("serverName", "127.0.0.1");
+        config.addDataSourceProperty("serverName", "db");
         return new HikariDataSource(config);
     }
+
     @Bean
-    public PlatformTransactionManager txManager(){
+    public PlatformTransactionManager txManager() {
         return new JpaTransactionManager(
                 getEntityManagerFactoryBean().getObject());
     }
+
     private Properties jpaProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL95Dialect");

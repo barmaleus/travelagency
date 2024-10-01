@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.repository;
 
+import by.rekuts.travelagency.domain.HotelFeature;
 import by.rekuts.travelagency.repository.config.TestRepositoryConfig;
 import by.rekuts.travelagency.domain.Hotel;
 import org.junit.Assert;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestRepositoryConfig.class)
-@ActiveProfiles("testScope")
+@ActiveProfiles("test")
 @Transactional
 public class HotelRepositoryTest {
 
@@ -33,7 +34,7 @@ public class HotelRepositoryTest {
         hotel.setStars(4);
         hotel.setLatitude(BigDecimal.valueOf(44.5468));
         hotel.setLongitude(BigDecimal.valueOf(-78.64));
-        hotel.setFeatures(new ArrayList<>(Arrays.asList(Hotel.Features.A.getValue(), Hotel.Features.C.getValue())));
+        hotel.setFeatures(new ArrayList<>(Arrays.asList(HotelFeature.A.getValue(), HotelFeature.C.getValue())));
         int countFirst = hotelRepository.getList(new HotelSpecification()).size();
         hotelRepository.insert(hotel);
         int countLast = hotelRepository.getList(new HotelSpecification()).size();
@@ -41,7 +42,7 @@ public class HotelRepositoryTest {
     }
 
     @Test
-    public void deleteHotelWithRefferenceTestFalse() {
+    public void deleteHotelWithReferenceTestFalse() {
         int countFirst = hotelRepository.getList(new HotelSpecification()).size();
         hotelRepository.delete(100);
         int countLast = hotelRepository.getList(new HotelSpecification()).size();

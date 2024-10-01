@@ -2,6 +2,7 @@ package by.rekuts.travelagency.repository.config;
 
 import com.opentable.db.postgres.embedded.EmbeddedPostgres;
 import com.opentable.db.postgres.embedded.FlywayPreparer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.*;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -9,6 +10,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
+@Slf4j
 @Configuration
 @ComponentScan({
         "by.rekuts.travelagency"
@@ -22,15 +24,16 @@ import java.sql.SQLException;
 public class TestRepositoryConfig {
 
     @Bean
-    @Profile("testScope")
+    @Profile("test")
     public DataSource getDataSource() {
         final FlywayPreparer preparer = FlywayPreparer.forClasspathLocation("db");
         DataSource postgresDatabase = null;
-        try {
-            EmbeddedPostgres embeddedPostgres = EmbeddedPostgres.start();
+        try (EmbeddedPostgres embeddedPostgres = EmbeddedPostgres.start()) {
             postgresDatabase = embeddedPostgres.getPostgresDatabase();
             preparer.prepare(postgresDatabase);
-        } catch (IOException | SQLException e) {}
+        } catch (IOException | SQLException e) {
+            log.warn("Failed to create test postgres database", e);
+        }
         return postgresDatabase;
     }
 }

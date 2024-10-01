@@ -12,7 +12,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     @Override
     protected WebApplicationContext createRootApplicationContext() {
         WebApplicationContext context = super.createRootApplicationContext();
-        ((ConfigurableEnvironment)context.getEnvironment()).setActiveProfiles("travelAgencyPU");
+        ((ConfigurableEnvironment)context.getEnvironment()).setActiveProfiles("dev");
         return context;
     }
 
