@@ -1,39 +1,39 @@
-package by.rekuts.travelagency.repository.config;
-
-import com.opentable.db.postgres.embedded.EmbeddedPostgres;
-import com.opentable.db.postgres.embedded.FlywayPreparer;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.*;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.SQLException;
-
-@Slf4j
-@Configuration
-@ComponentScan({
-        "by.rekuts.travelagency"
-})
-@EnableTransactionManagement
-@PropertySource({
-        "classpath:db/V1.1__Schema.sql",
-        "classpath:db/V1.2__Init-data.sql"
-})
-@EnableAspectJAutoProxy
-public class TestRepositoryConfig {
-
-    @Bean
-    @Profile("test")
-    public DataSource getDataSource() {
-        final FlywayPreparer preparer = FlywayPreparer.forClasspathLocation("db");
-        DataSource postgresDatabase = null;
-        try (EmbeddedPostgres embeddedPostgres = EmbeddedPostgres.start()) {
-            postgresDatabase = embeddedPostgres.getPostgresDatabase();
-            preparer.prepare(postgresDatabase);
-        } catch (IOException | SQLException e) {
-            log.warn("Failed to create test postgres database", e);
-        }
-        return postgresDatabase;
-    }
-}
+//package by.rekuts.travelagency.repository.config;
+//
+//import com.opentable.db.postgres.embedded.EmbeddedPostgres;
+//import com.opentable.db.postgres.embedded.FlywayPreparer;
+//import lombok.extern.slf4j.Slf4j;
+//import org.springframework.context.annotation.*;
+//import org.springframework.transaction.annotation.EnableTransactionManagement;
+//
+//import javax.sql.DataSource;
+//import java.io.IOException;
+//import java.sql.SQLException;
+//
+//@Slf4j
+//@Configuration
+//@ComponentScan({
+//        "by.rekuts.travelagency"
+//})
+//@EnableTransactionManagement
+//@PropertySource({
+//        "classpath:db/V1.1__Schema.sql",
+//        "classpath:db/V1.2__Init-data.sql"
+//})
+//@EnableAspectJAutoProxy
+//public class TestRepositoryConfig {
+//
+//    @Bean
+//    @Profile("test")
+//    public DataSource getDataSource() {
+//        final FlywayPreparer preparer = FlywayPreparer.forClasspathLocation("db");
+//        DataSource postgresDatabase = null;
+//        try (EmbeddedPostgres embeddedPostgres = EmbeddedPostgres.start()) {
+//            postgresDatabase = embeddedPostgres.getPostgresDatabase();
+//            preparer.prepare(postgresDatabase);
+//        } catch (IOException | SQLException e) {
+//            log.warn("Failed to create test postgres database", e);
+//        }
+//        return postgresDatabase;
+//    }
+//}

@@ -1,11 +1,14 @@
 package by.rekuts.travelagency.repository;
 
+import by.rekuts.travelagency.domain.Country;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
@@ -14,17 +17,18 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CountrySpecification implements Specification {
+public class CountrySpecification implements Specification<Country> {
+
     private Integer id;
 
     @Override
-    public List<Predicate> getPredicates(Root root, CriteriaBuilder builder) {
+    public Predicate toPredicate(Root<Country> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> predicates = new ArrayList<>();
         if (id != null) {
             predicates.add(
                     builder.equal(root.get("id"), id)
             );
         }
-        return predicates;
+        return builder.and(predicates.toArray(new Predicate[0]));
     }
 }

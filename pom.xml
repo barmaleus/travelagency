@@ -6,6 +6,13 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.7.18</version>
+    <relativePath/>
+  </parent>
+
   <name>travel-agency</name>
 
   <description>
@@ -22,29 +29,35 @@
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <maven.site.version>3.7.1</maven.site.version>
+<!--    <maven.site.version>3.7.1</maven.site.version>-->
     <maven.project.info.reports.version>2.9</maven.project.info.reports.version>
     <junit4.version>4.12</junit4.version>
-    <mockito.version>1.9.5</mockito.version>
+    <mockito.version>5.14.1</mockito.version>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-site-plugin</artifactId>
-      <version>${maven.site.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.maven.plugins</groupId>-->
+<!--      <artifactId>maven-site-plugin</artifactId>-->
+<!--      <version>${maven.site.version}</version>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
+      <artifactId>mockito-core</artifactId>
       <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit4.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

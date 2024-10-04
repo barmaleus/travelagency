@@ -1,6 +1,6 @@
 package by.rekuts.travelagency.view.configuration;
 
-import by.rekuts.travelagency.service.config.ServiceConfig;
+//import by.rekuts.travelagency.service.config.ServiceConfig;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -18,7 +18,9 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { ServiceConfig.class, WebConfiguration.class, SecurityConfig.class };
+        return new Class[] {
+//                ServiceConfig.class,
+                WebConfiguration.class, SecurityConfig.class };
     }
 
     @Override

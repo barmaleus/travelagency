@@ -1,5 +1,6 @@
 package by.rekuts.travelagency.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OptimisticLockType;
@@ -61,6 +62,7 @@ public class Tour implements Serializable {
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "tours", cascade = CascadeType.ALL)
 	private List<User> users;
 

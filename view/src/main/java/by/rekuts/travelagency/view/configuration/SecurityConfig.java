@@ -3,7 +3,6 @@ package by.rekuts.travelagency.view.configuration;
 import by.rekuts.travelagency.repository.UserSpecification;
 import by.rekuts.travelagency.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -43,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
-                .antMatchers("/", "/sign-in", "/sign-up", "/tours", "/reg-user").permitAll()
+                .antMatchers("/", "/sign-in", "/sign-up", "/tours", "/reg-user",  "/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().accessDeniedPage("/error")

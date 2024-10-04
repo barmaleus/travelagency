@@ -2,7 +2,7 @@ package by.rekuts.travelagency.view.controller;
 
 
 import by.rekuts.travelagency.service.TourService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +12,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 
+@RequiredArgsConstructor
 @Controller
 public class ImportController {
 
-    @Autowired
-    private TourService tourService;
+    private final TourService tourService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/import-post")

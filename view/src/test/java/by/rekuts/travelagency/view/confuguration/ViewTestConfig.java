@@ -38,28 +38,33 @@ public class ViewTestConfig {
     }
 
     @Bean
-    public GetController getController() {
-        return new GetController();
+    public CountryController countryController() {
+        return new CountryController(countryService());
     }
 
     @Bean
-    public CreateController createController() {
-        return new CreateController();
+    public HotelController hotelController() {
+        return new HotelController(hotelService());
     }
 
     @Bean
-    public DeleteController deleteController() {
-        return new DeleteController();
+    public ReviewController reviewController() {
+        return new ReviewController(tourService(), userService(), reviewService());
     }
 
     @Bean
-    public UpdateController updateController() {
-        return new UpdateController();
+    public TourController tourController() {
+        return new TourController(tourService(), countryService(), userService(), reviewService(), hotelService());
+    }
+
+    @Bean
+    public UserController userController() {
+        return new UserController(userService(), tourService(), reviewService());
     }
 
     @Bean
     public ImportController importController() {
-        return new ImportController();
+        return new ImportController(tourService());
     }
 
     @Bean

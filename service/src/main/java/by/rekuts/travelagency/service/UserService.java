@@ -2,7 +2,6 @@ package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.domain.Tour;
 import by.rekuts.travelagency.domain.User;
-import by.rekuts.travelagency.service.impl.CrudService;
 
 /**
  * Interface UserService concerns to Service layer.

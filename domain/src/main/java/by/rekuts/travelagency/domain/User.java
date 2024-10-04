@@ -1,6 +1,8 @@
 package by.rekuts.travelagency.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.Type;
@@ -9,15 +11,17 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Class User, includes fields <b>userId</b>, <b>login</b>, <b>password</b>,
  * <b>tours</b>
+ *
  * @author Aleh_Rekuts
  */
-@Data @ToString(exclude = "tours")
+@Data
+@ToString(exclude = "tours")
 @NoArgsConstructor
 @OptimisticLocking(type = OptimisticLockType.VERSION)
 @Entity
@@ -27,48 +31,49 @@ import java.util.List;
         typeClass = RoleEnumType.class
 )
 public class User implements Serializable {
-	@Id
-	@SequenceGenerator( name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
-	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
-	private int id;
+    @Id
+    @SequenceGenerator(name = "jpaSequence", sequenceName = "gpa_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jpaSequence")
+    private int id;
 
-	@NotNull
-	@Column(nullable = false, unique = true)
-	private String login;
+    @NotNull
+    @Column(nullable = false, unique = true)
+    private String login;
 
-	private String password;
+    private String password;
 
-	@Type(type="role_enum")
-	@Enumerated(EnumType.STRING)
-	private UserRole role;
+    @Type(type = "role_enum")
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(
-			name = "user_tour",
-			joinColumns = { @JoinColumn(name = "user_id") },
-			inverseJoinColumns = { @JoinColumn(name = "tour_id") }
-	)
-	private List<Tour> tours;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "user_tour",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tour_id")}
+    )
+    private Set<Tour> tours;
 
-	@Version
-	private Integer version;
+    @Version
+    private Integer version;
 
-	/**
-	 * Constructor - creating new object
-	 * @param id - id of the user
-	 * @param login - username of user
-	 * @param password - password of user
-	 * @see User#User()
-	 */
-	public User(int id, String login, String password) {
-		this.id = id;
-		this.login = login;
-		this.password = password;
-		this.tours = new ArrayList<>();
-	}
+    /**
+     * Constructor - creating new object
+     *
+     * @param id       - id of the user
+     * @param login    - username of user
+     * @param password - password of user
+     * @see User#User()
+     */
+    public User(int id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.tours = new LinkedHashSet<>();
+    }
 
-	public enum UserRole {
-		ROLE_MEMBER,
-		ROLE_ADMIN
-	}
+    public enum UserRole {
+        ROLE_MEMBER,
+        ROLE_ADMIN
+    }
 }

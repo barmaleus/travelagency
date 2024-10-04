@@ -1,12 +1,12 @@
 package by.rekuts.travelagency.service.impl;
 
 import by.rekuts.travelagency.domain.Tour;
-import by.rekuts.travelagency.repository.Specification;
-import by.rekuts.travelagency.repository.UserRepository;
 import by.rekuts.travelagency.domain.User;
+import by.rekuts.travelagency.repository.UserRepository;
 import by.rekuts.travelagency.repository.UserSpecification;
 import by.rekuts.travelagency.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,34 +16,36 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
-    @Autowired
-    UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
     @Transactional
     @Override
     public void insert(User user) {
-        userRepository.insert(user);
+        userRepository.save(user);
     }
 
     @Transactional
     @Override
     public void update(User user) {
-        userRepository.update(user);
+        userRepository.save(user);
     }
 
     @Transactional
     @Override
     public void delete(int id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     @Transactional
     @Override
-    public List<User> getList(Specification specification) {
-        return userRepository.getList(specification);
+    public List<User> getList(Specification<User> specification) {
+        return userRepository.findAll(specification);
     }
 
     @Transactional(readOnly = true)
@@ -51,7 +53,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String login) {
         UserSpecification specification = new UserSpecification();
         specification.setLogin(login);
-        User user = userRepository.getList(specification).get(0);
+        User user = userRepository.findAll(specification).get(0);
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(
                     user.getLogin(),
@@ -64,11 +66,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void addTourToFavorites(User user, Tour tour) {
-        userRepository.addTourToFavorites(user, tour);
+        Optional<User> temp = userRepository.findById(user.getId());
+        temp.ifPresent(u -> {
+            u.getTours().add(tour);
+            userRepository.save(u);
+        });
     }
 
     @Override
     public void removeTourFromFavorites(User user, Tour tour) {
-        userRepository.removeTourFromFavorites(user, tour);
+        Optional<User> temp = userRepository.findById(user.getId());
+        temp.ifPresent(u -> {
+            u.getTours().remove(tour);
+            userRepository.save(u);
+        });
     }
 }

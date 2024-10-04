@@ -21,10 +21,10 @@ public class TestSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/sign-in", "/sign-up", "/tours", "/reg-user").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().accessDeniedPage("/error")
+                .exceptionHandling().accessDeniedPage("/error-page")
                 .and()
                 .formLogin()
-                .loginPage("/sign-in")
+                .loginPage("/sign-in-page")
                 .loginProcessingUrl("/j_spring_security_check")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
@@ -38,7 +38,7 @@ public class TestSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 })
                 .failureHandler((req,res,exp)->{
                     req.setAttribute("message", "Invalid username or password.");
-                    res.sendRedirect("/sign-in");
+                    res.sendRedirect("/sign-in-page");
                 })
                 .permitAll()
                 .and()
@@ -46,7 +46,7 @@ public class TestSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/sign-out")
                 .logoutSuccessHandler((req,res,auth)->{
                     req.setAttribute("message", "You are logged out successfully.");
-                    res.sendRedirect("/sign-in");
+                    res.sendRedirect("/sign-in-page");
                 })
                 .permitAll()
                 .and()

@@ -1,18 +1,22 @@
 package by.rekuts.travelagency.repository;
 
+import by.rekuts.travelagency.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
-public class UserSpecification implements Specification {
+public class UserSpecification implements Specification<User> {
     Integer id;
     String login;
 
@@ -21,7 +25,7 @@ public class UserSpecification implements Specification {
     }
 
     @Override
-    public List<Predicate> getPredicates(Root root, CriteriaBuilder builder) {
+    public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> predicates = new ArrayList<>();
         if (id != null) {
             predicates.add(
@@ -33,6 +37,6 @@ public class UserSpecification implements Specification {
                     builder.equal(root.get("login"), login)
             );
         }
-        return predicates;
+        return builder.and(predicates.toArray(new Predicate[0]));
     }
 }

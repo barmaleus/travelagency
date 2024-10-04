@@ -34,9 +34,9 @@ public class ObjectFormatter {
     private HotelService hotelService;
 
     Formatter<LocalDate> localDateFormatter() {
-        return new Formatter<LocalDate>() {
+        return new Formatter<>() {
             @Override
-            public LocalDate parse(String text, Locale locale) throws ParseException {
+            public LocalDate parse(String text, Locale locale) {
                 return LocalDate.parse(text, DateTimeFormatter.ISO_DATE);
             }
 
@@ -48,9 +48,9 @@ public class ObjectFormatter {
     }
 
     Formatter<Tour> tourFormatter() {
-        return new Formatter<Tour>() {
+        return new Formatter<>() {
             @Override
-            public Tour parse(String tourId, Locale locale) throws ParseException {
+            public Tour parse(String tourId, Locale locale) {
                 int id = Integer.parseInt(tourId);
                 return tourService.getList(new TourSpecification(id)).get(0);
             }
@@ -63,9 +63,9 @@ public class ObjectFormatter {
     }
 
     Formatter<User> userFormatter() {
-        return new Formatter<User>() {
+        return new Formatter<>() {
             @Override
-            public User parse(String userId, Locale locale) throws ParseException {
+            public User parse(String userId, Locale locale) {
                 int id = Integer.parseInt(userId);
                 return userService.getList(new UserSpecification(id)).get(0);
             }
@@ -78,9 +78,9 @@ public class ObjectFormatter {
     }
 
     Formatter<Country> countryFormatter() {
-        return new Formatter<Country>() {
+        return new Formatter<>() {
             @Override
-            public Country parse(String countryId, Locale locale) throws ParseException {
+            public Country parse(String countryId, Locale locale) {
                 int id = Integer.parseInt(countryId);
                 return countryService.getList(new CountrySpecification(id)).get(0);
             }
@@ -93,9 +93,9 @@ public class ObjectFormatter {
     }
 
     Formatter<Hotel> hotelFormatter() {
-        return new Formatter<Hotel>() {
+        return new Formatter<>() {
             @Override
-            public Hotel parse(String hotelId, Locale locale) throws ParseException {
+            public Hotel parse(String hotelId, Locale locale) {
                 int id = Integer.parseInt(hotelId);
                 return hotelService.getList(new HotelSpecification(id)).get(0);
             }

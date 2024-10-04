@@ -1,6 +1,6 @@
-package by.rekuts.travelagency.service.impl;
+package by.rekuts.travelagency.service;
 
-import by.rekuts.travelagency.repository.Specification;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,5 +31,5 @@ public interface CrudService<T extends Serializable> {
      * This method calls repository method 'getList(Specification)'
      * @return list of all objects from database or list with one object selected by id
      */
-    List<T> getList(Specification specification);
+    List<T> getList(Specification<T> specification);
 }

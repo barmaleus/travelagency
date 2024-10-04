@@ -1,45 +1,45 @@
 package by.rekuts.travelagency.service.impl;
 
-import by.rekuts.travelagency.repository.impl.CSVTourLoaderImpl;
-import by.rekuts.travelagency.repository.Specification;
-import by.rekuts.travelagency.repository.TourRepository;
 import by.rekuts.travelagency.domain.Tour;
+import by.rekuts.travelagency.repository.TourRepository;
+import by.rekuts.travelagency.repository.impl.CSVTourLoaderImpl;
 import by.rekuts.travelagency.service.TourService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class TourServiceImpl implements TourService {
-    @Autowired
-    TourRepository tourRepository;
-    @Autowired
-    CSVTourLoaderImpl csvTourLoaderImpl;
+
+    private final TourRepository tourRepository;
+    private final CSVTourLoaderImpl csvTourLoaderImpl;
 
     @Transactional
     @Override
     public void insert(Tour tour) {
-        tourRepository.insert(tour);
+        tourRepository.save(tour);
     }
 
     @Transactional
     @Override
     public void update(Tour tour) {
-        tourRepository.update(tour);
+        tourRepository.save(tour);
     }
 
     @Transactional
     @Override
     public void delete(int id) {
-        tourRepository.delete(id);
+        tourRepository.deleteById(id);
     }
 
     @Transactional
     @Override
-    public List<Tour> getList(Specification specification) {
-        return tourRepository.getList(specification);
+    public List<Tour> getList(Specification<Tour> specification) {
+        return tourRepository.findAll(specification);
     }
 
     @Transactional

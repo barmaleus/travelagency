@@ -1,7 +1,6 @@
 package by.rekuts.travelagency.service;
 
 import by.rekuts.travelagency.domain.Country;
-import by.rekuts.travelagency.service.impl.CrudService;
 
 /**
  * Interface CountryService concerns to Service layer.
